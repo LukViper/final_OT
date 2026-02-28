@@ -230,19 +230,46 @@ class WeatherService:
                 wave_height = 1.5
                 
             wind_direction = current.get('wind_direction', 180)
+            if wind_direction is None:
+                wind_direction = 180
             try:
                 wind_direction = float(wind_direction)
             except (TypeError, ValueError):
                 wind_direction = 180
                 
+            # Add more safety for other fields
+            swell_wave_height = current.get('swell_wave_height')
+            if swell_wave_height is None:
+                swell_wave_height = 1.0
+            try:
+                swell_wave_height = float(swell_wave_height)
+            except (TypeError, ValueError):
+                swell_wave_height = 1.0
+                
+            ocean_current = current.get('ocean_current_velocity')
+            if ocean_current is None:
+                ocean_current = 0.5
+            try:
+                ocean_current = float(ocean_current)
+            except (TypeError, ValueError):
+                ocean_current = 0.5
+                
+            sea_temp = current.get('sea_surface_temperature')
+            if sea_temp is None:
+                sea_temp = 20
+            try:
+                sea_temp = float(sea_temp)
+            except (TypeError, ValueError):
+                sea_temp = 20
+            
             return {
                 'temperature': 20.0,
                 'wind_speed': wind_speed,
                 'wind_direction': wind_direction,
                 'wave_height': wave_height,
-                'swell_wave_height': float(current.get('swell_wave_height', 1.0)),
-                'ocean_current_velocity': float(current.get('ocean_current_velocity', 0.5)),
-                'sea_surface_temperature': float(current.get('sea_surface_temperature', 20)),
+                'swell_wave_height': swell_wave_height,
+                'ocean_current_velocity': ocean_current,
+                'sea_surface_temperature': sea_temp,
                 'source': 'open-meteo-marine'
             }
         except Exception as e:

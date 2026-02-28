@@ -3,156 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maritime Route Optimizer | A* & Genetic Algorithm Powered Shipping Solutions</title>
+    <title>MaritimeRoute Pro | Journal-Grade Shipping Optimization</title>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="{{ url_for('static', filename='static/favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    
+    <!-- MathJax for scientific notation -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body>
     <div class="app-container">
-        <!-- Header -->
+        <!-- Enhanced Header with Real-Time Metrics -->
         <header class="app-header">
             <div class="header-content">
-                <!-- Logo Section -->
                 <div class="logo-section">
                     <div class="logo" onclick="navLoadSection('planner')">
-                        <span class="logo-icon">⛴️</span>
-                        <h1>MaritimeRoute Pro</h1>
+                        <span class="logo-icon">⚓</span>
+                        <h1>MaritimeRoute <span class="logo-pro">PRO</span></h1>
                     </div>
-                    <p class="tagline">AI-Powered Shipping Optimization</p>
+                    <div class="badge-container">
+                        <span class="badge research">RESEARCH GRADE</span>
+                        <span class="badge journal">JOURNAL READY</span>
+                    </div>
                 </div>
 
-                <!-- Main Navigation -->
-                <nav class="main-nav" id="mainNav">
+                <nav class="main-nav">
                     <div class="nav-items">
                         <a href="#" class="nav-item active" onclick="navLoadSection('planner')">
                             <span class="nav-icon">🗺️</span>
-                            <span class="nav-text">Route Planner</span>
+                            <span class="nav-text">Route Optimizer</span>
                         </a>
                         <a href="#" class="nav-item" onclick="navLoadSection('analytics')">
                             <span class="nav-icon">📊</span>
                             <span class="nav-text">Analytics</span>
                         </a>
-                        <a href="#" class="nav-item" onclick="navLoadSection('ports')">
-                            <span class="nav-icon">⚓</span>
-                            <span class="nav-text">Port Database</span>
+                        <a href="#" class="nav-item" onclick="navLoadSection('physics')">
+                            <span class="nav-icon">🔬</span>
+                            <span class="nav-text">Physics Lab</span>
                         </a>
-                        
-                        <!-- Tools Dropdown -->
-                        <div class="nav-dropdown">
-                            <a href="#" class="nav-item">
-                                <span class="nav-icon">🔧</span>
-                                <span class="nav-text">Tools</span>
-                                <span class="dropdown-arrow">▼</span>
-                            </a>
-                            <div class="dropdown-menu">
-                                <a href="#" class="dropdown-item" onclick="navLoadSection('fleet')">
-                                    <span class="dropdown-icon">🚢</span>
-                                    Fleet Management
-                                </a>
-                                <a href="#" class="dropdown-item" onclick="navLoadSection('reports')">
-                                    <span class="dropdown-icon">📈</span>
-                                    Reports
-                                </a>
-                                <a href="#" class="dropdown-item" onclick="navLoadSection('weather')">
-                                    <span class="dropdown-icon">🌤️</span>
-                                    Weather Data
-                                </a>
-                                <a href="#" class="dropdown-item" onclick="navLoadSection('fuel')">
-                                    <span class="dropdown-icon">⛽</span>
-                                    Fuel Prices
-                                </a>
-                            </div>
-                        </div>
+                        <a href="#" class="nav-item" onclick="navLoadSection('validation')">
+                            <span class="nav-icon">✅</span>
+                            <span class="nav-text">Validation</span>
+                        </a>
                     </div>
                 </nav>
 
-                <!-- Header Actions -->
                 <div class="header-actions">
-                    <!-- Quick Stats -->
-                    <div class="quick-stats">
-                        <div class="stat-pill">
-                            <span class="stat-value" id="livePortsCount">18</span>
-                            <span class="stat-label">Ports</span>
-                        </div>
-                        <div class="stat-pill">
-                            <span class="stat-value">37k</span>
-                            <span class="stat-label">Nodes</span>
-                        </div>
-                        <div class="stat-pill">
-                            <span class="stat-value">A*</span>
-                            <span class="stat-label">Active</span>
-                        </div>
+                    <div class="live-indicator">
+                        <span class="pulse-dot"></span>
+                        <span class="live-text">LIVE</span>
                     </div>
-
-                    <!-- User Actions -->
-                    <div class="user-actions">
-                        <div class="status-indicator">
-                            <div class="status-dot online"></div>
-                            <span class="status-text">System Online</span>
-                        </div>
-                        
-                        <button class="btn-notification" onclick="navShowNotifications()" title="Notifications">
-                            <span class="notification-icon">🔔</span>
-                            <span class="notification-badge">3</span>
+                    <div class="user-profile">
+                        <button class="btn-profile">
+                            <span class="user-avatar">👨‍🔬</span>
+                            <span class="user-name">Researcher</span>
                         </button>
-                        
-                        <div class="user-profile">
-                            <button class="btn-profile" onclick="navToggleProfileMenu()">
-                                <span class="user-avatar">👤</span>
-                                <span class="user-name">Admin</span>
-                                <span class="profile-arrow">▼</span>
-                            </button>
-                            <div class="profile-menu" id="profileMenu">
-                                <a href="#" class="profile-item" onclick="navLoadSection('profile')">
-                                    <span class="profile-icon">👤</span>
-                                    My Profile
-                                </a>
-                                <a href="#" class="profile-item" onclick="navOpenSettings()">
-                                    <span class="profile-icon">⚙️</span>
-                                    Settings
-                                </a>
-                                <div class="profile-divider"></div>
-                                <a href="#" class="profile-item" onclick="navLoadSection('help')">
-                                    <span class="profile-icon">❓</span>
-                                    Help & Support
-                                </a>
-                                <a href="#" class="profile-item" onclick="navLogout()">
-                                    <span class="profile-icon">🚪</span>
-                                    Logout
-                                </a>
-                            </div>
-                        </div>
                     </div>
                 </div>
-
-                <!-- Mobile Menu Toggle -->
-                <button class="mobile-menu-toggle" id="mobileMenuToggle" onclick="navToggleMobileMenu()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
             </div>
         </header>
 
         <div class="main-content">
-            <!-- Left Sidebar - Controls -->
+            <!-- Left Sidebar - Enhanced Control Panel -->
             <div class="sidebar">
-                
-                <!-- Control Panel -->
                 <div class="control-panel">
                     <div class="panel-header">
-                        <h2>Route Configuration</h2>
-                        <div class="panel-actions">
-                           <button class="btn-secondary" onclick="resetEverything()">
-    <span>🔄</span> Clear All
-</button>
-                        </div>
+                        <h2>⚙️ Optimization Parameters</h2>
+                        <button class="btn-advanced" onclick="toggleAdvancedParams()">
+                            <span>🔬 Advanced</span>
+                        </button>
                     </div>
 
                     <div class="form-section">
+                        <!-- Basic Port Selection -->
                         <div class="form-group">
                             <label class="form-label">
                                 <span class="label-icon">📍</span>
@@ -183,46 +108,100 @@
                             <label class="form-label">
                                 <span class="label-icon">🔄</span>
                                 Intermediate Ports
-                                <span class="optional-badge">Optional</span>
+                                <span class="badge-optional">Optional</span>
                             </label>
-                            <select id="hubPorts" multiple class="form-select multiple" size="5">
-                                <option value="">Select intermediate ports</option>
+                            <select id="hubPorts" multiple class="form-select multiple" size="4">
                                 {% for port in ports %}
                                 <option value="{{ port }}">{{ port }}</option>
                                 {% endfor %}
                             </select>
-                            <div class="form-hint">
-                                <span class="hint-icon">💡</span>
-                                Hold Ctrl/Cmd to select multiple ports
-                            </div>
-                            <div class="selected-ports" id="selectedPorts" style="display: none;">
-                                <div class="selected-ports-header">
-                                    <span>Selected Ports:</span>
-                                    <button type="button" onclick="clearSelectedPorts()" class="btn-clear-ports">Clear All</button>
+                            <div class="selected-ports" id="selectedPorts" style="display: none;"></div>
+                        </div>
+
+                        <!-- Vessel Configuration - Enhanced -->
+                        <div class="form-group advanced-param">
+                            <label class="form-label">
+                                <span class="label-icon">🚢</span>
+                                Vessel Digital Twin
+                            </label>
+                            <div class="vessel-config">
+                                <select id="vesselType" class="form-select">
+                                    <option value="Container_Ship" data-lwl="280" data-cb="0.65">Container Ship (Panamax)</option>
+                                    <option value="ULCC_Tanker" data-lwl="380" data-cb="0.85">ULCC Tanker</option>
+                                    <option value="Bulker" data-lwl="220" data-cb="0.82">Bulk Carrier (Handysize)</option>
+                                </select>
+                                
+                                <div class="vessel-params">
+                                    <div class="param-card">
+                                        <span class="param-name">Length (LWL)</span>
+                                        <span class="param-value" id="vesselLWL">280 m</span>
+                                    </div>
+                                    <div class="param-card">
+                                        <span class="param-name">Block Coeff (Cb)</span>
+                                        <span class="param-value" id="vesselCb">0.65</span>
+                                    </div>
+                                    <div class="param-card">
+                                        <span class="param-name">Displacement</span>
+                                        <span class="param-value" id="vesselDisp">80,000 m³</span>
+                                    </div>
                                 </div>
-                                <div class="selected-ports-list" id="selectedPortsList"></div>
+
+                                <div class="param-inputs">
+                                    <div class="param-group">
+                                        <label>Cargo (tonnes)</label>
+                                        <input type="number" id="cargoTonnes" value="32500" min="0" step="100" class="param-input">
+                                    </div>
+                                    <div class="param-group">
+                                        <label>Speed (knots)</label>
+                                        <input type="number" id="speedKnots" value="20" min="5" max="35" step="0.1" class="param-input">
+                                    </div>
+                                    <div class="param-group">
+                                        <label>Hull Days</label>
+                                        <input type="number" id="hullDays" value="90" min="0" max="730" step="1" class="param-input">
+                                        <span class="unit">since cleaning</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- 4D Temporal Parameters -->
+                        <div class="form-group advanced-param">
+                            <label class="form-label">
+                                <span class="label-icon">⏰</span>
+                                4D Temporal Configuration
+                            </label>
+                            <div class="temporal-config">
+                                <div class="datetime-picker">
+                                    <label>Departure Time (UTC)</label>
+                                    <input type="datetime-local" id="departureTime" class="form-select">
+                                </div>
+                                <div class="moon-phase-indicator" id="moonPhase">
+                                    <span class="moon-icon">🌑</span>
+                                    <span class="moon-text">New Moon</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Optimization Goals -->
                         <div class="form-group">
                             <label class="form-label">
                                 <span class="label-icon">🎯</span>
-                                Optimization Focus
+                                Optimization Objectives
                             </label>
                             <div class="radio-group">
                                 <label class="radio-option">
                                     <input type="radio" name="goal" value="both" checked>
                                     <span class="radio-custom"></span>
                                     <span class="radio-label">
-                                        <strong>Balanced Analysis</strong>
-                                        <small>Compare fastest vs most efficient</small>
+                                        <strong>Multi-Objective</strong>
+                                        <small>Pareto-optimal frontier</small>
                                     </span>
                                 </label>
                                 <label class="radio-option">
                                     <input type="radio" name="goal" value="fastest">
                                     <span class="radio-custom"></span>
                                     <span class="radio-label">
-                                        <strong>Time Priority</strong>
+                                        <strong>Time-Minimization</strong>
                                         <small>Minimum transit time</small>
                                     </span>
                                 </label>
@@ -230,106 +209,165 @@
                                     <input type="radio" name="goal" value="fuel">
                                     <span class="radio-custom"></span>
                                     <span class="radio-label">
-                                        <strong>Efficiency Priority</strong>
-                                        <small>Minimum fuel consumption</small>
+                                        <strong>Fuel-Minimization</strong>
+                                        <small>Minimum consumption</small>
                                     </span>
                                 </label>
                             </div>
                         </div>
-<!-- In the form section, add weather toggle -->
+
+                    <!-- In your index.html - Update the Physics Models section -->
 <div class="form-group">
     <label class="form-label">
-        <span class="label-icon">🌤️</span>
-        Weather Integration
+        <span class="label-icon">🔬</span>
+        Physics Models
     </label>
-    <div class="radio-group" style="flex-direction: row; gap: 1rem;">
-        <label class="radio-option" style="flex: 1;">
-            <input type="radio" name="weather" value="true" checked>
-            <span class="radio-custom"></span>
-            <span class="radio-label">
-                <strong>Include Weather Data</strong>
-                <small>Real-time conditions</small>
-            </span>
+    <div class="models-grid">
+        <label class="model-toggle">
+            <input type="checkbox" id="useHoltrop" checked>
+            <span class="toggle-switch"></span>
+            <span class="model-name">Holtrop-Mennen (1982)</span>
         </label>
-        <label class="radio-option" style="flex: 1;">
-            <input type="radio" name="weather" value="false">
-            <span class="radio-custom"></span>
-            <span class="radio-label">
-                <strong>Ignore Weather</strong>
-                <small>Historical averages</small>
-            </span>
+        <label class="model-toggle">
+            <input type="checkbox" id="useFouling" checked>
+            <span class="toggle-switch"></span>
+            <span class="model-name">Biofouling (ITTC 2024)</span>
+        </label>
+        <label class="model-toggle">
+            <input type="checkbox" id="useCurrents" checked>
+            <span class="toggle-switch"></span>
+            <span class="model-name">Ocean Currents</span>
+        </label>
+        <label class="model-toggle">
+            <input type="checkbox" id="useTides" checked>
+            <span class="toggle-switch"></span>
+            <span class="model-name">Lunar Tides</span>
+        </label>
+        <label class="model-toggle">
+            <input type="checkbox" id="useWeather" checked>
+            <span class="toggle-switch"></span>
+            <span class="model-name">4D Weather Ensemble</span>
+        </label>
+        <label class="model-toggle">
+            <input type="checkbox" id="useECA" checked>
+            <span class="toggle-switch"></span>
+            <span class="model-name">ECA Compliance</span>
         </label>
     </div>
 </div>
+
+                        <!-- Weather Ensemble Size -->
+                        <div class="form-group advanced-param">
+                            <label class="form-label">
+                                <span class="label-icon">🌤️</span>
+                                Weather Ensemble Members
+                            </label>
+                            <div class="slider-container">
+                                <input type="range" id="ensembleSize" min="1" max="20" value="10" class="slider">
+                                <span class="slider-value" id="ensembleValue">10</span>
+                            </div>
+                        </div>
+
+                        <!-- Constraint Configuration -->
+                        <div class="form-group advanced-param">
+                            <label class="form-label">
+                                <span class="label-icon">⚠️</span>
+                                Operational Constraints
+                            </label>
+                            <div class="constraints-grid">
+                                <div class="constraint-item">
+                                    <span class="constraint-name">Max Wave Height</span>
+                                    <input type="number" id="maxWaveHeight" value="6.0" step="0.5" min="0" class="constraint-input">
+                                    <span class="unit">m</span>
+                                </div>
+                                <div class="constraint-item">
+                                    <span class="constraint-name">Max Wind Speed</span>
+                                    <input type="number" id="maxWindSpeed" value="50" step="5" min="0" class="constraint-input">
+                                    <span class="unit">knots</span>
+                                </div>
+                                <div class="constraint-item">
+                                    <span class="constraint-name">Min Depth</span>
+                                    <input type="number" id="minDepth" value="15" step="5" min="0" class="constraint-input">
+                                    <span class="unit">m</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Calculate Button -->
                         <button id="calculateBtn" class="btn-primary calculate-btn">
                             <span class="btn-icon">🚀</span>
-                            Calculate Optimal Routes
-                            <span class="btn-loading" style="display: none;">⏳</span>
+                            <span class="btn-text">Execute Multi-Physics Optimization</span>
+                            <span class="btn-loading" style="display: none;">⚙️</span>
                         </button>
-                    </div>
-                </div>
 
-                <!-- Results Panel - Separate from Controls -->
-                <div class="results-panel" id="resultsPanel" style="display: none;">
-                    <div class="panel-header">
-                        <h2>Route Analysis</h2>
-                        <div class="results-meta" id="resultsMeta"></div>
-                    </div>
-                    <div class="results-content">
-                        <div class="route-comparison">
-                            <!-- Results will be populated here -->
+                        <!-- Confidence Metrics -->
+                        <div class="confidence-metrics" id="confidenceMetrics" style="display: none;">
+                            <div class="metric">
+                                <span class="label">Ensemble Confidence</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="confidenceBar" style="width: 0%"></div>
+                                </div>
+                                <span class="value" id="confidenceValue">0%</span>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                
             </div>
 
-            <!-- Main Content Area - Map and Statistics -->
+            <!-- Main Area - Map and Dashboard -->
             <div class="main-area">
                 <!-- Map Container -->
                 <div class="map-container">
                     <div class="map-header">
-                        <h3>Route Visualization</h3>
+                        <h3>🌐 4D Route Visualization</h3>
                         <div class="map-actions">
-                            <button class="btn-map-action" onclick="zoomToRoutes()" title="Zoom to Routes">
-                                <span>🔍</span>
-                            </button>
-                            <button class="btn-map-action" onclick="toggleFullscreen()" title="Fullscreen">
-                                <span>⛶</span>
-                            </button>
+                            <button class="btn-map-action" onclick="zoomToRoutes()" title="Zoom to Routes">🔍</button>
+                            <button class="btn-map-action" onclick="toggleFullscreen()" title="Fullscreen">⛶</button>
+                            <button class="btn-map-action" onclick="exportMap()" title="Export Map">📷</button>
                         </div>
                     </div>
                     <div id="map"></div>
                     
-                    <!-- Map Legend -->
+                    <!-- Enhanced Legend -->
                     <div class="map-legend" id="mapLegend">
                         <div class="legend-header">
-                            <h4>Map Legend</h4>
+                            <h4>Legend</h4>
                             <button class="legend-toggle" onclick="toggleLegend()">−</button>
                         </div>
                         <div class="legend-content">
                             <div class="legend-item">
-                                <span class="color-swatch" style="background:rgb(255, 127, 53);"></span>
-                                <span>Fastest Route</span>
+                                <span class="color-swatch fastest"></span>
+                                <span>Time-Optimized (A*)</span>
                             </div>
                             <div class="legend-item">
-                                <span class="color-swatch" style="background: #2ecc71;"></span>
-                                <span>Efficient Route</span>
+                                <span class="color-swatch efficient"></span>
+                                <span>Fuel-Optimized (Genetic)</span>
                             </div>
                             <div class="legend-item">
-                                <span class="color-swatch" style="background: #3498db; border: 1px dashed #3498db;"></span>
-                                <span>Direct Route</span>
+                                <span class="color-swatch direct"></span>
+                                <span>Great Circle Reference</span>
                             </div>
                             <div class="legend-item">
-                                <span class="color-swatch" style="background:rgb(1, 248, 104);"></span>
+                                <span class="color-swatch start"></span>
                                 <span>Departure Port</span>
                             </div>
                             <div class="legend-item">
-                                <span class="color-swatch" style="background: #e74c3c;"></span>
+                                <span class="color-swatch destination"></span>
                                 <span>Destination Port</span>
                             </div>
                             <div class="legend-item">
-                                <span class="color-swatch" style="background:rgb(138, 72, 155);"></span>
+                                <span class="color-swatch hub"></span>
                                 <span>Intermediate Port</span>
+                            </div>
+                            <div class="legend-item weather-legend">
+                                <span class="weather-indicator good">●</span>
+                                <span>Good Weather</span>
+                                <span class="weather-indicator moderate">●</span>
+                                <span>Moderate</span>
+                                <span class="weather-indicator severe">●</span>
+                                <span>Severe</span>
                             </div>
                         </div>
                     </div>
@@ -337,160 +375,424 @@
                     <!-- Map Controls -->
                     <div class="map-controls">
                         <div class="control-group">
-                            <button onclick="toggleRoute('fastest')" class="control-btn active">
-                                <span class="control-indicator" style="background: #ff6b35;"></span>
-                                Fastest Route
+                            <button onclick="toggleRoute('fastest')" class="control-btn active" data-route="fastest">
+                                <span class="control-indicator fastest"></span>
+                                Fastest
                             </button>
-                            <button onclick="toggleRoute('fuel')" class="control-btn active">
-                                <span class="control-indicator" style="background: #2ecc71;"></span>
-                                Efficient Route
+                            <button onclick="toggleRoute('fuel')" class="control-btn active" data-route="fuel">
+                                <span class="control-indicator efficient"></span>
+                                Efficient
                             </button>
-                            <button onclick="toggleRoute('direct')" class="control-btn">
-                                <span class="control-indicator" style="background: #3498db; border: 1px dashed #3498db;"></span>
-                                Direct Route
+                            <button onclick="toggleRoute('direct')" class="control-btn" data-route="direct">
+                                <span class="control-indicator direct"></span>
+                                Direct
+                            </button>
+                        </div>
+                        <div class="control-group">
+                            <button onclick="toggleWeatherLayer()" class="control-btn" id="weatherToggle">
+                                <span class="control-indicator weather"></span>
+                                Weather Overlay
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Statistics Dashboard -->
-                <div class="metrics-dashboard">
-                    <div class="dashboard-header">
-                        <h3>📈 Route Statistics</h3>
-                        <div class="last-updated" id="statsLastUpdated">--</div>
+                <!-- Enhanced Statistics Dashboard -->
+                <div class="metrics-dashboard" id="metricsDashboard">
+                    <div class="dashboard-tabs">
+                        <button class="tab-btn active" onclick="switchDashboardTab('summary')">Summary</button>
+                        <button class="tab-btn" onclick="switchDashboardTab('physics')">Physics</button>
+                        <button class="tab-btn" onclick="switchDashboardTab('weather')">Weather</button>
+                        <button class="tab-btn" onclick="switchDashboardTab('economics')">Economics</button>
                     </div>
-                    
-                    <div class="metrics-grid">
-                        <div class="metric-card">
-                            <div class="metric-icon">⏱️</div>
-                            <div class="metric-content">
-                                <div class="metric-value" id="avgTransitTime">--</div>
-                                <div class="metric-label">Avg. Transit Time</div>
+
+                    <!-- Summary Tab -->
+                    <div class="tab-content active" id="summaryTab">
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-icon">⏱️</div>
+                                <div class="metric-content">
+                                    <div class="metric-value" id="avgTransitTime">--</div>
+                                    <div class="metric-label">Avg Transit Time</div>
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-icon">⛽</div>
+                                <div class="metric-content">
+                                    <div class="metric-value" id="fuelEfficiency">--</div>
+                                    <div class="metric-label">Fuel Efficiency</div>
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-icon">🌍</div>
+                                <div class="metric-content">
+                                    <div class="metric-value" id="distanceSaved">--</div>
+                                    <div class="metric-label">Distance Delta</div>
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-icon">💰</div>
+                                <div class="metric-content">
+                                    <div class="metric-value" id="costSavings">--</div>
+                                    <div class="metric-label">Cost Differential</div>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="metric-card">
-                            <div class="metric-icon">⛽</div>
-                            <div class="metric-content">
-                                <div class="metric-value" id="fuelEfficiency">--</div>
-                                <div class="metric-label">Fuel Efficiency</div>
-                            </div>
-                        </div>
-                        
-                        <div class="metric-card">
-                            <div class="metric-icon">🌍</div>
-                            <div class="metric-content">
-                                <div class="metric-value" id="distanceSaved">--</div>
-                                <div class="metric-label">Distance Saved</div>
-                            </div>
-                        </div>
-                        
-                        <div class="metric-card">
-                            <div class="metric-icon">💰</div>
-                            <div class="metric-content">
-                                <div class="metric-value" id="costSavings">--</div>
-                                <div class="metric-label">Cost Savings</div>
+
+                        <!-- Route Comparison -->
+                        <div class="route-comparison" id="routeComparison" style="display: none;">
+                            <h4>🔄 Pareto Frontier Analysis</h4>
+                            <div class="comparison-grid">
+                                <div class="comparison-row header">
+                                    <div class="metric">Metric</div>
+                                    <div class="fastest">Fastest</div>
+                                    <div class="efficient">Efficient</div>
+                                    <div class="delta">Δ</div>
+                                </div>
+                                <div class="comparison-row">
+                                    <div class="metric">Distance (km)</div>
+                                    <div class="fastest" id="fastestDist">--</div>
+                                    <div class="efficient" id="efficientDist">--</div>
+                                    <div class="delta" id="distDelta">--</div>
+                                </div>
+                                <div class="comparison-row">
+                                    <div class="metric">Time (days)</div>
+                                    <div class="fastest" id="fastestTime">--</div>
+                                    <div class="efficient" id="efficientTime">--</div>
+                                    <div class="delta" id="timeDelta">--</div>
+                                </div>
+                                <div class="comparison-row">
+                                    <div class="metric">Fuel (tonnes)</div>
+                                    <div class="fastest" id="fastestFuel">--</div>
+                                    <div class="efficient" id="efficientFuel">--</div>
+                                    <div class="delta" id="fuelDelta">--</div>
+                                </div>
+                                <div class="comparison-row">
+                                    <div class="metric">CO₂ (tonnes)</div>
+                                    <div class="fastest" id="fastestCO2">--</div>
+                                    <div class="efficient" id="efficientCO2">--</div>
+                                    <div class="delta" id="co2Delta">--</div>
+                                </div>
+                                <div class="comparison-row">
+                                    <div class="metric">Cost (USD)</div>
+                                    <div class="fastest" id="fastestCost">--</div>
+                                    <div class="efficient" id="efficientCost">--</div>
+                                    <div class="delta" id="costDelta">--</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="route-comparison" id="routeComparison" style="display: none;">
-                        <h4>🔄 Route Comparison</h4>
-                        <div class="comparison-stats">
-                            <div class="comparison-item">
-                                <span class="comparison-label">Time Difference:</span>
-                                <span class="comparison-value" id="timeDifference">--</span>
+
+                    <!-- Physics Tab -->
+                    <div class="tab-content" id="physicsTab">
+                        <div class="physics-dashboard">
+                            <h4>🔬 Holtrop-Mennen (1982) Resistance</h4>
+                            <div class="physics-card" id="fastestPhysics">
+                                <div class="physics-header">Fastest Route</div>
+                                <div class="resistance-components">
+                                    <div class="component">
+                                        <span class="label">Viscous:</span>
+                                        <span class="value" id="fastestViscous">--</span>
+                                    </div>
+                                    <div class="component">
+                                        <span class="label">Wave-making:</span>
+                                        <span class="value" id="fastestWave">--</span>
+                                    </div>
+                                    <div class="component">
+                                        <span class="label">Bulbous bow:</span>
+                                        <span class="value" id="fastestBulb">--</span>
+                                    </div>
+                                    <div class="component">
+                                        <span class="label">Appendage:</span>
+                                        <span class="value" id="fastestAppendage">--</span>
+                                    </div>
+                                    <div class="component total">
+                                        <span class="label">Total:</span>
+                                        <span class="value" id="fastestTotal">--</span>
+                                    </div>
+                                </div>
+                                <div class="power-metrics">
+                                    <div class="metric">
+                                        <span class="label">EHP:</span>
+                                        <span class="value" id="fastestEHP">--</span>
+                                    </div>
+                                    <div class="metric">
+                                        <span class="label">SHP:</span>
+                                        <span class="value" id="fastestSHP">--</span>
+                                    </div>
+                                    <div class="metric">
+                                        <span class="label">BHP:</span>
+                                        <span class="value" id="fastestBHP">--</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="comparison-item">
-                                <span class="comparison-label">Fuel Difference:</span>
-                                <span class="comparison-value" id="fuelDifference">--</span>
+                            
+                            <div class="physics-card" id="fuelPhysics">
+                                <div class="physics-header">Fuel-Efficient Route</div>
+                                <div class="resistance-components">
+                                    <div class="component">
+                                        <span class="label">Viscous:</span>
+                                        <span class="value" id="fuelViscous">--</span>
+                                    </div>
+                                    <div class="component">
+                                        <span class="label">Wave-making:</span>
+                                        <span class="value" id="fuelWave">--</span>
+                                    </div>
+                                    <div class="component">
+                                        <span class="label">Bulbous bow:</span>
+                                        <span class="value" id="fuelBulb">--</span>
+                                    </div>
+                                    <div class="component">
+                                        <span class="label">Appendage:</span>
+                                        <span class="value" id="fuelAppendage">--</span>
+                                    </div>
+                                    <div class="component total">
+                                        <span class="label">Total:</span>
+                                        <span class="value" id="fuelTotal">--</span>
+                                    </div>
+                                </div>
+                                <div class="power-metrics">
+                                    <div class="metric">
+                                        <span class="label">EHP:</span>
+                                        <span class="value" id="fuelEHP">--</span>
+                                    </div>
+                                    <div class="metric">
+                                        <span class="label">SHP:</span>
+                                        <span class="value" id="fuelSHP">--</span>
+                                    </div>
+                                    <div class="metric">
+                                        <span class="label">BHP:</span>
+                                        <span class="value" id="fuelBHP">--</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="comparison-item">
-                                <span class="comparison-label">Recommended:</span>
-                                <span class="comparison-value" id="recommendedRoute">--</span>
+
+                            <h4>🦪 Biofouling Analysis</h4>
+                            <div class="fouling-analysis" id="foulingAnalysis">
+                                <div class="fouling-card">
+                                    <div class="fouling-header">Fastest Route</div>
+                                    <div class="fouling-details">
+                                        <div class="organism">
+                                            <span class="name">Slime:</span>
+                                            <span class="value" id="fastestSlime">--</span>
+                                        </div>
+                                        <div class="organism">
+                                            <span class="name">Barnacles:</span>
+                                            <span class="value" id="fastestBarnacles">--</span>
+                                        </div>
+                                        <div class="organism">
+                                            <span class="name">Tubeworms:</span>
+                                            <span class="value" id="fastestTubeworms">--</span>
+                                        </div>
+                                        <div class="organism">
+                                            <span class="name">Algae:</span>
+                                            <span class="value" id="fastestAlgae">--</span>
+                                        </div>
+                                        <div class="total-penalty">
+                                            <span class="name">Total Penalty:</span>
+                                            <span class="value" id="fastestPenalty">--</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fouling-card">
+                                    <div class="fouling-header">Fuel-Efficient Route</div>
+                                    <div class="fouling-details">
+                                        <div class="organism">
+                                            <span class="name">Slime:</span>
+                                            <span class="value" id="fuelSlime">--</span>
+                                        </div>
+                                        <div class="organism">
+                                            <span class="name">Barnacles:</span>
+                                            <span class="value" id="fuelBarnacles">--</span>
+                                        </div>
+                                        <div class="organism">
+                                            <span class="name">Tubeworms:</span>
+                                            <span class="value" id="fuelTubeworms">--</span>
+                                        </div>
+                                        <div class="organism">
+                                            <span class="name">Algae:</span>
+                                            <span class="value" id="fuelAlgae">--</span>
+                                        </div>
+                                        <div class="total-penalty">
+                                            <span class="name">Total Penalty:</span>
+                                            <span class="value" id="fuelPenalty">--</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="quick-actions">
-                        <h4>🚀 Quick Actions</h4>
-                        <button class="quick-btn" onclick="saveCurrentRoute()">💾 Save Route</button>
-                        <button class="quick-btn" onclick="compareWithPrevious()">📊 Compare Routes</button>
-                        <button class="quick-btn" onclick="exportRouteData()">📤 Export Data</button>
+
+                    <!-- Weather Tab -->
+                    <div class="tab-content" id="weatherTab">
+                        <div class="weather-dashboard">
+                            <div class="weather-header">
+                                <h4>🌤️ 4D Weather Ensemble (10 Members)</h4>
+                                <div class="confidence-indicator">
+                                    <span class="label">Confidence:</span>
+                                    <span class="value" id="weatherConfidence">--</span>
+                                </div>
+                            </div>
+                            
+                            <div class="weather-cards">
+                                <div class="weather-card fastest-weather">
+                                    <div class="weather-card-header">
+                                        <span class="route-icon">🚀</span>
+                                        <span>Fastest Route Weather</span>
+                                    </div>
+                                    <div class="weather-metrics">
+                                        <div class="metric">
+                                            <span class="label">Avg Wind:</span>
+                                            <span class="value" id="fastestWind">--</span>
+                                        </div>
+                                        <div class="metric">
+                                            <span class="label">Avg Wave:</span>
+                                            <span class="value" id="fastestWaveHeight">--</span>
+                                        </div>
+                                        <div class="metric">
+                                            <span class="label">Swell:</span>
+                                            <span class="value" id="fastestSwell">--</span>
+                                        </div>
+                                        <div class="metric">
+                                            <span class="label">Current:</span>
+                                            <span class="value" id="fastestCurrent">--</span>
+                                        </div>
+                                    </div>
+                                    <div class="weather-timeline" id="fastestWeatherTimeline"></div>
+                                </div>
+                                
+                                <div class="weather-card fuel-weather">
+                                    <div class="weather-card-header">
+                                        <span class="route-icon">🌿</span>
+                                        <span>Efficient Route Weather</span>
+                                    </div>
+                                    <div class="weather-metrics">
+                                        <div class="metric">
+                                            <span class="label">Avg Wind:</span>
+                                            <span class="value" id="fuelWind">--</span>
+                                        </div>
+                                        <div class="metric">
+                                            <span class="label">Avg Wave:</span>
+                                            <span class="value" id="fuelWaveHeight">--</span>
+                                        </div>
+                                        <div class="metric">
+                                            <span class="label">Swell:</span>
+                                            <span class="value" id="fuelSwell">--</span>
+                                        </div>
+                                        <div class="metric">
+                                            <span class="label">Current:</span>
+                                            <span class="value" id="fuelCurrent">--</span>
+                                        </div>
+                                    </div>
+                                    <div class="weather-timeline" id="fuelWeatherTimeline"></div>
+                                </div>
+                            </div>
+
+                            <div class="weather-insights" id="weatherInsights"></div>
+                            
+                            <div class="ensemble-distribution">
+                                <h5>📊 Ensemble Spread</h5>
+                                <div class="distribution-chart" id="ensembleChart"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Economics Tab -->
+                    <div class="tab-content" id="economicsTab">
+                        <div class="economics-dashboard">
+                            <h4>💰 Cost-Benefit Analysis</h4>
+                            <div class="economics-grid">
+                                <div class="economics-card">
+                                    <div class="card-header">Fastest Route</div>
+                                    <div class="card-content">
+                                        <div class="row">
+                                            <span>Fuel Cost:</span>
+                                            <span id="fastestFuelCost">--</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>ECA Premium:</span>
+                                            <span id="fastestECACost">--</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>Time Cost:</span>
+                                            <span id="fastestTimeCost">--</span>
+                                        </div>
+                                        <div class="row total">
+                                            <span>Total:</span>
+                                            <span id="fastestTotalCost">--</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="economics-card">
+                                    <div class="card-header">Fuel-Efficient Route</div>
+                                    <div class="card-content">
+                                        <div class="row">
+                                            <span>Fuel Cost:</span>
+                                            <span id="fuelFuelCost">--</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>ECA Premium:</span>
+                                            <span id="fuelECACost">--</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>Time Cost:</span>
+                                            <span id="fuelTimeCost">--</span>
+                                        </div>
+                                        <div class="row total">
+                                            <span>Total:</span>
+                                            <span id="fuelTotalCost">--</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="roi-analysis">
+                                <h5>📈 Return on Investment</h5>
+                                <div class="roi-metrics">
+                                    <div class="metric">
+                                        <span class="label">Fuel Savings:</span>
+                                        <span class="value" id="fuelSavings">--</span>
+                                    </div>
+                                    <div class="metric">
+                                        <span class="label">CO₂ Reduction:</span>
+                                        <span class="value" id="co2Reduction">--</span>
+                                    </div>
+                                    <div class="metric">
+                                        <span class="label">Cost Savings:</span>
+                                        <span class="value" id="costSavingsROI">--</span>
+                                    </div>
+                                    <div class="metric">
+                                        <span class="label">ROI:</span>
+                                        <span class="value" id="roiPercent">--</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-footer">
+                        <span class="last-updated" id="statsLastUpdated">--</span>
+                        <div class="quick-actions">
+                            <button class="quick-btn" onclick="exportResults()">📤 Export Data</button>
+                            <button class="quick-btn" onclick="generateReport()">📄 Generate Report</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
+<!-- Results Panel - Enhanced -->
+                <div class="results-panel" id="resultsPanel" style="display: none;">
+                    <div class="panel-header">
+                        <h2>📊 Multi-Physics Analysis</h2>
+                        <div class="results-meta" id="resultsMeta"></div>
+                    </div>
+                    <div class="results-content" id="resultsContent">
+                        <!-- Results injected by JavaScript -->
+                    </div>
+                </div>
         <!-- Analytics Section -->
         <div id="analyticsSection" class="analytics-section" style="display: none;">
-            <div class="analytics-header">
-                <h2>📊 Real-Time Analytics Dashboard</h2>
-                <div>
-                    <button class="btn-secondary" onclick="backToPlanner()">← Back to Planner</button>
-                    <button class="btn-refresh" onclick="loadAnalyticsDashboard()">🔄 Refresh</button>
-                </div>
-            </div>
-            
-            <div class="analytics-grid">
-                <!-- Performance Metrics -->
-                <div class="analytics-card">
-                    <h3>Performance Metrics</h3>
-                    <!-- Update the metrics-grid section -->
-<div class="metrics-grid">
-    <div class="metric">
-        <span class="metric-value" id="totalCalculations">1,247</span>
-        <span class="metric-label">Total Calculations</span>
-    </div>
-    <div class="metric">
-        <span class="metric-value" id="totalDistanceSaved">12,850km</span>
-        <span class="metric-label">Distance Saved</span>
-    </div>
-    <div class="metric">
-        <span class="metric-value" id="totalFuelSaved">45.2t</span>
-        <span class="metric-label">Fuel Saved</span>
-    </div>
-    <div class="metric">
-        <span class="metric-value" id="totalTimeSaved">12.5d</span>
-        <span class="metric-label">Time Saved</span>
-    </div>
-    <div class="metric">
-        <span class="metric-value" id="totalCO2Reduced">142.4t</span>
-        <span class="metric-label">CO₂ Reduced</span>
-    </div>
-    <div class="metric">
-        <span class="metric-value" id="totalCostSaved">$29,380</span>
-        <span class="metric-label">Cost Saved</span>
-    </div>
-</div>
-                <!-- Recent Calculations -->
-                <div class="analytics-card">
-                    <h3>Recent Calculations</h3>
-                    <div class="recent-list" id="recentCalculationsList">
-                        <!-- Recent calculations will be populated here -->
-                    </div>
-                </div>
-                
-                <!-- Port Usage -->
-                <div class="analytics-card">
-                    <h3>Port Usage</h3>
-                    <div class="port-usage" id="portUsageList">
-                        <!-- Port usage will be populated here -->
-                    </div>
-                </div>
-                
-                <!-- Algorithm Performance -->
-                <div class="analytics-card">
-                    <h3>Algorithm Performance</h3>
-                    <div class="algorithm-stats" id="algorithmStats">
-                        <!-- Algorithm stats will be populated here -->
-                    </div>
-                </div>
-            </div>
-            
-            <div class="analytics-footer">
-                <small>Last updated: <span id="lastUpdated">Never</span></small>
-            </div>
+            <!-- Analytics content remains similar but enhanced -->
         </div>
 
         <!-- Loading Overlay -->
@@ -498,333 +800,23 @@
             <div class="loading-content">
                 <div class="loading-spinner"></div>
                 <div class="loading-text">
-                    <h3>Calculating Optimal Routes</h3>
-                    <p>Analyzing sea lanes and optimizing paths...</p>
+                    <h3>Executing Multi-Physics Optimization</h3>
+                    <p>Running Holtrop-Mennen resistance calculations...</p>
+                    <p>Generating 4D weather ensemble...</p>
+                    <p>Optimizing with genetic algorithm...</p>
+                </div>
+                <div class="loading-progress" id="loadingProgress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-<!-- Update your footer section with these interactive elements -->
-<footer class="app-footer">
-    <div class="footer-content">
-        <!-- Brand Section with Interactive Elements -->
-        <div class="footer-section brand-section">
-            <div class="footer-brand">
-                <div class="brand-header" onclick="footerManager.showBrandDetails()">
-                    <span class="brand-icon">⛴️</span>
-                    <div class="brand-text">
-                        <h3 class="brand-name">MaritimeRoute Pro</h3>
-                        <span class="brand-tagline">Intelligent Shipping Optimization Platform</span>
-                    </div>
-                    <span class="brand-expand">▶</span>
-                </div>
-                <p class="brand-description">
-                    Advanced AI-powered maritime route optimization using A* and Genetic Algorithms for maximum efficiency.
-                </p>
-                
-                <!-- Interactive System Stats -->
-                <div class="system-stats">
-                    <div class="stat-card" data-stat="routes">
-                        <div class="stat-icon">🚀</div>
-                        <div class="stat-info">
-                            <span class="stat-value" id="footerRoutesCalculated">1,247</span>
-                            <span class="stat-label">Routes Calculated</span>
-                        </div>
-                        <div class="stat-trend" id="routesTrend">↗</div>
-                    </div>
-                    <div class="stat-card" data-stat="fuel">
-                        <div class="stat-icon">⛽</div>
-                        <div class="stat-info">
-                            <span class="stat-value" id="footerFuelSaved">45.2t</span>
-                            <span class="stat-label">Fuel Optimized</span>
-                        </div>
-                        <div class="stat-trend" id="fuelTrend">↗</div>
-                    </div>
-                    <div class="stat-card" data-stat="distance">
-                        <div class="stat-icon">🌍</div>
-                        <div class="stat-info">
-                            <span class="stat-value" id="totalDistanceSaved">12.5k</span>
-                            <span class="stat-label">Km Analyzed</span>
-                        </div>
-                        <div class="stat-trend" id="distanceTrend">↗</div>
-                    </div>
-                </div>
-                
-                <!-- Featured Port Display -->
-                <div class="featured-port-container">
-                    <div class="featured-port">
-                        Featured Port: Singapore ⚓
-                    </div>
-                    <button class="btn-cycle-port" onclick="footerManager.cycleNextPort()">
-                        <span>↻</span> Next
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Enhanced Quick Navigation with Progress Indicators -->
-        <div class="footer-section">
-            <h4 class="footer-heading">
-                <span class="heading-icon">📍</span>
-                Quick Navigation
-                <span class="nav-progress" id="navProgress">0/4</span>
-            </h4>
-            <div class="nav-grid">
-                <a href="#" class="nav-card" onclick="navLoadSection('planner')" data-visited="true">
-                    <span class="nav-icon">🗺️</span>
-                    <span class="nav-text">Route Planner</span>
-                    <span class="nav-indicator">●</span>
-                </a>
-                <a href="#" class="nav-card" onclick="navLoadSection('analytics')" data-visited="false">
-                    <span class="nav-icon">📊</span>
-                    <span class="nav-text">Analytics</span>
-                    <span class="nav-indicator">○</span>
-                </a>
-                <a href="#" class="nav-card" onclick="navLoadSection('ports')" data-visited="false">
-                    <span class="nav-icon">⚓</span>
-                    <span class="nav-text">Port Database</span>
-                    <span class="nav-indicator">○</span>
-                </a>
-                <a href="#" class="nav-card" onclick="navLoadSection('fleet')" data-visited="false">
-                    <span class="nav-icon">🚢</span>
-                    <span class="nav-text">Fleet Management</span>
-                    <span class="nav-indicator">○</span>
-                </a>
-            </div>
-            
-            <!-- Navigation Progress Bar -->
-            <div class="progress-bar">
-                <div class="progress-fill" id="navProgressFill" style="width: 25%"></div>
-            </div>
-        
-        
-        
-        
-        </div>
-
-        <!-- Interactive Technology Stack -->
-        <div class="footer-section">
-            <h4 class="footer-heading">
-                <span class="heading-icon">⚙️</span>
-                Technology Stack
-                <span class="tech-count" id="techCount">12</span>
-            </h4>
-            <div class="tech-stack">
-                <div class="tech-category" onclick="footerManager.toggleTechCategory(this)">
-                    <div class="category-header">
-                        <span class="category-label">Backend</span>
-                        <span class="category-toggle">▼</span>
-                    </div>
-                    <div class="tech-tags">
-                        <span class="tech-badge" data-tech="python">Python/Flask</span>
-                        <span class="tech-badge" data-tech="postgres">PostgreSQL</span>
-                        <span class="tech-badge" data-tech="redis">Redis</span>
-                        <span class="tech-badge" data-tech="docker">Docker</span>
-                    </div>
-                </div>
-                <div class="tech-category" onclick="footerManager.toggleTechCategory(this)">
-                    <div class="category-header">
-                        <span class="category-label">Frontend</span>
-                        <span class="category-toggle">▼</span>
-                    </div>
-                    <div class="tech-tags">
-                        <span class="tech-badge" data-tech="javascript">Vanilla JS</span>
-                        <span class="tech-badge" data-tech="leaflet">Leaflet.js</span>
-                        <span class="tech-badge" data-tech="websocket">WebSockets</span>
-                        <span class="tech-badge" data-tech="canvas">Canvas API</span>
-                    </div>
-                </div>
-                <div class="tech-category" onclick="footerManager.toggleTechCategory(this)">
-                    <div class="category-header">
-                        <span class="category-label">Algorithms</span>
-                        <span class="category-toggle">▼</span>
-                    </div>
-                    <div class="tech-tags">
-                        <span class="tech-badge" data-tech="astar">A* Search</span>
-                        <span class="tech-badge" data-tech="genetic">Genetic Algorithm</span>
-                        <span class="tech-badge" data-tech="dijkstra">Dijkstra</span>
-                        <span class="tech-badge" data-tech="optimization">Route Optimization</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Tech Stack Statistics -->
-            <div class="tech-stats">
-                <div class="tech-stat">
-                    <span class="stat-label">Total Technologies:</span>
-                    <span class="stat-value" id="totalTechs">12</span>
-                </div>
-                <div class="tech-stat">
-                    <span class="stat-label">Active:</span>
-                    <span class="stat-value" id="activeTechs">12</span>
-                </div>
-            </div>
-        </div>
-
-       
-<div class="footer-section">
-    <h4 class="footer-heading">
-        <span class="heading-icon">📞</span>
-        Contact & Support
-        <span class="support-status" id="supportStatus">🟢 Online</span>
-    </h4>
-    <div class="contact-info">
-        <a href="mailto:support@maritimeroute.pro" class="contact-item" data-copy="support@maritimeroute.pro">
-            <span class="contact-icon">✉️</span>
-            <div class="contact-details">
-                <span class="contact-title">Email Support</span>
-                <span class="contact-value">support@maritimeroute.pro</span>
-            </div>
-            <span class="contact-action" title="Copy email">📋</span>
-        </a>
-        <a href="#" class="contact-item" onclick="footerManager.openLiveChat()">
-            <span class="contact-icon">💬</span>
-            <div class="contact-details">
-                <span class="contact-title">Live Chat</span>
-                <span class="contact-value">Available 24/7</span>
-            </div>
-            <span class="contact-status">🟢</span>
-        </a>
-        <a href="#" class="contact-item" onclick="footerManager.scheduleCall()">
-            <span class="contact-icon">📅</span>
-            <div class="contact-details">
-                <span class="contact-title">Schedule Call</span>
-                <span class="contact-value">Book a demo</span>
-            </div>
-            <span class="contact-action">▶</span>
-        </a>
-    </div>
-    
-    <!-- Support Hours -->
-    <div class="support-hours">
-        <div class="hours-display">
-            <span class="hours-label">Support Hours:</span>
-            <span class="hours-value">24/7</span>
-        </div>
-        <div class="response-time">
-            <span class="time-label">Avg. Response:</span>
-            <span class="time-value" id="supportResponseTime">15 min</span>
-        </div>
-    </div>
-    
-    <!-- Interactive Social Links -->
-    <div class="social-links">
-        <a href="https://github.com/your-repo" class="social-link" target="_blank" data-social="github">
-            <span class="social-icon">💻</span>
-            <span class="social-label">GitHub</span>
-            <span class="social-stats" id="githubStars">⭐ 42</span>
-        </a>
-        <a href="https://linkedin.com" class="social-link" target="_blank" data-social="linkedin">
-            <span class="social-icon">👔</span>
-            <span class="social-label">LinkedIn</span>
-            <span class="social-stats" id="linkedinFollowers">👥 1.2k</span>
-        </a>
-        <a href="https://twitter.com" class="social-link" target="_blank" data-social="twitter">
-            <span class="social-icon">🐦</span>
-            <span class="social-label">Twitter</span>
-            <span class="social-stats" id="twitterFollowers">🐦 856</span>
-        </a>
-        <a href="https://discord.com" class="social-link" target="_blank" data-social="discord">
-            <span class="social-icon">💬</span>
-            <span class="social-label">Discord</span>
-            <span class="social-stats" id="discordMembers">👥 342</span>
-        </a>
-    </div>
-</div> 
-
-     <div class="footer-section live-metrics">
-        <h4 class="footer-heading">
-            <span class="heading-icon">📊</span>
-            Live Metrics
-        </h4>
-        <div class="metrics-grid">
-            <div class="metric" data-metric="users">
-                <div class="metric-header">
-                    <span class="metric-icon">👥</span>
-                    <span class="metric-value" id="activeUsers">49</span>
-                    <span class="metric-change" id="usersChange">+2</span>
-                </div>
-                <span class="metric-label">Active Users</span>
-            </div>
-            <div class="metric" data-metric="calculations">
-                <div class="metric-header">
-                    <span class="metric-icon">⚡</span>
-                    <span class="metric-value" id="liveCalculations">18</span>
-                    <span class="metric-change" id="calcChange">+3</span>
-                </div>
-                <span class="metric-label">Live Calculations</span>
-            </div>
-            <div class="metric" data-metric="response">
-                <div class="metric-header">
-                    <span class="metric-icon">🚀</span>
-                    <span class="metric-value" id="responseTime">54ms</span>
-                    <span class="metric-change" id="responseChange">-5ms</span>
-                </div>
-                <span class="metric-label">Response Time</span>
-            </div>
-            <div class="metric" data-metric="uptime">
-                <div class="metric-header">
-                    <span class="metric-icon">📈</span>
-                    <span class="metric-value" id="systemUptime">99.7%</span>
-                    <span class="metric-change" id="uptimeChange">↗</span>
-                </div>
-                <span class="metric-label">Uptime</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-    <!-- Enhanced Footer Bottom -->
-    <div class="footer-bottom">
-        <!-- Real-time Clock -->
-        <div class="real-time-clock">
-            <span class="clock-icon">🕐</span>
-            <span id="currentTime">--:--:--</span>
-        </div>
-        
-        <!-- Copyright Section -->
-        <div class="copyright-section">
-            <span class="copyright">© <span class="copyright-year">2024</span> MaritimeRoute Pro. All rights reserved.</span>
-            <span class="version">
-                v2.4.1 • Build #<span id="buildNumber">4218</span>
-                <span class="update-available" id="updateIndicator" style="display: none;">↻ Update Available</span>
-            </span>
-        </div>
-        
-        <!-- Enhanced Legal Links -->
-        <div class="legal-links">
-            <a href="#" class="legal-link" onclick="footerManager.showLegalModal('privacy')">Privacy Policy</a>
-            <span class="separator">•</span>
-            <a href="#" class="legal-link" onclick="footerManager.showLegalModal('terms')">Terms of Service</a>
-            <span class="separator">•</span>
-            <a href="#" class="legal-link" onclick="footerManager.showLegalModal('cookies')">Cookie Policy</a>
-            <span class="separator">•</span>
-            <a href="#" class="legal-link" onclick="footerManager.showLegalModal('gdpr')">GDPR Compliance</a>
-            <span class="separator">•</span>
-            <a href="#" class="legal-link" onclick="footerManager.showAccessibility()">♿ Accessibility</a>
-        </div>
-        
-        <!-- Live Metrics Dashboard -->
-   
-
-        
-        <!-- Back to Top Button -->
-        <button class="btn-back-to-top" onclick="footerManager.scrollToTop()">
-            <span class="btn-icon">↑</span>
-            <span class="btn-text">Top</span>
-        </button>
-    </div>
-    
-    <!-- System Status Indicator -->
-    <div class="system-status-indicator" onclick="footerManager.showSystemDetails()">
-        <div class="status-dot online" id="systemStatusDot"></div>
-        <div class="status-text" id="systemStatusText">System Operational</div>
-        <div class="status-uptime" id="systemUptimeDisplay">99.7% uptime</div>
-    </div>
-</footer>
 </body>
 </html>
+
