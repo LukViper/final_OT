@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard | MaritimeRoute Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Your analytics CSS styles */
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Your header and analytics content -->
+        
+   <!-- Analytics Section -->
+<div id="analyticsSection" class="analytics-section" style="display: none;">
+    <div class="analytics-header">
+        <h2>📊 Real-Time Analytics Dashboard</h2>
+        <div>
+            <button class="btn-secondary" onclick="backToPlanner()">← Back to Planner</button>
+            <button class="btn-refresh" onclick="loadAnalyticsDashboard()">🔄 Refresh</button>
+        </div>
+    </div>
+    
+    <div class="analytics-grid">
+        <!-- Performance Metrics -->
+       <!-- In the Analytics Dashboard - Performance Metrics section -->
+<div class="analytics-card">
+    <h3>Performance Metrics</h3>
+    <div class="metrics-grid">
+        <div class="metric">
+            <span class="metric-value" id="totalCalculations">0</span>
+            <span class="metric-label">Total Calculations</span>
+        </div>
+        <div class="metric">
+            <span class="metric-value" id="totalDistanceSaved">0km</span>
+            <span class="metric-label">Distance Saved</span>
+        </div>
+        <div class="metric">
+            <span class="metric-value" id="totalFuelSaved">0.0t</span>
+            <span class="metric-label">Fuel Saved</span>
+        </div>
+        <div class="metric">
+            <span class="metric-value" id="totalTimeSaved">0.0d</span>
+            <span class="metric-label">Time Saved</span>
+        </div>
+        <div class="metric">
+            <span class="metric-value" id="totalCO2Reduced">0.0t</span>
+            <span class="metric-label">CO₂ Reduced</span>
+        </div>
+        <div class="metric">
+            <span class="metric-value" id="totalCostSaved">$0</span>
+            <span class="metric-label">Cost Saved</span>
+        </div>
+    </div>
+</div>
+        <!-- Statistics Info Panel -->
+<div class="stats-info-panel">
+    <div class="info-header">
+        <h4>📊 Statistics Explained</h4>
+        <button class="info-toggle" onclick="toggleStatsInfo()">ℹ️</button>
+    </div>
+    
+    <div class="info-content" id="statsInfoContent">
+        <div class="info-grid">
+            <!-- Row 1 -->
+            <div class="info-item">
+                <div class="info-icon">⏱️</div>
+                <div class="info-text">
+                    <div class="info-title">Avg. Transit Time</div>
+                    <div class="info-desc">Average duration for both fastest and fuel-efficient routes</div>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <div class="info-icon">⛽</div>
+                <div class="info-text">
+                    <div class="info-title">Fuel Efficiency</div>
+                    <div class="info-desc">Fuel consumption per 100km for the efficient route</div>
+                </div>
+            </div>
+            
+            <!-- Row 2 -->
+            <div class="info-item">
+                <div class="info-icon">🌍</div>
+                <div class="info-text">
+                    <div class="info-title">Distance Saved</div>
+                    <div class="info-desc">Distance difference between fastest and efficient routes</div>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <div class="info-icon">💰</div>
+                <div class="info-text">
+                    <div class="info-title">Cost Savings</div>
+                    <div class="info-desc">Estimated monetary savings from fuel difference</div>
+                </div>
+            </div>
+            
+            <!-- Row 3 -->
+            <div class="info-item full-width">
+                <div class="info-icon">🔄</div>
+                <div class="info-text">
+                    <div class="info-title">Route Comparison</div>
+                    <div class="info-desc">Time/fuel differences and AI-powered recommendation</div>
+                    <div class="info-details">
+                        <span class="detail-tag positive">🟢 Positive: Better performance</span>
+                        <span class="detail-tag negative">🔴 Negative: Reduced performance</span>
+                        <span class="detail-tag neutral">🔵 Neutral: Balanced option</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-footnote">
+            <small>💡 <strong>Calculation Basis:</strong> Fuel price at $600/tonne • Speed: 37 km/h • Emissions: 3.15t CO₂ per tonne fuel</small>
+        </div>
+    </div>
+</div>
+        <!-- Algorithm Performance -->
+        <div class="analytics-card">
+            <h3>⚡ Algorithm Performance</h3>
+            <div class="algorithm-stats" id="algorithmStats">
+                <div class="algorithm-loading">Loading algorithm data...</div>
+            </div>
+        </div>
+        
+        <!-- Recent Calculations -->
+        <div class="analytics-card">
+            <h3>🕒 Recent Calculations</h3>
+            <div class="recent-list" id="recentCalculationsList">
+                <div class="recent-item">No recent calculations</div>
+            </div>
+        </div>
+        
+        <!-- Port Usage -->
+        <div class="analytics-card">
+            <h3>⚓ Port Usage</h3>
+            <div class="port-usage" id="portUsageList">
+                <div class="port-usage-item">No port usage data</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="analytics-footer">
+        <small>Last updated: <span id="lastUpdated">Never</span></small>
+    </div>
+</div>
+    
+</body>
+</html>

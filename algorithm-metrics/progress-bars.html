@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Metrics - Progress Bars</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; }
+        .metric { margin-bottom: 25px; }
+        .algorithm-name { font-weight: bold; margin-bottom: 8px; }
+        .progress-container { background-color: #f0f0f0; border-radius: 10px; height: 20px; overflow: hidden; }
+        .progress-bar { background-color: #3498db; height: 100%; width: 0%; transition: width 0.5s ease; }
+        .percentage { margin-top: 5px; color: #2c3e50; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h2>Algorithm Performance Metrics</h2>
+    <div class="metric">
+        <div class="algorithm-name">A* Algorithm</div>
+        <div class="progress-container"><div class="progress-bar" id="a-star-bar"></div></div>
+        <div class="percentage" id="a-star-percent">0%</div>
+    </div>
+    <div class="metric">
+        <div class="algorithm-name">Genetic Algorithm</div>
+        <div class="progress-container"><div class="progress-bar" id="genetic-bar"></div></div>
+        <div class="percentage" id="genetic-percent">0%</div>
+    </div>
+    <div class="metric">
+        <div class="algorithm-name">Total Optimization</div>
+        <div class="progress-container"><div class="progress-bar" id="total-bar"></div></div>
+        <div class="percentage" id="total-percent">0%</div>
+    </div>
+
+    <script>
+        function updateMetrics(aStar, genetic, total) {
+            document.getElementById('a-star-bar').style.width = aStar + '%';
+            document.getElementById('a-star-percent').textContent = aStar + '%';
+            document.getElementById('genetic-bar').style.width = genetic + '%';
+            document.getElementById('genetic-percent').textContent = genetic + '%';
+            document.getElementById('total-bar').style.width = total + '%';
+            document.getElementById('total-percent').textContent = total + '%';
+        }
+        
+        updateMetrics(0, 0, 0);
+        setTimeout(() => updateMetrics(75, 60, 85), 2000);
+    </script>
+</body>
+</html>
