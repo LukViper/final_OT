@@ -110,9 +110,9 @@ class Forecast4D:
             'avg_response_time': 0.0
         }
         
-        logger.info(f"✅ 4D Forecasting System initialized")
-        logger.info(f"   📡 APIs available: {len(self.active_apis)}")
-        logger.info(f"   🗺️  Grid resolution: {self.CACHE_GRID_SIZE}°")
+        logger.info(f" 4D Forecasting System initialized")
+        logger.info(f"    APIs available: {len(self.active_apis)}")
+        logger.info(f"     Grid resolution: {self.CACHE_GRID_SIZE}°")
         
     def _load_api_keys(self) -> Dict[str, str]:
         """Load API keys from environment variables."""
@@ -133,10 +133,10 @@ class Forecast4D:
                 if self.api_keys.get(key_name):
                     api['key'] = self.api_keys[key_name]
                     filtered.append(api)
-                    logger.info(f"   ✅ {api['name']} enabled")
+                    logger.info(f"    {api['name']} enabled")
             else:
                 filtered.append(api)
-                logger.info(f"   ✅ {api['name']} enabled (free)")
+                logger.info(f"    {api['name']} enabled (free)")
         return filtered
     
     def _grid_key(self, lat: float, lon: float) -> Tuple[float, float]:
@@ -650,7 +650,7 @@ class Forecast4D:
         total_hours = total_distance / speed_kmh
         total_days = total_hours / 24
         
-        logger.info(f"\n🌐 4D Route Timeline - {len(route_coords)-1} segments")
+        logger.info(f"\n 4D Route Timeline - {len(route_coords)-1} segments")
         logger.info(f"   Total distance: {total_distance:.0f} km")
         logger.info(f"   Nominal speed: {speed_knots:.1f} knots")
         logger.info(f"   Base duration: {total_days:.1f} days ({total_hours:.1f} hours)")
@@ -769,7 +769,7 @@ class Forecast4D:
         total_delay = adjusted_total_hours - total_hours
         avg_speed_factor = sum(wi['speed_factor'] for wi in weather_impacts) / len(weather_impacts)
         
-        logger.info(f"\n📊 4D Impact Analysis:")
+        logger.info(f"\n 4D Impact Analysis:")
         logger.info(f"   Adjusted duration: {adjusted_total_hours/24:.1f} days "
                    f"({adjusted_total_hours:.1f} hours)")
         logger.info(f"   Weather delay: {total_delay:.1f} hours "

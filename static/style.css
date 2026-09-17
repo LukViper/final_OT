@@ -84,11 +84,38 @@ body {
     transform: translateY(-1px);
 }
 
+.svg-icon,
+[data-icon] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.15em;
+    height: 1.15em;
+    vertical-align: -0.18em;
+    flex: 0 0 auto;
+    line-height: 0;
+}
+
+.svg-icon svg,
+[data-icon] svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.metric-icon,
+.logo-icon,
+.winner-icon,
+.recommendation-icon,
+.route-icon {
+    width: 1.35rem;
+    height: 1.35rem;
+}
+
 .logo-icon {
-    font-size: 2rem;
-    background: linear-gradient(135deg, #60a5fa, #3b82f6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    width: 1.6rem;
+    height: 1.6rem;
+    color: #60a5fa;
     filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));
 }
 
@@ -789,6 +816,37 @@ body {
     text-align: center;
     font-weight: 600;
     color: #60a5fa;
+}
+
+.check-route-card {
+    background: #eff6ff;
+    border: 1px solid #93c5fd;
+    border-radius: 8px;
+    padding: 0.85rem;
+    margin-bottom: 1rem;
+}
+
+.check-route-card p {
+    margin: 0.4rem 0 0.7rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.check-status {
+    margin-top: 0.6rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.check-status.pass {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.check-status.fail {
+    background: #fee2e2;
+    color: #991b1b;
 }
 
 /* Buttons */
@@ -1745,8 +1803,7 @@ body {
 }
 
 .route-comparison h4::before {
-    content: '🔄';
-    font-size: 1.25rem;
+    content: none;
 }
 
 .comparison-grid {
@@ -2201,11 +2258,7 @@ body {
 }
 
 .bar-value.winner::after {
-  content: '👑';
-  position: absolute;
-  top: -8px;
-  right: -15px;
-  font-size: 0.9rem;
+  content: none;
 }
 
 .comparison-difference {
@@ -3177,8 +3230,7 @@ body {
 }
 
 .panel-header h2::before {
-    content: '📊';
-    font-size: 1.5rem;
+    content: none;
 }
 
 /* Results content - wider padding */

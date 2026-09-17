@@ -1,0 +1,263 @@
+{
+  "generated_at": "2026-09-17T19:14:49",
+  "preregistration": "metrics_preregistered.json",
+  "preregistration_timestamp": "2026-09-17T13:45:00+05:30",
+  "weather_cache": null,
+  "ais_voyages": null,
+  "ais_status": "not obtained. Free feeds do not cover these crossings, and tracks were not invented.",
+  "gebco": "not applied",
+  "land": "Natural Earth 10m",
+  "cases": [
+    {
+      "name": "Jebel Ali to Suez Canal point",
+      "origin": [
+        25.0108,
+        55.061
+      ],
+      "destination": [
+        30.5852,
+        32.2654
+      ],
+      "great_circle_km": 2321.627,
+      "mesh_km": 5492.472,
+      "distance_ratio_mesh_over_gc": 2.3658,
+      "astar_dijkstra_abs_diff_km": 0.0,
+      "B1": {
+        "label": "B1_great_circle_fixed_speed",
+        "distance_km": 2321.627,
+        "speed_knots": 18.0,
+        "hours": 69.6432,
+        "fuel_t": 164.8536,
+        "co2_t": 513.354,
+        "scenario_cost_usd": 171457.1696,
+        "feasible": false,
+        "weather": "calm"
+      },
+      "B2": {
+        "label": "B2_mesh_fixed_speed",
+        "distance_km": 5492.4716,
+        "speed_knots": 18.0,
+        "hours": 164.761,
+        "fuel_t": 390.0082,
+        "co2_t": 1214.4854,
+        "scenario_cost_usd": 405630.8996,
+        "feasible": true,
+        "weather": "calm"
+      },
+      "B3_commercial": {
+        "label": "B3_commercial_speed",
+        "distance_km": 5492.4716,
+        "speed_knots": 13,
+        "hours": 228.1306,
+        "fuel_t": 200.2615,
+        "co2_t": 623.6142,
+        "scenario_cost_usd": 357792.8944,
+        "feasible": true,
+        "weather": "calm",
+        "arrival_constraint": null
+      },
+      "B3_deadline": {
+        "label": "B3_deadline_speed",
+        "distance_km": 5492.4716,
+        "speed_knots": 18.0,
+        "hours": 164.761,
+        "fuel_t": 390.0082,
+        "co2_t": 1214.4854,
+        "scenario_cost_usd": 405630.8996,
+        "feasible": true,
+        "weather": "calm",
+        "arrival_constraint_hours": 164.761
+      },
+      "B4": {
+        "label": "B4_weather",
+        "status": "not_estimated",
+        "reason": "No frozen wind/wave/current cache. No live API call is made.",
+        "fuel_t": null,
+        "co2_t": null
+      },
+      "network_inflation": {
+        "fuel_increase_t": 225.1546,
+        "fuel_ratio": 2.3658,
+        "distance_ratio": 2.3658
+      },
+      "commercial_speed_delta": {
+        "fuel_change_t": 189.7467,
+        "note": "Difference against a cheaper speed with no arrival window. Not a weather-routing saving."
+      },
+      "deadline_speed_effect_t": 0.0,
+      "through_bab_el_mandeb": true,
+      "detours_east_of_62E": false,
+      "same_endpoints_as_polyline_study": true,
+      "polyline_file_ratio_not_used": 4.345,
+      "polyline_file_lane_km": 10087.7,
+      "polyline_drawn": true,
+      "polyline_vertices": 17,
+      "polyline_longest_edge_km": 2422.4,
+      "polyline_edges_over_1000_km": 4
+    },
+    {
+      "name": "Jebel Ali to Suez",
+      "origin": [
+        25.0108,
+        55.061
+      ],
+      "destination": [
+        29.9668,
+        32.5498
+      ],
+      "great_circle_km": 2283.68,
+      "mesh_km": 5428.038,
+      "distance_ratio_mesh_over_gc": 2.3769,
+      "astar_dijkstra_abs_diff_km": 0.0,
+      "B1": {
+        "label": "B1_great_circle_fixed_speed",
+        "distance_km": 2283.6797,
+        "speed_knots": 18.0,
+        "hours": 68.5049,
+        "fuel_t": 162.159,
+        "co2_t": 504.9631,
+        "scenario_cost_usd": 168654.6819,
+        "feasible": false,
+        "weather": "calm"
+      },
+      "B2": {
+        "label": "B2_mesh_fixed_speed",
+        "distance_km": 5428.0376,
+        "speed_knots": 18.0,
+        "hours": 162.8281,
+        "fuel_t": 385.4328,
+        "co2_t": 1200.2379,
+        "scenario_cost_usd": 400872.3109,
+        "feasible": true,
+        "weather": "calm"
+      },
+      "B3_commercial": {
+        "label": "B3_commercial_speed",
+        "distance_km": 5428.0376,
+        "speed_knots": 13,
+        "hours": 225.4543,
+        "fuel_t": 197.9121,
+        "co2_t": 616.2984,
+        "scenario_cost_usd": 353595.509,
+        "feasible": true,
+        "weather": "calm",
+        "arrival_constraint": null
+      },
+      "B3_deadline": {
+        "label": "B3_deadline_speed",
+        "distance_km": 5428.0376,
+        "speed_knots": 18.0,
+        "hours": 162.8281,
+        "fuel_t": 385.4328,
+        "co2_t": 1200.2379,
+        "scenario_cost_usd": 400872.3109,
+        "feasible": true,
+        "weather": "calm",
+        "arrival_constraint_hours": 162.8281
+      },
+      "B4": {
+        "label": "B4_weather",
+        "status": "not_estimated",
+        "reason": "No frozen wind/wave/current cache. No live API call is made.",
+        "fuel_t": null,
+        "co2_t": null
+      },
+      "network_inflation": {
+        "fuel_increase_t": 223.2738,
+        "fuel_ratio": 2.3769,
+        "distance_ratio": 2.3769
+      },
+      "commercial_speed_delta": {
+        "fuel_change_t": 187.5207,
+        "note": "Difference against a cheaper speed with no arrival window. Not a weather-routing saving."
+      },
+      "deadline_speed_effect_t": 0.0,
+      "through_bab_el_mandeb": true,
+      "detours_east_of_62E": false,
+      "polyline_file_ratio_not_used": 4.345
+    },
+    {
+      "name": "New York to Rotterdam",
+      "origin": [
+        40.6892,
+        -74.0445
+      ],
+      "destination": [
+        51.9225,
+        4.4792
+      ],
+      "great_circle_km": 5857.902,
+      "mesh_km": 6405.449,
+      "distance_ratio_mesh_over_gc": 1.0935,
+      "astar_dijkstra_abs_diff_km": 0.0,
+      "B1": {
+        "label": "B1_great_circle_fixed_speed",
+        "distance_km": 5857.9019,
+        "speed_knots": 18.0,
+        "hours": 175.723,
+        "fuel_t": 415.9565,
+        "co2_t": 1295.2887,
+        "scenario_cost_usd": 432618.7168,
+        "feasible": false,
+        "weather": "calm"
+      },
+      "B2": {
+        "label": "B2_mesh_fixed_speed",
+        "distance_km": 6405.4487,
+        "speed_knots": 18.0,
+        "hours": 192.1481,
+        "fuel_t": 454.8366,
+        "co2_t": 1416.3612,
+        "scenario_cost_usd": 473056.231,
+        "feasible": true,
+        "weather": "calm"
+      },
+      "B3_commercial": {
+        "label": "B3_commercial_speed",
+        "distance_km": 6405.4487,
+        "speed_knots": 13,
+        "hours": 266.0512,
+        "fuel_t": 233.5496,
+        "co2_t": 727.2735,
+        "scenario_cost_usd": 417266.4319,
+        "feasible": true,
+        "weather": "calm",
+        "arrival_constraint": null
+      },
+      "B3_deadline": {
+        "label": "B3_deadline_speed",
+        "distance_km": 6405.4487,
+        "speed_knots": 18.0,
+        "hours": 192.1481,
+        "fuel_t": 454.8366,
+        "co2_t": 1416.3612,
+        "scenario_cost_usd": 473056.231,
+        "feasible": true,
+        "weather": "calm",
+        "arrival_constraint_hours": 192.1481
+      },
+      "B4": {
+        "label": "B4_weather",
+        "status": "not_estimated",
+        "reason": "No frozen wind/wave/current cache. No live API call is made.",
+        "fuel_t": null,
+        "co2_t": null
+      },
+      "network_inflation": {
+        "fuel_increase_t": 38.8801,
+        "fuel_ratio": 1.0935,
+        "distance_ratio": 1.0935
+      },
+      "commercial_speed_delta": {
+        "fuel_change_t": 221.287,
+        "note": "Difference against a cheaper speed with no arrival window. Not a weather-routing saving."
+      },
+      "deadline_speed_effect_t": 0.0
+    }
+  ],
+  "kill_criteria_this_revision": {
+    "weather_saving_reported": false,
+    "percentage_against_B1_alone_reported": false,
+    "reason": "B4 is not_estimated. No weather percentage is written."
+  }
+}

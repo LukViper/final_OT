@@ -1,22 +1,20 @@
 // Configuration
 const CONFIG = {
-  AVERAGE_SPEED_KMH: 37.0,
-  FUEL_CONSUMPTION_PER_KM: 0.04,
-  WEATHER_FACTOR: 1.25,
   EMISSION_FACTOR: 3.114,
+  BUNKER_USD_PER_T: 600,
 };
 
 // Navigation Configuration
 const NAV_CONFIG = {
   sections: {
-    planner: { name: "Route Planner", icon: "🗺️", visible: true },
-    analytics: { name: "Analytics", icon: "📊", visible: true },
-    ports: { name: "Port Database", icon: "⚓", visible: true },
-    tools: { name: "Tools", icon: "🔧", visible: true, submenu: {
-        fleet: { name: "Fleet Management", icon: "🚢" },
-        reports: { name: "Reports", icon: "📈" },
-        weather: { name: "Weather Data", icon: "🌤️" },
-        fuel: { name: "Fuel Prices", icon: "⛽" },
+    planner: { name: "Route Planner", icon: "map", visible: true },
+    analytics: { name: "Analytics", icon: "chart", visible: true },
+    ports: { name: "Port Database", icon: "anchor", visible: true },
+    tools: { name: "Tools", icon: "cog", visible: true, submenu: {
+        fleet: { name: "Fleet Management", icon: "ship" },
+        reports: { name: "Reports", icon: "chart" },
+        weather: { name: "Weather Data", icon: "cloud" },
+        fuel: { name: "Fuel Prices", icon: "fuel" },
       },
     },
   },
@@ -34,7 +32,7 @@ let currentMapData = null;
 
 // ========== INITIALIZATION ==========
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("📱 Initializing MaritimeRoute Pro...");
+  console.log(" Initializing MaritimeRoute Pro...");
 
   currentMapData = null;
   routeLayers = { fastest: null, fuel: null, direct: null };
@@ -78,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // ========== MAP FUNCTIONS ==========
 function initializeMap() {
-  console.log("🗺️ Initializing fresh map...");
+  console.log(" Initializing fresh map...");
 
   const mapContainer = document.getElementById("map");
   if (mapContainer && mapContainer._leaflet_id) {
@@ -113,7 +111,7 @@ function initializeMap() {
       .setLatLng([20, 0])
       .setContent(`
         <div style="text-align: center; padding: 10px;">
-            <h3>🚢 MaritimeRoute Pro</h3>
+            <h3>${icon("ship")} MaritimeRoute Pro</h3>
             <p>Select ports and click "Calculate" to see routes.</p>
             <p><strong>Holtrop-Mennen, 4D Weather, Biofouling, Ocean Currents</strong></p>
         </div>
@@ -121,7 +119,7 @@ function initializeMap() {
       .openOn(map);
   }, 500);
 
-  console.log("✅ Map initialized");
+  console.log(" Map initialized");
 }
 
 function refreshMapWithNewData() {
@@ -140,11 +138,11 @@ function refreshMapWithNewData() {
   if (window.currentRouteLayers) window.currentRouteLayers = [];
 
   currentMapData = null;
-  console.log("✅ Map cleared");
+  console.log(" Map cleared");
 }
 
 function displayRoutesOnMap(data) {
-  console.log("🗺️ Displaying routes on map...");
+  console.log(" Displaying routes on map...");
 
   // Clear existing layers
   if (window.currentRouteLayers) {
@@ -185,7 +183,7 @@ function displayRoutesOnMap(data) {
   if (!window.currentRouteLayers) window.currentRouteLayers = [];
 
   if (!data) {
-    console.warn("⚠️ No data provided");
+    console.warn(" No data provided");
     return;
   }
 
@@ -197,7 +195,7 @@ function displayRoutesOnMap(data) {
   const fuelPorts = fuelRoute.ports || [];
 
   if (!fastestRoute.coordinates && !fuelRoute.coordinates) {
-    console.warn("⚠️ No route coordinates");
+    console.warn(" No route coordinates");
     return;
   }
 
@@ -224,12 +222,12 @@ function displayRoutesOnMap(data) {
 
     polyline.bindPopup(`
       <div style="text-align: center; min-width: 200px;">
-        <h4 style="color: ${NAV_CONFIG.routeTypes.fastest.color}; margin: 0 0 10px 0; font-size: 16px;">🚀 Fastest Route (A*)</h4>
+        <h4 style="color: ${NAV_CONFIG.routeTypes.fastest.color}; margin: 0 0 10px 0; font-size: 16px;">${icon("play")} Fastest Route (A*)</h4>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
           <div><strong>Distance:</strong><br>${safeNumberFormat(fastestRoute.distance_km)} km</div>
           <div><strong>Time:</strong><br>${safeNumberFormat(fastestRoute.time_hours / 24, 1)} days</div>
           <div><strong>Fuel:</strong><br>${safeNumberFormat(fastestRoute.fuel_tonnes, 1)} t</div>
-          <div><strong>Cost:</strong><br>$${((fastestRoute.fuel_tonnes || 0) * 650).toLocaleString()}</div>
+          <div><strong>Cost:</strong><br>$${((fastestRoute.fuel_tonnes || 0) * CONFIG.BUNKER_USD_PER_T).toLocaleString()}</div>
         </div>
       </div>
     `);
@@ -258,12 +256,12 @@ function displayRoutesOnMap(data) {
 
     polyline.bindPopup(`
       <div style="text-align: center; min-width: 200px;">
-        <h4 style="color: ${NAV_CONFIG.routeTypes.efficient.color}; margin: 0 0 10px 0; font-size: 16px;">🌿 Fuel-Efficient Route (Genetic)</h4>
+        <h4 style="color: ${NAV_CONFIG.routeTypes.efficient.color}; margin: 0 0 10px 0; font-size: 16px;">${icon("leaf")} Fuel-Efficient Route (Genetic)</h4>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
           <div><strong>Distance:</strong><br>${safeNumberFormat(fuelRoute.distance_km)} km</div>
           <div><strong>Time:</strong><br>${safeNumberFormat(fuelRoute.time_hours / 24, 1)} days</div>
           <div><strong>Fuel:</strong><br>${safeNumberFormat(fuelRoute.fuel_tonnes, 1)} t</div>
-          <div><strong>Cost:</strong><br>$${((fuelRoute.fuel_tonnes || 0) * 650).toLocaleString()}</div>
+          <div><strong>Cost:</strong><br>$${((fuelRoute.fuel_tonnes || 0) * CONFIG.BUNKER_USD_PER_T).toLocaleString()}</div>
         </div>
       </div>
     `);
@@ -283,7 +281,7 @@ function displayRoutesOnMap(data) {
 
     polyline.bindPopup(`
       <div style="text-align: center;">
-        <h4 style="color: ${NAV_CONFIG.routeTypes.direct.color};">📐 Great Circle Reference</h4>
+        <h4 style="color: ${NAV_CONFIG.routeTypes.direct.color};">${icon("ruler")} Great Circle Reference</h4>
       </div>
     `);
   }
@@ -303,26 +301,26 @@ function displayRoutesOnMap(data) {
 function addPortMarkers(portLocations, fastestPorts, fuelPorts) {
   Object.entries(portLocations).forEach(([port, coords]) => {
     let color = "#94a3b8";
-    let iconHtml = "⚓";
+    let iconHtml = icon("anchor");
     let size = 28;
 
     if (port === fastestPorts[0]) {
       color = "#27ae60";
-      iconHtml = "🟢";
+      iconHtml = icon("dot");
       size = 32;
     } else if (port === fastestPorts[fastestPorts.length - 1]) {
       color = "#e74c3c";
-      iconHtml = "🔴";
+      iconHtml = icon("dot");
       size = 32;
     } else if (fastestPorts.includes(port) && fuelPorts.includes(port)) {
       color = "#9b59b6";
-      iconHtml = "🟣";
+      iconHtml = icon("dot");
     } else if (fastestPorts.includes(port)) {
       color = "#ff6b35";
-      iconHtml = "🟠";
+      iconHtml = icon("dot");
     } else if (fuelPorts.includes(port)) {
       color = "#2ecc71";
-      iconHtml = "🟢";
+      iconHtml = icon("dot");
     }
 
     const customIcon = L.divIcon({
@@ -417,10 +415,10 @@ function toggleAdvancedParams() {
     advancedParams.forEach(param => {
         if (param.style.display === 'none' || param.style.display === '') {
             param.style.display = 'block';
-            btn.innerHTML = '<span>🔬 Basic</span>';
+            btn.innerHTML = '<span>${icon("flask")} Basic</span>';
         } else {
             param.style.display = 'none';
-            btn.innerHTML = '<span>🔬 Advanced</span>';
+            btn.innerHTML = '<span>${icon("flask")} Advanced</span>';
         }
     });
 }
@@ -489,10 +487,8 @@ document.addEventListener('DOMContentLoaded', function() {
       if (vesselLWLEl) vesselLWLEl.textContent = lwl + ' m';
       if (vesselCbEl) vesselCbEl.textContent = cb;
       
-      let disp = '80,000';
-      if (this.value === 'ULCC_Tanker') disp = '520,000';
-      else if (this.value === 'Bulker') disp = '45,000';
-      if (vesselDispEl) vesselDispEl.textContent = disp + ' m³';
+      const disp = selected.dataset.disp || "not in the resistance model";
+      if (vesselDispEl) vesselDispEl.textContent = disp + (selected.dataset.disp ? " m³" : "");
     });
   }
 
@@ -504,6 +500,77 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+function fmt(value, digits) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return "--";
+  return number.toLocaleString("en-US", {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  });
+}
+
+function drawCheckPath(coords, color, options) {
+  if (!coords || coords.length < 2) return null;
+  const line = L.polyline(coords, options).addTo(map);
+  if (!window.currentRouteLayers) window.currentRouteLayers = [];
+  window.currentRouteLayers.push(line);
+  return line;
+}
+
+async function checkJebelAliSuez() {
+  const start = document.getElementById("startPort");
+  const dest = document.getElementById("destinationPort");
+  if (start) start.value = "Jebel_Ali";
+  if (dest) dest.value = "Suez_Canal";
+
+  const overlay = document.getElementById("loadingOverlay");
+  const button = document.getElementById("checkRouteBtn");
+  if (overlay) overlay.style.display = "flex";
+  if (button) button.disabled = true;
+  refreshMapWithNewData();
+
+  try {
+    const response = await fetch("/api/check-route");
+    if (!response.ok) {
+      throw new Error(`Server error ${response.status}`);
+    }
+    const data = await response.json();
+    map.closePopup();
+    drawCheckPath(data.great_circle_coordinates, "#9b2335", { dashArray: "8 6", weight: 2 });
+    drawCheckPath(data.polyline_coordinates, "#c47b00", { weight: 2, opacity: 0.85 });
+    const mesh = drawCheckPath(data.mesh_coordinates, "#0b3d91", { weight: 3 });
+    if (data.mesh_coordinates && data.mesh_coordinates.length) {
+      const startPt = data.mesh_coordinates[0];
+      const endPt = data.mesh_coordinates[data.mesh_coordinates.length - 1];
+      L.circleMarker(startPt, { radius: 6, color: "#111" }).addTo(map).bindPopup("Jebel Ali");
+      L.circleMarker(endPt, { radius: 6, color: "#111" }).addTo(map).bindPopup("Suez Canal");
+    }
+    if (mesh) map.fitBounds(mesh.getBounds(), { padding: [24, 24] });
+
+    const card = document.getElementById("checkRouteCard");
+    const old = document.getElementById("checkStatus");
+    if (old) old.remove();
+    const status = document.createElement("div");
+    status.id = "checkStatus";
+    status.className = "check-status " + (data.working ? "pass" : "fail");
+    const lines = data.checks.map((item) => (item.pass ? "Pass: " : "Fail: ") + item.name);
+    status.textContent = (data.working ? "Working. " : "Not working. ")
+      + "Coastline mesh " + fmt(data.mesh_km, 3) + " km, "
+      + fmt(data.mesh_fuel_t, 4) + " t fuel, "
+      + fmt(data.mesh_co2_t, 4) + " t CO2, at "
+      + data.speed_knots + " kn, calm water, clean hull. "
+      + "Great circle " + fmt(data.great_circle_km, 3) + " km is not a voyage. "
+      + "Polyline file " + fmt(data.polyline_km, 3) + " km. Ratio "
+      + fmt(data.ratio, 4) + ". " + lines.join(". ") + ".";
+    card.appendChild(status);
+  } catch (error) {
+    alert("Check failed: " + error.message);
+  } finally {
+    if (overlay) overlay.style.display = "none";
+    if (button) button.disabled = false;
+  }
+}
 
 // In script.js - Replace the calculateRoutes function with this fixed version
 async function calculateRoutes() {
@@ -535,14 +602,14 @@ async function calculateRoutes() {
   // Get constraints
   const avoidECA = document.getElementById("avoidECA")?.checked || false;
   const optimizeTides = document.getElementById("optimizeTides")?.checked || false;
-  const useCurrents = document.getElementById("useCurrents")?.checked || true;
+  const useCurrents = document.getElementById("useCurrents")?.checked === true;
 
   // Get physics model toggles
-  const useHoltrop = document.getElementById("useHoltrop")?.checked || true;
-  const useFouling = document.getElementById("useFouling")?.checked || true;
-  const useWeather = document.getElementById("useWeather")?.checked || true;
-  const useTides = document.getElementById("useTides")?.checked || true;
-  const useECA = document.getElementById("useECA")?.checked || true;
+  const useHoltrop = document.getElementById("useHoltrop")?.checked === true;
+  const useFouling = document.getElementById("useFouling")?.checked === true;
+  const useWeather = document.getElementById("useWeather")?.checked === true;
+  const useTides = document.getElementById("useTides")?.checked === true;
+  const useECA = document.getElementById("useECA")?.checked === true;
   
   const ensembleSize = parseInt(document.getElementById("ensembleSize")?.value) || 10;
 
@@ -632,7 +699,7 @@ async function calculateRoutes() {
     alert(`Route calculated in ${data.calculation_time || 0.1}s`);
     
   } catch (error) {
-    console.error("❌ Error:", error);
+    console.error(" Error:", error);
     alert("Error calculating routes: " + error.message);
   } finally {
     clearInterval(progressInterval);
@@ -643,7 +710,7 @@ async function calculateRoutes() {
 
 // Update the function signature and usage of optimizationGoal
 function displayResults(data, optimizationGoal = 'both') {
-  console.log("📊 Displaying results with goal:", optimizationGoal);
+  console.log(" Displaying results with goal:", optimizationGoal);
   
   const resultsPanel = document.getElementById("resultsPanel");
   const resultsContent = document.getElementById("resultsContent");
@@ -675,7 +742,7 @@ function displayResults(data, optimizationGoal = 'both') {
   // Calculate comparison metrics
   const fuelDiff = (fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0);
   const timeDiff = ((fastestRoute.time_hours || 0) - (fuelRoute.time_hours || 0)) / 24;
-  const costDiff = fuelDiff * 650;
+  const costDiff = fuelDiff * CONFIG.BUNKER_USD_PER_T;
   const co2Diff = fuelDiff * 3.114;
   
   // Determine winner for each metric
@@ -700,10 +767,10 @@ function displayResults(data, optimizationGoal = 'both') {
   // Head-to-Head Comparison
   html += `
     <div class="comparison-header-card">
-      <h3>⚔️ HEAD-TO-HEAD COMPARISON</h3>
+      <h3>${icon("scale")} HEAD-TO-HEAD COMPARISON</h3>
       <div class="comparison-badges">
-        <span class="comparison-badge fastest-badge">🚀 Fastest Route</span>
-        <span class="comparison-badge efficient-badge">🌿 Efficient Route</span>
+        <span class="comparison-badge fastest-badge">${icon("play")} Fastest Route</span>
+        <span class="comparison-badge efficient-badge">${icon("leaf")} Efficient Route</span>
       </div>
     </div>
   `;
@@ -712,7 +779,7 @@ function displayResults(data, optimizationGoal = 'both') {
   html += `
     <div class="visual-comparison">
       <div class="comparison-metric-group">
-        <div class="metric-label-large">⛽ FUEL CONSUMPTION</div>
+        <div class="metric-label-large">${icon("fuel")} FUEL CONSUMPTION</div>
         <div class="comparison-bars">
           <div class="bar-container">
             <div class="bar-label">Fastest</div>
@@ -730,14 +797,14 @@ function displayResults(data, optimizationGoal = 'both') {
           </div>
         </div>
         <div class="comparison-difference ${fuelDiff > 0 ? 'positive' : (fuelDiff < 0 ? 'negative' : 'neutral')}">
-          ${fuelDiff > 0 ? `✅ Efficient saves ${fuelDiff.toFixed(1)} tonnes (${((fuelDiff / fastestRoute.fuel_tonnes) * 100).toFixed(1)}%)` : 
-            fuelDiff < 0 ? `⚠️ Fastest uses ${Math.abs(fuelDiff).toFixed(1)} tonnes less` : 
-            '⚖️ Equal fuel consumption'}
+          ${fuelDiff > 0 ? `${icon("check")} Efficient saves ${fuelDiff.toFixed(1)} tonnes (${((fuelDiff / fastestRoute.fuel_tonnes) * 100).toFixed(1)}%)` : 
+            fuelDiff < 0 ? `${icon("warning")} Fastest uses ${Math.abs(fuelDiff).toFixed(1)} tonnes less` : 
+            '${icon("scale")} Equal fuel consumption'}
         </div>
       </div>
 
       <div class="comparison-metric-group">
-        <div class="metric-label-large">⏱️ TRANSIT TIME</div>
+        <div class="metric-label-large">${icon("clock")} TRANSIT TIME</div>
         <div class="comparison-bars">
           <div class="bar-container">
             <div class="bar-label">Fastest</div>
@@ -755,9 +822,9 @@ function displayResults(data, optimizationGoal = 'both') {
           </div>
         </div>
         <div class="comparison-difference ${timeDiff < 0 ? 'positive' : (timeDiff > 0 ? 'negative' : 'neutral')}">
-          ${timeDiff < 0 ? `✅ Fastest saves ${Math.abs(timeDiff).toFixed(1)} days` : 
-            timeDiff > 0 ? `⚠️ Efficient takes ${timeDiff.toFixed(1)} days longer` : 
-            '⚖️ Equal transit time'}
+          ${timeDiff < 0 ? `${icon("check")} Fastest saves ${Math.abs(timeDiff).toFixed(1)} days` : 
+            timeDiff > 0 ? `${icon("warning")} Efficient takes ${timeDiff.toFixed(1)} days longer` : 
+            '${icon("scale")} Equal transit time'}
         </div>
       </div>
     </div>
@@ -770,26 +837,26 @@ function displayResults(data, optimizationGoal = 'both') {
   html += `
     <div class="winner-summary">
       <div class="winner-card ${fastestWins >= efficientWins ? 'highlight' : ''}">
-        <div class="winner-icon">🚀</div>
+        <div class="winner-icon">${icon("play")}</div>
         <div class="winner-stats">
           <div class="winner-title">Fastest Route</div>
           <div class="winner-metrics">
-            <span class="winner-metric ${winner.time === 'fastest' ? 'win' : ''}">⏱️ ${((fastestRoute.time_hours || 0)/24).toFixed(1)}d</span>
-            <span class="winner-metric ${winner.cost === 'fastest' ? 'win' : ''}">💰 $${((fastestRoute.fuel_tonnes || 0) * 650).toLocaleString()}</span>
-            <span class="winner-metric ${winner.co2 === 'fastest' ? 'win' : ''}">🌍 ${((fastestRoute.fuel_tonnes || 0) * 3.114).toFixed(1)}t CO₂</span>
+            <span class="winner-metric ${winner.time === 'fastest' ? 'win' : ''}">${icon("clock")} ${((fastestRoute.time_hours || 0)/24).toFixed(1)}d</span>
+            <span class="winner-metric ${winner.cost === 'fastest' ? 'win' : ''}">${icon("money")} $${((fastestRoute.fuel_tonnes || 0) * CONFIG.BUNKER_USD_PER_T).toLocaleString()}</span>
+            <span class="winner-metric ${winner.co2 === 'fastest' ? 'win' : ''}">${icon("globe")} ${((fastestRoute.fuel_tonnes || 0) * 3.114).toFixed(1)}t CO₂</span>
           </div>
         </div>
         <div class="winner-score">${fastestWins} wins</div>
       </div>
       
       <div class="winner-card ${efficientWins >= fastestWins ? 'highlight' : ''}">
-        <div class="winner-icon">🌿</div>
+        <div class="winner-icon">${icon("leaf")}</div>
         <div class="winner-stats">
           <div class="winner-title">Fuel-Efficient Route</div>
           <div class="winner-metrics">
-            <span class="winner-metric ${winner.fuel === 'efficient' ? 'win' : ''}">⛽ ${(fuelRoute.fuel_tonnes || 0).toFixed(1)}t</span>
-            <span class="winner-metric ${winner.cost === 'efficient' ? 'win' : ''}">💰 $${((fuelRoute.fuel_tonnes || 0) * 650).toLocaleString()}</span>
-            <span class="winner-metric ${winner.co2 === 'efficient' ? 'win' : ''}">🌍 ${((fuelRoute.fuel_tonnes || 0) * 3.114).toFixed(1)}t CO₂</span>
+            <span class="winner-metric ${winner.fuel === 'efficient' ? 'win' : ''}">${icon("fuel")} ${(fuelRoute.fuel_tonnes || 0).toFixed(1)}t</span>
+            <span class="winner-metric ${winner.cost === 'efficient' ? 'win' : ''}">${icon("money")} $${((fuelRoute.fuel_tonnes || 0) * CONFIG.BUNKER_USD_PER_T).toLocaleString()}</span>
+            <span class="winner-metric ${winner.co2 === 'efficient' ? 'win' : ''}">${icon("globe")} ${((fuelRoute.fuel_tonnes || 0) * 3.114).toFixed(1)}t CO₂</span>
           </div>
         </div>
         <div class="winner-score">${efficientWins} wins</div>
@@ -803,7 +870,7 @@ function displayResults(data, optimizationGoal = 'both') {
       <!-- Fastest Route Card -->
       <div class="route-card fastest">
         <div class="route-card-header">
-          <span class="route-icon">🚀</span>
+          <span class="route-icon">${icon("play")}</span>
           <span class="route-title">Fastest Route (A* Algorithm)</span>
           <span class="route-badge ${winner.time === 'fastest' ? 'winner-badge' : ''}">${((fastestRoute.time_hours || 0)/24).toFixed(1)} days</span>
         </div>
@@ -813,27 +880,27 @@ function displayResults(data, optimizationGoal = 'both') {
         <div class="route-stats-grid">
           <div class="stat-card ${winner.time === 'fastest' ? 'winner-stat' : ''}">
             <div class="stat-value">${((fastestRoute.time_hours || 0)/24).toFixed(1)} d</div>
-            <div class="stat-label">⏱️ Transit Time</div>
+            <div class="stat-label">${icon("clock")} Transit Time</div>
           </div>
           <div class="stat-card">
             <div class="stat-value">${(fastestRoute.distance_km || 0).toFixed(0)} km</div>
-            <div class="stat-label">📏 Distance</div>
+            <div class="stat-label">${icon("ruler")} Distance</div>
           </div>
           <div class="stat-card ${winner.fuel === 'fastest' ? 'winner-stat' : ''}">
             <div class="stat-value">${(fastestRoute.fuel_tonnes || 0).toFixed(1)} t</div>
-            <div class="stat-label">⛽ Fuel</div>
+            <div class="stat-label">${icon("fuel")} Fuel</div>
           </div>
           <div class="stat-card ${winner.cost === 'fastest' ? 'winner-stat' : ''}">
-            <div class="stat-value">$${((fastestRoute.fuel_tonnes || 0) * 650).toLocaleString()}</div>
-            <div class="stat-label">💰 Cost</div>
+            <div class="stat-value">$${((fastestRoute.fuel_tonnes || 0) * CONFIG.BUNKER_USD_PER_T).toLocaleString()}</div>
+            <div class="stat-label">${icon("money")} Cost</div>
           </div>
           <div class="stat-card ${winner.co2 === 'fastest' ? 'winner-stat' : ''}">
             <div class="stat-value">${((fastestRoute.fuel_tonnes || 0) * 3.114).toFixed(1)} t</div>
-            <div class="stat-label">🌍 CO₂</div>
+            <div class="stat-label">${icon("globe")} CO₂</div>
           </div>
           <div class="stat-card">
             <div class="stat-value">${fastestRoute.ports?.length || 0}</div>
-            <div class="stat-label">⚓ Ports</div>
+            <div class="stat-label">${icon("anchor")} Ports</div>
           </div>
         </div>
   `;
@@ -843,8 +910,8 @@ function displayResults(data, optimizationGoal = 'both') {
     html += `
       <div class="physics-section">
         <div class="section-header" onclick="toggleSection('fastest-holtrop')">
-          <span>🔬 Holtrop-Mennen (1982) Resistance</span>
-          <span class="toggle-icon">▼</span>
+          <span>${icon("flask")} Holtrop-Mennen (1982) Resistance</span>
+          <span class="toggle-icon">${icon("chevron-down")}</span>
         </div>
         <div class="section-content" id="fastest-holtrop" style="display: none;">
           <div class="resistance-grid">
@@ -864,8 +931,8 @@ function displayResults(data, optimizationGoal = 'both') {
     html += `
       <div class="physics-section">
         <div class="section-header" onclick="toggleSection('fastest-fouling')">
-          <span>🦪 Biofouling Analysis</span>
-          <span class="toggle-icon">▼</span>
+          <span>${icon("wave")} Biofouling Analysis</span>
+          <span class="toggle-icon">${icon("chevron-down")}</span>
         </div>
         <div class="section-content" id="fastest-fouling" style="display: none;">
           <div class="fouling-grid">
@@ -885,8 +952,8 @@ function displayResults(data, optimizationGoal = 'both') {
     html += `
       <div class="physics-section">
         <div class="section-header" onclick="toggleSection('fastest-current')">
-          <span>🌊 Ocean Current Analysis</span>
-          <span class="toggle-icon">▼</span>
+          <span>${icon("wave")} Ocean Current Analysis</span>
+          <span class="toggle-icon">${icon("chevron-down")}</span>
         </div>
         <div class="section-content" id="fastest-current" style="display: none;">
           <div class="current-metrics">
@@ -908,7 +975,7 @@ function displayResults(data, optimizationGoal = 'both') {
   html += `
     <div class="route-card fuel-efficient">
       <div class="route-card-header">
-        <span class="route-icon">🌿</span>
+        <span class="route-icon">${icon("leaf")}</span>
         <span class="route-title">Fuel-Efficient Route (Genetic Algorithm)</span>
         <span class="route-badge ${winner.fuel === 'efficient' ? 'winner-badge' : ''}">${((fuelRoute.time_hours || 0)/24).toFixed(1)} days</span>
       </div>
@@ -918,27 +985,27 @@ function displayResults(data, optimizationGoal = 'both') {
       <div class="route-stats-grid">
         <div class="stat-card">
           <div class="stat-value">${((fuelRoute.time_hours || 0)/24).toFixed(1)} d</div>
-          <div class="stat-label">⏱️ Transit Time</div>
+          <div class="stat-label">${icon("clock")} Transit Time</div>
         </div>
         <div class="stat-card">
           <div class="stat-value">${(fuelRoute.distance_km || 0).toFixed(0)} km</div>
-          <div class="stat-label">📏 Distance</div>
+          <div class="stat-label">${icon("ruler")} Distance</div>
         </div>
         <div class="stat-card ${winner.fuel === 'efficient' ? 'winner-stat' : ''}">
           <div class="stat-value">${(fuelRoute.fuel_tonnes || 0).toFixed(1)} t</div>
-          <div class="stat-label">⛽ Fuel</div>
+          <div class="stat-label">${icon("fuel")} Fuel</div>
         </div>
         <div class="stat-card ${winner.cost === 'efficient' ? 'winner-stat' : ''}">
-          <div class="stat-value">$${((fuelRoute.fuel_tonnes || 0) * 650).toLocaleString()}</div>
-          <div class="stat-label">💰 Cost</div>
+          <div class="stat-value">$${((fuelRoute.fuel_tonnes || 0) * CONFIG.BUNKER_USD_PER_T).toLocaleString()}</div>
+          <div class="stat-label">${icon("money")} Cost</div>
         </div>
         <div class="stat-card ${winner.co2 === 'efficient' ? 'winner-stat' : ''}">
           <div class="stat-value">${((fuelRoute.fuel_tonnes || 0) * 3.114).toFixed(1)} t</div>
-          <div class="stat-label">🌍 CO₂</div>
+          <div class="stat-label">${icon("globe")} CO₂</div>
         </div>
         <div class="stat-card">
           <div class="stat-value">${fuelRoute.ports?.length || 0}</div>
-          <div class="stat-label">⚓ Ports</div>
+          <div class="stat-label">${icon("anchor")} Ports</div>
         </div>
       </div>
   `;
@@ -947,8 +1014,8 @@ function displayResults(data, optimizationGoal = 'both') {
     html += `
       <div class="physics-section">
         <div class="section-header" onclick="toggleSection('fuel-holtrop')">
-          <span>🔬 Holtrop-Mennen (1982) Resistance</span>
-          <span class="toggle-icon">▼</span>
+          <span>${icon("flask")} Holtrop-Mennen (1982) Resistance</span>
+          <span class="toggle-icon">${icon("chevron-down")}</span>
         </div>
         <div class="section-content" id="fuel-holtrop" style="display: none;">
           <div class="resistance-grid">
@@ -967,8 +1034,8 @@ function displayResults(data, optimizationGoal = 'both') {
     html += `
       <div class="physics-section">
         <div class="section-header" onclick="toggleSection('fuel-fouling')">
-          <span>🦪 Biofouling Analysis</span>
-          <span class="toggle-icon">▼</span>
+          <span>${icon("wave")} Biofouling Analysis</span>
+          <span class="toggle-icon">${icon("chevron-down")}</span>
         </div>
         <div class="section-content" id="fuel-fouling" style="display: none;">
           <div class="fouling-grid">
@@ -990,7 +1057,7 @@ function displayResults(data, optimizationGoal = 'both') {
   // Detailed Comparison Table
   html += `
     <div class="comparison-table-detailed">
-      <h4>📊 Detailed Metric Comparison</h4>
+      <h4>${icon("chart")} Detailed Metric Comparison</h4>
       <table class="comparison-table">
         <thead>
           <tr>
@@ -1013,7 +1080,7 @@ function displayResults(data, optimizationGoal = 'both') {
             <td class="${(fastestRoute.distance_km || 0) > (fuelRoute.distance_km || 0) ? 'negative' : 'positive'}">
               ${(((fastestRoute.distance_km || 0) - (fuelRoute.distance_km || 0)) / (fuelRoute.distance_km || 1) * 100).toFixed(1)}%
             </td>
-            <td class="winner-cell">${(fastestRoute.distance_km || 0) < (fuelRoute.distance_km || 0) ? '🚀 Fastest' : ((fastestRoute.distance_km || 0) > (fuelRoute.distance_km || 0) ? '🌿 Efficient' : '⚖️ Tie')}</td>
+            <td class="winner-cell">${(fastestRoute.distance_km || 0) < (fuelRoute.distance_km || 0) ? '${icon("play")} Fastest' : ((fastestRoute.distance_km || 0) > (fuelRoute.distance_km || 0) ? '${icon("leaf")} Efficient' : '${icon("scale")} Tie')}</td>
           </tr>
           <tr>
             <td>Time (days)</td>
@@ -1025,7 +1092,7 @@ function displayResults(data, optimizationGoal = 'both') {
             <td class="${((fastestRoute.time_hours || 0) - (fuelRoute.time_hours || 0)) < 0 ? 'positive' : 'negative'}">
               ${(((fastestRoute.time_hours || 0) - (fuelRoute.time_hours || 0)) / (fuelRoute.time_hours || 1) * 100).toFixed(1)}%
             </td>
-            <td class="winner-cell">${((fastestRoute.time_hours || 0) < (fuelRoute.time_hours || 0)) ? '🚀 Fastest' : (((fastestRoute.time_hours || 0) > (fuelRoute.time_hours || 0)) ? '🌿 Efficient' : '⚖️ Tie')}</td>
+            <td class="winner-cell">${((fastestRoute.time_hours || 0) < (fuelRoute.time_hours || 0)) ? '${icon("play")} Fastest' : (((fastestRoute.time_hours || 0) > (fuelRoute.time_hours || 0)) ? '${icon("leaf")} Efficient' : '${icon("scale")} Tie')}</td>
           </tr>
           <tr>
             <td>Fuel (tonnes)</td>
@@ -1037,7 +1104,7 @@ function displayResults(data, optimizationGoal = 'both') {
             <td class="${((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) > 0 ? 'positive' : 'negative'}">
               ${(((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) / (fuelRoute.fuel_tonnes || 1) * 100).toFixed(1)}%
             </td>
-            <td class="winner-cell">${((fastestRoute.fuel_tonnes || 0) < (fuelRoute.fuel_tonnes || 0)) ? '🚀 Fastest' : (((fastestRoute.fuel_tonnes || 0) > (fuelRoute.fuel_tonnes || 0)) ? '🌿 Efficient' : '⚖️ Tie')}</td>
+            <td class="winner-cell">${((fastestRoute.fuel_tonnes || 0) < (fuelRoute.fuel_tonnes || 0)) ? '${icon("play")} Fastest' : (((fastestRoute.fuel_tonnes || 0) > (fuelRoute.fuel_tonnes || 0)) ? '${icon("leaf")} Efficient' : '${icon("scale")} Tie')}</td>
           </tr>
           <tr>
             <td>CO₂ (tonnes)</td>
@@ -1049,19 +1116,19 @@ function displayResults(data, optimizationGoal = 'both') {
             <td class="${((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) > 0 ? 'positive' : 'negative'}">
               ${((((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) * 3.114) / ((fuelRoute.fuel_tonnes || 1) * 3.114) * 100).toFixed(1)}%
             </td>
-            <td class="winner-cell">${((fastestRoute.fuel_tonnes || 0) < (fuelRoute.fuel_tonnes || 0)) ? '🚀 Fastest' : (((fastestRoute.fuel_tonnes || 0) > (fuelRoute.fuel_tonnes || 0)) ? '🌿 Efficient' : '⚖️ Tie')}</td>
+            <td class="winner-cell">${((fastestRoute.fuel_tonnes || 0) < (fuelRoute.fuel_tonnes || 0)) ? '${icon("play")} Fastest' : (((fastestRoute.fuel_tonnes || 0) > (fuelRoute.fuel_tonnes || 0)) ? '${icon("leaf")} Efficient' : '${icon("scale")} Tie')}</td>
           </tr>
           <tr>
             <td>Cost (USD)</td>
-            <td class="fastest">$${((fastestRoute.fuel_tonnes || 0) * 650).toLocaleString()}</td>
-            <td class="efficient">$${((fuelRoute.fuel_tonnes || 0) * 650).toLocaleString()}</td>
+            <td class="fastest">$${((fastestRoute.fuel_tonnes || 0) * CONFIG.BUNKER_USD_PER_T).toLocaleString()}</td>
+            <td class="efficient">$${((fuelRoute.fuel_tonnes || 0) * CONFIG.BUNKER_USD_PER_T).toLocaleString()}</td>
             <td class="${((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) > 0 ? 'positive' : 'negative'}">
-              $${(Math.abs((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) * 650).toLocaleString()}
+              $${(Math.abs((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) * CONFIG.BUNKER_USD_PER_T).toLocaleString()}
             </td>
             <td class="${((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) > 0 ? 'positive' : 'negative'}">
-              ${((((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) * 650) / ((fuelRoute.fuel_tonnes || 1) * 650) * 100).toFixed(1)}%
+              ${((((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) * CONFIG.BUNKER_USD_PER_T) / ((fuelRoute.fuel_tonnes || 1) * CONFIG.BUNKER_USD_PER_T) * 100).toFixed(1)}%
             </td>
-            <td class="winner-cell">${((fastestRoute.fuel_tonnes || 0) < (fuelRoute.fuel_tonnes || 0)) ? '🚀 Fastest' : (((fastestRoute.fuel_tonnes || 0) > (fuelRoute.fuel_tonnes || 0)) ? '🌿 Efficient' : '⚖️ Tie')}</td>
+            <td class="winner-cell">${((fastestRoute.fuel_tonnes || 0) < (fuelRoute.fuel_tonnes || 0)) ? '${icon("play")} Fastest' : (((fastestRoute.fuel_tonnes || 0) > (fuelRoute.fuel_tonnes || 0)) ? '${icon("leaf")} Efficient' : '${icon("scale")} Tie')}</td>
           </tr>
         </tbody>
       </table>
@@ -1076,23 +1143,23 @@ function displayResults(data, optimizationGoal = 'both') {
   if (fuelDiff > 50 && Math.abs(timeDiff) < 2) {
     recommendation = "Fuel-Efficient Route is STRONGLY RECOMMENDED";
     recommendationClass = "strong-efficient";
-    recommendationIcon = "🌿✅";
+    recommendationIcon = icon("leaf") + icon("check");
   } else if (timeDiff < -2 && Math.abs(fuelDiff) < 30) {
     recommendation = "Fastest Route is STRONGLY RECOMMENDED";
     recommendationClass = "strong-fastest";
-    recommendationIcon = "🚀✅";
+    recommendationIcon = icon("play") + icon("check");
   } else if (fuelDiff > 30) {
     recommendation = "Fuel-Efficient Route is Recommended";
     recommendationClass = "recommend-efficient";
-    recommendationIcon = "🌿";
+    recommendationIcon = icon("leaf");
   } else if (timeDiff < -1) {
     recommendation = "Fastest Route is Recommended";
     recommendationClass = "recommend-fastest";
-    recommendationIcon = "🚀";
+    recommendationIcon = icon("play");
   } else {
     recommendation = "Balanced Choice - Either Route Works Well";
     recommendationClass = "recommend-balanced";
-    recommendationIcon = "⚖️";
+    recommendationIcon = icon("scale");
   }
 
   // Get the optimization goal for display
@@ -1106,14 +1173,15 @@ function displayResults(data, optimizationGoal = 'both') {
         <h4>${recommendation}</h4>
         <p>Based on your optimization criteria (${goalDisplay})</p>
         <div class="recommendation-details">
-          ${fuelDiff > 0 ? `<span class="detail">⛽ Fuel savings: ${fuelDiff.toFixed(1)} tonnes</span>` : ''}
-          ${timeDiff < 0 ? `<span class="detail">⏱️ Time savings: ${Math.abs(timeDiff).toFixed(1)} days</span>` : ''}
-          ${costDiff > 0 ? `<span class="detail">💰 Cost savings: $${costDiff.toLocaleString()}</span>` : ''}
+          ${Math.abs((fastestRoute.distance_km || 0) - (fuelRoute.distance_km || 0)) < 0.05 ? `<span class="detail">Same stored path. A zero route gap is expected; it is not a routing saving.</span>` : ''}
+          ${fuelDiff > 0 ? `<span class="detail">${icon("fuel")} Fuel difference: ${fuelDiff.toFixed(4)} t</span>` : ''}
+          ${timeDiff < 0 ? `<span class="detail">${icon("clock")} Time difference: ${Math.abs(timeDiff).toFixed(3)} days</span>` : ''}
+          ${costDiff > 0 ? `<span class="detail">${icon("money")} Bunker difference at ${CONFIG.BUNKER_USD_PER_T} USD/t: $${costDiff.toLocaleString(undefined, {maximumFractionDigits: 0})}</span>` : ''}
         </div>
         <div class="confidence-meter">
-          <div class="confidence-label">Confidence: ${(data.ensemble_confidence * 100 || 85).toFixed(0)}%</div>
+          <div class="confidence-label">Weather confidence: ${data.ensemble_confidence == null ? "not estimated" : (data.ensemble_confidence * 100).toFixed(0) + "%"}</div>
           <div class="confidence-bar">
-            <div class="confidence-fill" style="width: ${(data.ensemble_confidence * 100 || 85)}%"></div>
+            <div class="confidence-fill" style="width: ${data.ensemble_confidence == null ? 0 : data.ensemble_confidence * 100}%"></div>
           </div>
         </div>
       </div>
@@ -1133,15 +1201,15 @@ function toggleSection(sectionId) {
     if (!section) return;
     
     const header = section.previousElementSibling;
-    const icon = header ? header.querySelector('.toggle-icon') : null;
+    const toggleEl = header ? header.querySelector('.toggle-icon') : null;
     
     if (section.style.display === 'none' || section.style.display === '') {
         section.style.display = 'block';
-        if (icon) icon.textContent = '▲';
+        if (toggleEl) toggleEl.innerHTML = icon("chevron-up");
         section.classList.add('active');
     } else {
         section.style.display = 'none';
-        if (icon) icon.textContent = '▼';
+        if (toggleEl) toggleEl.innerHTML = icon("chevron-down");
         section.classList.remove('active');
     }
 }
@@ -1154,15 +1222,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Set toggle icons to down arrows
-    document.querySelectorAll('.toggle-icon').forEach(icon => {
-        icon.textContent = '▼';
+    document.querySelectorAll('.toggle-icon').forEach((el) => {
+        el.innerHTML = icon("chevron-down");
     });
 });
 function updateResultsMeta(fastestPorts, fuelPorts, vesselInfo) {
   const meta = document.getElementById('resultsMeta');
   if (meta) {
     const totalPorts = new Set([...fastestPorts, ...fuelPorts]).size;
-    meta.innerHTML = `<span>⚓ ${totalPorts} ports</span><span>🚢 ${vesselInfo.type.replace('_', ' ')}</span>`;
+    meta.innerHTML = `<span>${icon("anchor")} ${totalPorts} ports</span><span>${icon("ship")} ${vesselInfo.type.replace('_', ' ')}</span>`;
   }
 }
 
@@ -1183,7 +1251,7 @@ function updateDashboardMetrics(fastestRoute, fuelRoute) {
     distanceSavedEl.textContent = distanceDiff > 0 ? `${distanceDiff.toFixed(0)} km longer` : `${Math.abs(distanceDiff).toFixed(0)} km shorter`;
   }
   
-  const costDiff = ((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) * 650;
+  const costDiff = ((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) * CONFIG.BUNKER_USD_PER_T;
   const costSavingsEl = document.getElementById('costSavings');
   if (costSavingsEl) {
     costSavingsEl.textContent = costDiff > 0 ? `$${costDiff.toFixed(0)} cheaper` : `$${Math.abs(costDiff).toFixed(0)} more`;
@@ -1377,7 +1445,7 @@ function updateRouteComparison(fastestRoute, fuelRoute) {
   const co2Delta = fastestCO2 - fuelCO2;
   if (co2DeltaEl) co2DeltaEl.textContent = Math.abs(co2Delta).toFixed(1);
 
-  const fuelPrice = 650;
+  const fuelPrice = CONFIG.BUNKER_USD_PER_T;
   const fastestCost = fastestFuel * fuelPrice;
   const fuelCost = fuelFuel * fuelPrice;
   const fastestCostEl = document.getElementById("fastestCost");
@@ -1391,14 +1459,19 @@ function updateRouteComparison(fastestRoute, fuelRoute) {
 }
 
 function updateConfidenceMetrics(data) {
-  const confidence = data.ensemble_confidence || 0.85;
+  const confidence = data.ensemble_confidence;
   const confidenceBar = document.getElementById("confidenceBar");
   const confidenceValue = document.getElementById("confidenceValue");
   const confidenceMetrics = document.getElementById("confidenceMetrics");
-  
-  if (confidenceBar) confidenceBar.style.width = (confidence * 100) + '%';
-  if (confidenceValue) confidenceValue.textContent = (confidence * 100).toFixed(0) + '%';
-  if (confidenceMetrics) confidenceMetrics.style.display = 'block';
+  if (confidence == null || Number.isNaN(Number(confidence))) {
+    if (confidenceBar) confidenceBar.style.width = "0%";
+    if (confidenceValue) confidenceValue.textContent = "not estimated";
+    if (confidenceMetrics) confidenceMetrics.style.display = "none";
+    return;
+  }
+  if (confidenceBar) confidenceBar.style.width = (confidence * 100) + "%";
+  if (confidenceValue) confidenceValue.textContent = (confidence * 100).toFixed(0) + "%";
+  if (confidenceMetrics) confidenceMetrics.style.display = "block";
 }
 
 // ========== WEATHER MARKERS ==========
@@ -1411,7 +1484,7 @@ function addWeatherMarkers(data) {
   if (data.fastest_route?.weather_impact?.weather_points) {
     data.fastest_route.weather_impact.weather_points.forEach((point, index) => {
       const marker = L.marker(point.coordinates)
-        .bindPopup(`<div><h5>🚀 Point ${index + 1}</h5><p><strong>Wind:</strong> ${(point.weather.wind_speed || 0).toFixed(1)} km/h</p><p><strong>Wave:</strong> ${(point.weather.wave_height || 0).toFixed(1)} m</p><p><strong>Impact:</strong> ${(point.impact_score || 0).toFixed(1)}/10</p></div>`)
+        .bindPopup(`<div><h5>${icon("play")} Point ${index + 1}</h5><p><strong>Wind:</strong> ${(point.weather.wind_speed || 0).toFixed(1)} km/h</p><p><strong>Wave:</strong> ${(point.weather.wave_height || 0).toFixed(1)} m</p><p><strong>Impact:</strong> ${(point.impact_score || 0).toFixed(1)}/10</p></div>`)
         .addTo(map);
       window.weatherMarkers.push(marker);
     });
@@ -1479,7 +1552,7 @@ function saveCurrentRoute() {
 }
 
 function resetEverything() {
-  console.log("🧹 Resetting everything...");
+  console.log(" Resetting everything...");
 
   refreshMapWithNewData();
 
@@ -1514,13 +1587,15 @@ function resetEverything() {
   }
 
   resetStatistics();
-  console.log("✅ Everything reset");
+  console.log(" Everything reset");
 }
 
 // ========== EVENT LISTENERS ==========
 function setupEventListeners() {
   const calculateBtn = document.getElementById("calculateBtn");
   if (calculateBtn) calculateBtn.addEventListener("click", calculateRoutes);
+  const checkRouteBtn = document.getElementById("checkRouteBtn");
+  if (checkRouteBtn) checkRouteBtn.addEventListener("click", checkJebelAliSuez);
 
   const hubPorts = document.getElementById("hubPorts");
   if (hubPorts) hubPorts.addEventListener("change", updateSelectedPortsDisplay);

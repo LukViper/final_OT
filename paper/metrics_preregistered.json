@@ -1,0 +1,34 @@
+{
+  "status": "pre-registered",
+  "written_before_decomposition_results": true,
+  "timestamp": "2026-09-17T13:45:00+05:30",
+  "thesis": "A reported fuel or CO2 saving against a great-circle baseline is not identifiable until the network effect, the speed-policy effect, and the weather effect are reported separately.",
+  "formulas": {
+    "network_effect_t": "B2.fuel_t - B1.fuel_t",
+    "network_effect_interpretation": "Positive means the feasible coastline-masked path uses more fuel than the great-circle baseline at the same speed. The great-circle figure understates a feasible voyage. It is not a saving.",
+    "speed_policy_deadline_t": "B2.fuel_t - B3_deadline.fuel_t",
+    "speed_policy_deadline_interpretation": "Under calm water and a convex fuel-speed curve, this is zero if the deadline speed equals the service speed on the same path.",
+    "speed_policy_commercial_t": "B2.fuel_t - B3_commercial.fuel_t",
+    "speed_policy_commercial_interpretation": "Depends on the stated bunker price and charter rate. Not comparable to a fixed-arrival speed schedule.",
+    "weather_effect_t": "B3.fuel_t - B4.fuel_t",
+    "weather_effect_status": "not_estimated until a frozen hindcast cache exists. Must not be filled with a synthetic field and then called ERA5 or Copernicus."
+  },
+  "prices": {
+    "bunker_usd_per_t": 600,
+    "charter_usd_per_day": 25000,
+    "service_speed_kn": 18,
+    "co2_t_per_t_fuel": 3.114
+  },
+  "kill_criteria": [
+    "Do not report a weather saving if B4.status is not_estimated.",
+    "Do not report a percentage against B1 alone.",
+    "Do not retune fouling, bunker price, grid resolution, or the strait mask after seeing a ratio, in order to manufacture a saving.",
+    "If the only large ratio is a great circle that crosses a continent, call it baseline infeasibility, not optimizer skill.",
+    "A positive weather result on one hand-picked corridor is not a result. Weather is not estimated in this revision, so this criterion is not applicable yet."
+  ],
+  "what_this_file_does_not_authorize": [
+    "Calling the genetic algorithm a contribution.",
+    "Citing Shipping_Lanes_v1.geojson as navigable water or as AIS.",
+    "Using the word validated for a model-versus-model comparison."
+  ]
+}

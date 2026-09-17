@@ -11,7 +11,7 @@ def test_4d_routes():
     """Test 4D routing with multiple departure times"""
     
     print("\n" + "="*80)
-    print("🌐 4D ROUTE OPTIMIZATION - JOURNAL-GRADE VALIDATION")
+    print(" 4D ROUTE OPTIMIZATION - JOURNAL-GRADE VALIDATION")
     print("="*80)
     
     # Initialize optimizer
@@ -28,7 +28,7 @@ def test_4d_routes():
     
     for i, dep in enumerate(departures):
         print(f"\n{'='*60}")
-        print(f"📅 SCENARIO {i+1}: Departure {dep.strftime('%Y-%m-%d %H:%M')}")
+        print(f" SCENARIO {i+1}: Departure {dep.strftime('%Y-%m-%d %H:%M')}")
         print('='*60)
         
         try:
@@ -40,13 +40,13 @@ def test_4d_routes():
             )
             results.append(result)
         except Exception as e:
-            print(f"❌ Error in scenario {i+1}: {e}")
+            print(f" Error in scenario {i+1}: {e}")
             continue
     
     # Compare results
     if results:
         print("\n" + "="*80)
-        print("📊 4D WEATHER IMPACT ANALYSIS")
+        print(" 4D WEATHER IMPACT ANALYSIS")
         print("="*80)
         print(f"\n{'Departure':<20} {'4D Fuel (t)':<15} {'Static (t)':<15} {'Impact':<10} {'Confidence':<10}")
         print("-"*70)
@@ -63,7 +63,7 @@ def test_4d_routes():
         # Find best scenario
         best_idx = min(range(len(results)), key=lambda i: results[i]['fuel_4d'])
         print("\n" + "="*80)
-        print(f"✅ OPTIMAL DEPARTURE: {departures[best_idx].strftime('%Y-%m-%d %H:%M')}")
+        print(f" OPTIMAL DEPARTURE: {departures[best_idx].strftime('%Y-%m-%d %H:%M')}")
         print(f"   Fuel consumption: {results[best_idx]['fuel_4d']:.1f} tonnes")
         print(f"   vs static baseline: {results[best_idx]['fuel_static']:.1f} tonnes")
         print(f"   Weather penalty: {results[best_idx]['savings_percent']:+.1f}%")

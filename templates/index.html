@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MaritimeRoute Pro | Journal-Grade Shipping Optimization</title>
+    <title>Coastline route check</title>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -20,31 +20,30 @@
             <div class="header-content">
                 <div class="logo-section">
                     <div class="logo" onclick="navLoadSection('planner')">
-                        <span class="logo-icon">⚓</span>
+                        <span class="logo-icon"><span class="svg-icon" data-icon="anchor"></span></span>
                         <h1>MaritimeRoute <span class="logo-pro">PRO</span></h1>
                     </div>
                     <div class="badge-container">
-                        <span class="badge research">RESEARCH GRADE</span>
-                        <span class="badge journal">JOURNAL READY</span>
+                        <span class="badge research">CHECK ROUTE</span>
                     </div>
                 </div>
 
                 <nav class="main-nav">
                     <div class="nav-items">
                         <a href="#" class="nav-item active" onclick="navLoadSection('planner')">
-                            <span class="nav-icon">🗺️</span>
+                            <span class="nav-icon"><span class="svg-icon" data-icon="map"></span></span>
                             <span class="nav-text">Route Optimizer</span>
                         </a>
                         <a href="#" class="nav-item" onclick="navLoadSection('analytics')">
-                            <span class="nav-icon">📊</span>
+                            <span class="nav-icon"><span class="svg-icon" data-icon="chart"></span></span>
                             <span class="nav-text">Analytics</span>
                         </a>
                         <a href="#" class="nav-item" onclick="navLoadSection('physics')">
-                            <span class="nav-icon">🔬</span>
+                            <span class="nav-icon"><span class="svg-icon" data-icon="flask"></span></span>
                             <span class="nav-text">Physics Lab</span>
                         </a>
                         <a href="#" class="nav-item" onclick="navLoadSection('validation')">
-                            <span class="nav-icon">✅</span>
+                            <span class="nav-icon"><span class="svg-icon" data-icon="check"></span></span>
                             <span class="nav-text">Validation</span>
                         </a>
                     </div>
@@ -53,11 +52,11 @@
                 <div class="header-actions">
                     <div class="live-indicator">
                         <span class="pulse-dot"></span>
-                        <span class="live-text">LIVE</span>
+                        <span class="live-text">LOCAL</span>
                     </div>
                     <div class="user-profile">
                         <button class="btn-profile">
-                            <span class="user-avatar">👨‍🔬</span>
+                            <span class="user-avatar"><span class="svg-icon" data-icon="user"></span></span>
                             <span class="user-name">Researcher</span>
                         </button>
                     </div>
@@ -70,43 +69,48 @@
             <div class="sidebar">
                 <div class="control-panel">
                     <div class="panel-header">
-                        <h2>⚙️ Optimization Parameters</h2>
+                        <h2><span class="svg-icon" data-icon="cog"></span> Optimization Parameters</h2>
                         <button class="btn-advanced" onclick="toggleAdvancedParams()">
-                            <span>🔬 Advanced</span>
+                            <span><span class="svg-icon" data-icon="flask"></span> Advanced</span>
                         </button>
                     </div>
 
                     <div class="form-section">
+                        <div class="check-route-card" id="checkRouteCard">
+                            <strong>Route to check</strong>
+                            <p>Jebel Ali → Suez Canal. A working result is a sea path through the Bab el-Mandeb, about 5,492 km, not east of 62°E. The dashed line across Arabia is not a route.</p>
+                            <button type="button" id="checkRouteBtn" class="btn-primary">Check Jebel Ali → Suez Canal</button>
+                        </div>
                         <!-- Basic Port Selection -->
                         <div class="form-group">
                             <label class="form-label">
-                                <span class="label-icon">📍</span>
+                                <span class="label-icon"><span class="svg-icon" data-icon="pin"></span></span>
                                 Departure Port
                             </label>
                             <select id="startPort" class="form-select">
                                 <option value="">Select departure port</option>
                                 {% for port in ports %}
-                                <option value="{{ port }}">{{ port }}</option>
+                                <option value="{{ port }}" {% if port == 'Jebel_Ali' %}selected{% endif %}>{{ port }}</option>
                                 {% endfor %}
                             </select>
                         </div>
                         
                         <div class="form-group">
                             <label class="form-label">
-                                <span class="label-icon">🎯</span>
+                                <span class="label-icon"><span class="svg-icon" data-icon="target"></span></span>
                                 Destination Port
                             </label>
                             <select id="destinationPort" class="form-select">
                                 <option value="">Select destination port</option>
                                 {% for port in ports %}
-                                <option value="{{ port }}">{{ port }}</option>
+                                <option value="{{ port }}" {% if port == 'Suez_Canal' %}selected{% endif %}>{{ port }}</option>
                                 {% endfor %}
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label class="form-label">
-                                <span class="label-icon">🔄</span>
+                                <span class="label-icon"><span class="svg-icon" data-icon="refresh"></span></span>
                                 Intermediate Ports
                                 <span class="badge-optional">Optional</span>
                             </label>
@@ -121,12 +125,12 @@
                         <!-- Vessel Configuration - Enhanced -->
                         <div class="form-group advanced-param">
                             <label class="form-label">
-                                <span class="label-icon">🚢</span>
+                                <span class="label-icon"><span class="svg-icon" data-icon="ship"></span></span>
                                 Vessel Digital Twin
                             </label>
                             <div class="vessel-config">
                                 <select id="vesselType" class="form-select">
-                                    <option value="Container_Ship" data-lwl="280" data-cb="0.65">Container Ship (Panamax)</option>
+                                    <option value="Container_Ship" data-lwl="280" data-cb="0.65" data-disp="73,255">Container Ship (Panamax)</option>
                                     <option value="ULCC_Tanker" data-lwl="380" data-cb="0.85">ULCC Tanker</option>
                                     <option value="Bulker" data-lwl="220" data-cb="0.82">Bulk Carrier (Handysize)</option>
                                 </select>
@@ -142,7 +146,7 @@
                                     </div>
                                     <div class="param-card">
                                         <span class="param-name">Displacement</span>
-                                        <span class="param-value" id="vesselDisp">80,000 m³</span>
+                                        <span class="param-value" id="vesselDisp">73,255 m³</span>
                                     </div>
                                 </div>
 
@@ -153,11 +157,11 @@
                                     </div>
                                     <div class="param-group">
                                         <label>Speed (knots)</label>
-                                        <input type="number" id="speedKnots" value="20" min="5" max="35" step="0.1" class="param-input">
+                                        <input type="number" id="speedKnots" value="18" min="5" max="35" step="0.1" class="param-input">
                                     </div>
                                     <div class="param-group">
                                         <label>Hull Days</label>
-                                        <input type="number" id="hullDays" value="90" min="0" max="730" step="1" class="param-input">
+                                        <input type="number" id="hullDays" value="0" min="0" max="730" step="1" class="param-input">
                                         <span class="unit">since cleaning</span>
                                     </div>
                                 </div>
@@ -167,7 +171,7 @@
                         <!-- 4D Temporal Parameters -->
                         <div class="form-group advanced-param">
                             <label class="form-label">
-                                <span class="label-icon">⏰</span>
+                                <span class="label-icon"><span class="svg-icon" data-icon="clock"></span></span>
                                 4D Temporal Configuration
                             </label>
                             <div class="temporal-config">
@@ -176,7 +180,7 @@
                                     <input type="datetime-local" id="departureTime" class="form-select">
                                 </div>
                                 <div class="moon-phase-indicator" id="moonPhase">
-                                    <span class="moon-icon">🌑</span>
+                                    <span class="moon-icon"><span class="svg-icon" data-icon="moon"></span></span>
                                     <span class="moon-text">New Moon</span>
                                 </div>
                             </div>
@@ -185,7 +189,7 @@
                         <!-- Optimization Goals -->
                         <div class="form-group">
                             <label class="form-label">
-                                <span class="label-icon">🎯</span>
+                                <span class="label-icon"><span class="svg-icon" data-icon="target"></span></span>
                                 Optimization Objectives
                             </label>
                             <div class="radio-group">
@@ -219,7 +223,7 @@
                     <!-- In your index.html - Update the Physics Models section -->
 <div class="form-group">
     <label class="form-label">
-        <span class="label-icon">🔬</span>
+        <span class="label-icon"><span class="svg-icon" data-icon="flask"></span></span>
         Physics Models
     </label>
     <div class="models-grid">
@@ -229,27 +233,27 @@
             <span class="model-name">Holtrop-Mennen (1982)</span>
         </label>
         <label class="model-toggle">
-            <input type="checkbox" id="useFouling" checked>
+            <input type="checkbox" id="useFouling">
             <span class="toggle-switch"></span>
-            <span class="model-name">Biofouling (ITTC 2024)</span>
+            <span class="model-name">Fouling scenario, not ITTC</span>
         </label>
         <label class="model-toggle">
-            <input type="checkbox" id="useCurrents" checked>
+            <input type="checkbox" id="useCurrents">
             <span class="toggle-switch"></span>
             <span class="model-name">Ocean Currents</span>
         </label>
         <label class="model-toggle">
-            <input type="checkbox" id="useTides" checked>
+            <input type="checkbox" id="useTides">
             <span class="toggle-switch"></span>
             <span class="model-name">Lunar Tides</span>
         </label>
         <label class="model-toggle">
-            <input type="checkbox" id="useWeather" checked>
+            <input type="checkbox" id="useWeather">
             <span class="toggle-switch"></span>
-            <span class="model-name">4D Weather Ensemble</span>
+            <span class="model-name">Weather, not estimated</span>
         </label>
         <label class="model-toggle">
-            <input type="checkbox" id="useECA" checked>
+            <input type="checkbox" id="useECA">
             <span class="toggle-switch"></span>
             <span class="model-name">ECA Compliance</span>
         </label>
@@ -259,7 +263,7 @@
                         <!-- Weather Ensemble Size -->
                         <div class="form-group advanced-param">
                             <label class="form-label">
-                                <span class="label-icon">🌤️</span>
+                                <span class="label-icon"><span class="svg-icon" data-icon="cloud"></span></span>
                                 Weather Ensemble Members
                             </label>
                             <div class="slider-container">
@@ -271,7 +275,7 @@
                         <!-- Constraint Configuration -->
                         <div class="form-group advanced-param">
                             <label class="form-label">
-                                <span class="label-icon">⚠️</span>
+                                <span class="label-icon"><span class="svg-icon" data-icon="warning"></span></span>
                                 Operational Constraints
                             </label>
                             <div class="constraints-grid">
@@ -295,15 +299,15 @@
 
                         <!-- Calculate Button -->
                         <button id="calculateBtn" class="btn-primary calculate-btn">
-                            <span class="btn-icon">🚀</span>
-                            <span class="btn-text">Execute Multi-Physics Optimization</span>
-                            <span class="btn-loading" style="display: none;">⚙️</span>
+                            <span class="btn-icon"><span class="svg-icon" data-icon="play"></span></span>
+                            <span class="btn-text">Polyline file only</span>
+                            <span class="btn-loading" style="display: none;"><span class="svg-icon" data-icon="cog"></span></span>
                         </button>
 
                         <!-- Confidence Metrics -->
                         <div class="confidence-metrics" id="confidenceMetrics" style="display: none;">
                             <div class="metric">
-                                <span class="label">Ensemble Confidence</span>
+                                <span class="label">Weather confidence</span>
                                 <div class="progress-bar">
                                     <div class="progress-fill" id="confidenceBar" style="width: 0%"></div>
                                 </div>
@@ -321,11 +325,11 @@
                 <!-- Map Container -->
                 <div class="map-container">
                     <div class="map-header">
-                        <h3>🌐 4D Route Visualization</h3>
+                        <h3><span class="svg-icon" data-icon="globe"></span> 4D Route Visualization</h3>
                         <div class="map-actions">
-                            <button class="btn-map-action" onclick="zoomToRoutes()" title="Zoom to Routes">🔍</button>
-                            <button class="btn-map-action" onclick="toggleFullscreen()" title="Fullscreen">⛶</button>
-                            <button class="btn-map-action" onclick="exportMap()" title="Export Map">📷</button>
+                            <button class="btn-map-action" onclick="zoomToRoutes()" title="Zoom to Routes"><span class="svg-icon" data-icon="search"></span></button>
+                            <button class="btn-map-action" onclick="toggleFullscreen()" title="Fullscreen"><span class="svg-icon" data-icon="expand"></span></button>
+                            <button class="btn-map-action" onclick="exportMap()" title="Export Map"><span class="svg-icon" data-icon="camera"></span></button>
                         </div>
                     </div>
                     <div id="map"></div>
@@ -410,28 +414,28 @@
                     <div class="tab-content active" id="summaryTab">
                         <div class="metrics-grid">
                             <div class="metric-card">
-                                <div class="metric-icon">⏱️</div>
+                                <div class="metric-icon"><span class="svg-icon" data-icon="clock"></span></div>
                                 <div class="metric-content">
                                     <div class="metric-value" id="avgTransitTime">--</div>
                                     <div class="metric-label">Avg Transit Time</div>
                                 </div>
                             </div>
                             <div class="metric-card">
-                                <div class="metric-icon">⛽</div>
+                                <div class="metric-icon"><span class="svg-icon" data-icon="fuel"></span></div>
                                 <div class="metric-content">
                                     <div class="metric-value" id="fuelEfficiency">--</div>
                                     <div class="metric-label">Fuel Efficiency</div>
                                 </div>
                             </div>
                             <div class="metric-card">
-                                <div class="metric-icon">🌍</div>
+                                <div class="metric-icon"><span class="svg-icon" data-icon="globe"></span></div>
                                 <div class="metric-content">
                                     <div class="metric-value" id="distanceSaved">--</div>
                                     <div class="metric-label">Distance Delta</div>
                                 </div>
                             </div>
                             <div class="metric-card">
-                                <div class="metric-icon">💰</div>
+                                <div class="metric-icon"><span class="svg-icon" data-icon="money"></span></div>
                                 <div class="metric-content">
                                     <div class="metric-value" id="costSavings">--</div>
                                     <div class="metric-label">Cost Differential</div>
@@ -441,7 +445,7 @@
 
                         <!-- Route Comparison -->
                         <div class="route-comparison" id="routeComparison" style="display: none;">
-                            <h4>🔄 Pareto Frontier Analysis</h4>
+                            <h4><span class="svg-icon" data-icon="refresh"></span> Pareto Frontier Analysis</h4>
                             <div class="comparison-grid">
                                 <div class="comparison-row header">
                                     <div class="metric">Metric</div>
@@ -486,7 +490,7 @@
                     <!-- Physics Tab -->
                     <div class="tab-content" id="physicsTab">
                         <div class="physics-dashboard">
-                            <h4>🔬 Holtrop-Mennen (1982) Resistance</h4>
+                            <h4><span class="svg-icon" data-icon="flask"></span> Holtrop-Mennen (1982) Resistance</h4>
                             <div class="physics-card" id="fastestPhysics">
                                 <div class="physics-header">Fastest Route</div>
                                 <div class="resistance-components">
@@ -567,7 +571,7 @@
                                 </div>
                             </div>
 
-                            <h4>🦪 Biofouling Analysis</h4>
+                            <h4><span class="svg-icon" data-icon="wave"></span> Biofouling Analysis</h4>
                             <div class="fouling-analysis" id="foulingAnalysis">
                                 <div class="fouling-card">
                                     <div class="fouling-header">Fastest Route</div>
@@ -627,7 +631,7 @@
                     <div class="tab-content" id="weatherTab">
                         <div class="weather-dashboard">
                             <div class="weather-header">
-                                <h4>🌤️ 4D Weather Ensemble (10 Members)</h4>
+                                <h4><span class="svg-icon" data-icon="cloud"></span> Weather, not estimated unless a hindcast is cached</h4>
                                 <div class="confidence-indicator">
                                     <span class="label">Confidence:</span>
                                     <span class="value" id="weatherConfidence">--</span>
@@ -637,7 +641,7 @@
                             <div class="weather-cards">
                                 <div class="weather-card fastest-weather">
                                     <div class="weather-card-header">
-                                        <span class="route-icon">🚀</span>
+                                        <span class="route-icon"><span class="svg-icon" data-icon="play"></span></span>
                                         <span>Fastest Route Weather</span>
                                     </div>
                                     <div class="weather-metrics">
@@ -663,7 +667,7 @@
                                 
                                 <div class="weather-card fuel-weather">
                                     <div class="weather-card-header">
-                                        <span class="route-icon">🌿</span>
+                                        <span class="route-icon"><span class="svg-icon" data-icon="leaf"></span></span>
                                         <span>Efficient Route Weather</span>
                                     </div>
                                     <div class="weather-metrics">
@@ -691,7 +695,7 @@
                             <div class="weather-insights" id="weatherInsights"></div>
                             
                             <div class="ensemble-distribution">
-                                <h5>📊 Ensemble Spread</h5>
+                                <h5><span class="svg-icon" data-icon="chart"></span> Ensemble Spread</h5>
                                 <div class="distribution-chart" id="ensembleChart"></div>
                             </div>
                         </div>
@@ -700,7 +704,7 @@
                     <!-- Economics Tab -->
                     <div class="tab-content" id="economicsTab">
                         <div class="economics-dashboard">
-                            <h4>💰 Cost-Benefit Analysis</h4>
+                            <h4><span class="svg-icon" data-icon="money"></span> Cost-Benefit Analysis</h4>
                             <div class="economics-grid">
                                 <div class="economics-card">
                                     <div class="card-header">Fastest Route</div>
@@ -747,7 +751,7 @@
                             </div>
                             
                             <div class="roi-analysis">
-                                <h5>📈 Return on Investment</h5>
+                                <h5><span class="svg-icon" data-icon="chart"></span> Return on Investment</h5>
                                 <div class="roi-metrics">
                                     <div class="metric">
                                         <span class="label">Fuel Savings:</span>
@@ -773,8 +777,8 @@
                     <div class="dashboard-footer">
                         <span class="last-updated" id="statsLastUpdated">--</span>
                         <div class="quick-actions">
-                            <button class="quick-btn" onclick="exportResults()">📤 Export Data</button>
-                            <button class="quick-btn" onclick="generateReport()">📄 Generate Report</button>
+                            <button class="quick-btn" onclick="exportResults()"><span class="svg-icon" data-icon="download"></span> Export Data</button>
+                            <button class="quick-btn" onclick="generateReport()"><span class="svg-icon" data-icon="document"></span> Generate Report</button>
                         </div>
                     </div>
                 </div>
@@ -783,7 +787,7 @@
 <!-- Results Panel - Enhanced -->
                 <div class="results-panel" id="resultsPanel" style="display: none;">
                     <div class="panel-header">
-                        <h2>📊 Multi-Physics Analysis</h2>
+                        <h2><span class="svg-icon" data-icon="chart"></span> Multi-Physics Analysis</h2>
                         <div class="results-meta" id="resultsMeta"></div>
                     </div>
                     <div class="results-content" id="resultsContent">
@@ -800,10 +804,10 @@
             <div class="loading-content">
                 <div class="loading-spinner"></div>
                 <div class="loading-text">
-                    <h3>Executing Multi-Physics Optimization</h3>
-                    <p>Running Holtrop-Mennen resistance calculations...</p>
-                    <p>Generating 4D weather ensemble...</p>
-                    <p>Optimizing with genetic algorithm...</p>
+                    <h3>Computing the coastline path</h3>
+                    <p>Jebel Ali to Suez Canal, 0.25 degree mesh.</p>
+                    <p>Weather is not estimated.</p>
+                    <p>Comparing the mesh with the great circle and the polyline file.</p>
                 </div>
                 <div class="loading-progress" id="loadingProgress">
                     <div class="progress-bar">
@@ -816,6 +820,7 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="{{ url_for('static', filename='icons.js') }}"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

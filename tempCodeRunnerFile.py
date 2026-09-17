@@ -208,10 +208,10 @@ def calculate_routes():
         if not start_port or not destination_port:
             return jsonify({'error': 'Please select both start and destination ports'}), 400
         
-        print(f"\n🚢 Calculating route: {start_port} → {destination_port}")
-        print(f"🌤️ Weather enabled: {include_weather}")
-        print(f"🎯 Goal: {goal}")
-        print(f"📍 Hub ports: {hub_ports}")
+        print(f"\n Calculating route: {start_port} → {destination_port}")
+        print(f" Weather enabled: {include_weather}")
+        print(f" Goal: {goal}")
+        print(f" Hub ports: {hub_ports}")
         
         # SAFETY: Ensure hub_ports is a list
         if hub_ports is None:
@@ -230,7 +230,7 @@ def calculate_routes():
                 departure_time=datetime.now()
             )
         except Exception as e:
-            print(f"❌ Route calculator error: {e}")
+            print(f" Route calculator error: {e}")
             traceback.print_exc()
             return jsonify({'error': f'Route calculation failed: {str(e)}'}), 500
         
@@ -239,9 +239,9 @@ def calculate_routes():
             try:
                 if 'fastest_route' in results and results['fastest_route'] and 'weather_impact' in results['fastest_route']:
                     impact = results['fastest_route']['weather_impact'].get('average_impact', 3.0)
-                    print(f"✅ Weather data included - Impact: {impact}/10")
+                    print(f" Weather data included - Impact: {impact}/10")
                 else:
-                    print("⚠️ Weather requested but not in results (using fallback)")
+                    print(" Weather requested but not in results (using fallback)")
                     # Add fallback weather data
                     if 'fastest_route' in results and results['fastest_route']:
                         results['fastest_route']['weather_impact'] = {
@@ -257,7 +257,7 @@ def calculate_routes():
                         }
                     results['weather_recommendation'] = "Using climatology data (weather API unavailable)"
             except Exception as e:
-                print(f"⚠️ Weather data handling error: {e}")
+                print(f" Weather data handling error: {e}")
         
         calculation_time = time.time() - start_time
         
@@ -270,12 +270,12 @@ def calculate_routes():
                 calculation_time
             )
         except Exception as e:
-            print(f"⚠️ Analytics logging error: {e}")
+            print(f" Analytics logging error: {e}")
         
         return jsonify(results)
         
     except Exception as e:
-        print(f"❌ Fatal error in calculate_routes: {e}")
+        print(f" Fatal error in calculate_routes: {e}")
         traceback.print_exc()
         return jsonify({'error': str(e)}), 400
 
@@ -359,10 +359,10 @@ def internal_error(error):
 
 if __name__ == '__main__':
     print("="*60)
-    print("🚢 SHIPPING ROUTE OPTIMIZER WEB SERVER")
+    print(" SHIPPING ROUTE OPTIMIZER WEB SERVER")
     print("="*60)
-    print("📡 Access the application at: http://localhost:5006")
-    print("🌐 Also available at: http://0.0.0.0:5006")
-    print("⏹️  Press CTRL+C to stop the server")
+    print(" Access the application at: http://localhost:5006")
+    print(" Also available at: http://0.0.0.0:5006")
+    print("⏹  Press CTRL+C to stop the server")
     print("="*60)
     app.run(debug=True, port=5006, host='0.0.0.0')

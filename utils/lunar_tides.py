@@ -36,28 +36,28 @@ class LunarTideModel:
         # Phase name
         if moon_age < 1.0:
             phase = "New Moon"
-            phase_icon = "🌑"
+            phase_icon = "moon"
         elif moon_age < 7.4:
             phase = "Waxing Crescent"
-            phase_icon = "🌒"
+            phase_icon = "moon"
         elif moon_age < 8.4:
             phase = "First Quarter"
-            phase_icon = "🌓"
+            phase_icon = "moon"
         elif moon_age < 14.8:
             phase = "Waxing Gibbous"
-            phase_icon = "🌔"
+            phase_icon = "moon"
         elif moon_age < 15.8:
             phase = "Full Moon"
-            phase_icon = "🌕"
+            phase_icon = "moon"
         elif moon_age < 22.1:
             phase = "Waning Gibbous"
-            phase_icon = "🌖"
+            phase_icon = "moon"
         elif moon_age < 23.1:
             phase = "Last Quarter"
-            phase_icon = "🌗"
+            phase_icon = "moon"
         else:
             phase = "Waning Crescent"
-            phase_icon = "🌘"
+            phase_icon = "moon"
         
         # Tidal range factor (spring/neap)
         # Spring tides at new/full moon (factor 1.2), neap at quarters (factor 0.8)
@@ -151,14 +151,10 @@ class LunarTideModel:
         }
     
     def _recommendation(self, tide: Dict, moon: Dict) -> str:
-        if tide['state'] == "Slack Water" and moon['illumination'] > 50:
-            return "✅ Ideal conditions for port entry/exit"
-        elif abs(tide['height_meters']) > 2.0:
-            return "⚠️ Strong tidal currents - reduce speed near ports"
-        elif moon['illumination'] < 10:
-            return "🌙 New moon - ensure navigation lights working"
-        else:
-            return "👍 Normal sailing conditions"
+        return (
+            f"Scenario only: tide state {tide['state']}, moon {moon['phase']}, "
+            f"illumination {moon['illumination']}%. Not a tide prediction and not an entry clearance."
+        )
 
 # Singleton
 lunar_tides = LunarTideModel()

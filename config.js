@@ -71,35 +71,35 @@ const DYNAMIC_CONFIG = {
         "fastest": {
             name: "Time Priority",
             description: "Minimum transit time",
-            icon: "🚀",
+            icon: "play",
             color: "#ff6b35",
             parameters: ["time", "speed"]
         },
         "fuel": {
             name: "Efficiency Priority",
             description: "Minimum fuel consumption",
-            icon: "🌿",
+            icon: "leaf",
             color: "#2ecc71",
             parameters: ["fuel", "emissions"]
         },
         "balanced": {
             name: "Balanced Analysis",
             description: "Compare fastest vs most efficient",
-            icon: "⚖️",
+            icon: "scale",
             color: "#3498db",
             parameters: ["time", "fuel", "cost"]
         },
         "cost": {
             name: "Cost Optimization",
             description: "Minimum operational cost",
-            icon: "💰",
+            icon: "money",
             color: "#f39c12",
             parameters: ["fuel", "port_fees", "time"]
         },
         "safety": {
             name: "Safety First",
             description: "Prioritize safe navigation routes",
-            icon: "🛡️",
+            icon: "shield",
             color: "#9b59b6",
             parameters: ["weather", "traffic", "depth"]
         }

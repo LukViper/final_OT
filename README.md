@@ -1,10 +1,39 @@
-# Lane-constrained waypoint routing
+# What a great-circle baseline measures
 
-Reproducible study of mandatory-waypoint routing on a shipping-lane graph, with fuel from the Holtrop–Mennen regression. The manuscript is `paper/manuscript.tex`. Every number it cites through `paper/numbers.tex` and `paper/tables.tex` is produced by the study script, not typed in by hand.
+`paper/manuscript.tex` is an identification paper, not a weather-routing method. It compares three objects on the same endpoints: a great circle, a Natural Earth coastline mesh, and the undocumented polyline file `Shipping_Lanes_v1.geojson`. The manuscript numbers that are not literature citations come from `paper/decomp_table.tex` and `paper/decomp_numbers.tex`.
 
-The repository previously reported a fuel “saving” against a fixed 15% weather allowance, including when no forecast was available. That comparison has been removed. The paper does not claim a weather-routing saving.
+No weather percentage is reported. Automatic Identification System tracks were not available and were not invented. Author names are left blank on purpose.
 
-## Reproduce the study
+## Reproduce the manuscript numbers
+
+From this directory:
+
+```bash
+python research/run_decomposition.py
+python -m pytest tests/test_navigable_mesh.py tests/test_baselines.py
+```
+
+The script reads `paper/metrics_preregistered.json` and does not rewrite it. It writes `paper/decomposition_results.json`, `paper/decomp_table.tex`, `paper/decomp_numbers.tex`, and `paper/figures/jebel_ali_suez_mesh.pdf`. Land is Natural Earth 10 m under `data/raw/ne_10m_land`. Bathymetry is not applied.
+
+Compile from `paper/` once TeX Live is installed (`geometry`, `natbib`, `hyperref`, `booktabs`, `graphicx`, `microtype`):
+
+```bash
+cd paper
+pdflatex manuscript
+bibtex manuscript
+pdflatex manuscript
+pdflatex manuscript
+```
+
+TeX Live is not installed in the environment that produced this note, so the PDF has not been compiled here.
+
+## Older lane-file audit
+
+`experiments/run_study.py` still regenerates the polyline-file audit (`paper/results.json`, `paper/numbers.tex`, `paper/tables.tex`). Those files are not the evidence base of the current manuscript. The lane file has no source or date. Do not cite it as navigable water or as an Automatic Identification System product.
+
+The repository previously reported a fuel “saving” against a fixed 15% weather allowance. That comparison has been removed.
+
+## Reproduce the older audit
 
 From this directory:
 
@@ -15,9 +44,9 @@ python experiments/run_study.py
 No weather API key is required. The script writes:
 
 - `paper/results.json` — full numerical record
-- `paper/numbers.tex` — macros used in the manuscript
-- `paper/tables.tex` — the two result tables
-- `paper/figures/*.pdf` — the four figures
+- `paper/numbers.tex` — macros for the older audit, not for the current manuscript
+- `paper/tables.tex` — the two audit tables
+- `paper/figures/` — audit figures, plus the manuscript figure written by the decomposition script
 
 It also checks that A* matches Dijkstra on every port pair, that the 20-knot fuel rate lies in a plausible band, and that the genetic algorithm’s gap against enumeration is zero on the stated instances.
 

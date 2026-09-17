@@ -18,7 +18,7 @@ class ShippingRouteOptimizer:
         current_dir = os.path.dirname(os.path.abspath(__file__))
         self.SEA_LANES_GEOJSON_PATH = os.path.join(current_dir, "../Shipping_Lanes_v1.geojson")
         
-        print(f"📁 Looking for GeoJSON at: {self.SEA_LANES_GEOJSON_PATH}")
+        print(f" Looking for GeoJSON at: {self.SEA_LANES_GEOJSON_PATH}")
         
         self.PORT_LOCATIONS = {
             "Jebel_Ali": (25.0108, 55.0610),
@@ -97,7 +97,7 @@ class ShippingRouteOptimizer:
         else:
             self.deterministic_random = random.Random(42)  # Default seed
         
-        print("🔄 Initializing Shipping Route Optimizer...")
+        print(" Initializing Shipping Route Optimizer...")
         
         # Initialize graph and data structures once
         self.sea_graph = self._build_sea_graph()
@@ -107,7 +107,7 @@ class ShippingRouteOptimizer:
         # Initialize weather service as None (lazy loading)
         self.weather_service = None
         
-        print("✅ Shipping Route Optimizer initialized successfully!")
+        print(" Shipping Route Optimizer initialized successfully!")
 
     # ========== HELPER METHODS ==========
     def _get_deterministic_seed(self, start_port, destination_port, hub_ports, goal):
@@ -129,10 +129,10 @@ class ShippingRouteOptimizer:
             departure_time = datetime.now()
         
         print("\n" + "="*70)
-        print("🌐 4D ROUTE OPTIMIZATION (Time-Dependent)")
+        print(" 4D ROUTE OPTIMIZATION (Time-Dependent)")
         print("="*70)
-        print(f"📅 Departure: {departure_time}")
-        print(f"🚢 Speed: {speed_knots} knots")
+        print(f" Departure: {departure_time}")
+        print(f" Speed: {speed_knots} knots")
         
         # Get route (use genetic algorithm for hub ports, direct if none)
         if hub_ports:
@@ -150,7 +150,7 @@ class ShippingRouteOptimizer:
         try:
             from utils.forecast_4d import forecast_4d
         except ImportError:
-            print("⚠️ 4D forecast module not found. Install with: pip install requests numpy")
+            print(" 4D forecast module not found. Install with: pip install requests numpy")
             # Fallback to simple forecast
             return self._calculate_route_fallback(start_port, destination_port, route, distance, coords, departure_time)
         
@@ -200,7 +200,7 @@ class ShippingRouteOptimizer:
         total_fuel_static *= fouling["fuel_multiplier"]
         fouling_penalty = fouling["total_penalty_percent"]
         
-        print(f"\n📊 4D Results:")
+        print(f"\n 4D Results:")
         print(f"   Calm-water fuel:     {total_fuel_static:.1f} tonnes")
         print(f"   Weather-adjusted:    {total_fuel_4d:.1f} tonnes")
         print(f"   Calm-water delta:    {weather_delta:.1f}%")
@@ -221,7 +221,7 @@ class ShippingRouteOptimizer:
 
     def _calculate_route_fallback(self, start_port, destination_port, route, distance, coords, departure_time):
         """Fallback method if 4D forecast isn't available"""
-        print("📊 Using simplified 4D calculation")
+        print(" Using simplified 4D calculation")
         
         calm = distance * self.FUEL_CONSUMPTION_PER_KM
         return {
@@ -244,7 +244,7 @@ class ShippingRouteOptimizer:
         if not os.path.exists(self.SEA_LANES_GEOJSON_PATH):
             raise FileNotFoundError(f"GeoJSON file not found: {self.SEA_LANES_GEOJSON_PATH}")
         
-        print(f"📁 Loading GeoJSON from: {self.SEA_LANES_GEOJSON_PATH}")
+        print(f" Loading GeoJSON from: {self.SEA_LANES_GEOJSON_PATH}")
         
         with open(self.SEA_LANES_GEOJSON_PATH, "r", encoding="utf-8") as f:
             geojson_data = json.load(f)
@@ -279,7 +279,7 @@ class ShippingRouteOptimizer:
                     prev_node = node_id
 
         sea_nodes = len([n for n in sea_graph.nodes if str(n).startswith('sea_')])
-        print(f"✅ Built sea-graph with {sea_nodes} sea nodes and {len(list(sea_graph.edges))} edges")
+        print(f" Built sea-graph with {sea_nodes} sea nodes and {len(list(sea_graph.edges))} edges")
         return sea_graph
 
     def _connect_ports_to_sea_nodes(self):
@@ -294,11 +294,11 @@ class ShippingRouteOptimizer:
                 if d <= self.PORT_CONNECTION_THRESHOLD_KM:
                     self.sea_graph.add_edge(pname, node, weight=d)
                     connected.append(node)
-            print(f"🔗 Port {pname} connected to {len(connected)} sea nodes.")
+            print(f" Port {pname} connected to {len(connected)} sea nodes.")
 
     def _precompute_all_port_paths(self):
         """Precompute paths between all ports for web use"""
-        print("⚙️ Precomputing all port-to-port paths...")
+        print(" Precomputing all port-to-port paths...")
         port_paths = {}
         ports = list(self.PORT_LOCATIONS.keys())
         
@@ -314,7 +314,7 @@ class ShippingRouteOptimizer:
                 if current % 50 == 0:
                     print(f"  Progress: {current}/{total_combinations} paths computed")
         
-        print("✅ Precompute done.")
+        print(" Precompute done.")
         return port_paths
 
     def _calculate_distance_km(self, coord1, coord2):
@@ -448,7 +448,7 @@ class ShippingRouteOptimizer:
             direct_distance = self._total_distance(direct_route)
             return direct_route, direct_distance
 
-        print(f"🧬 GA optimizing route with ALL hubs: {hub_ports}")
+        print(f" GA optimizing route with ALL hubs: {hub_ports}")
         
         # Generate deterministic seed for this specific optimization
         ga_seed = self._get_deterministic_seed(start_port, destination_port, hub_ports, goal)
@@ -552,7 +552,7 @@ class ShippingRouteOptimizer:
             missing_hubs = set(hub_ports) - final_hubs
             
             if missing_hubs:
-                print(f"⚠️  Adding missing hubs to final route: {missing_hubs}")
+                print(f"  Adding missing hubs to final route: {missing_hubs}")
                 
                 for hub in missing_hubs:
                     best_increase = float('inf')
@@ -572,13 +572,13 @@ class ShippingRouteOptimizer:
                         best_distance = self._total_distance(best_route)
 
         if not best_route or best_fitness <= 0:
-            print("🔄 Using fallback route with all hubs")
+            print(" Using fallback route with all hubs")
             best_route = [start_port] + hub_ports + [destination_port]
             best_distance = self._total_distance(best_route)
 
-        print(f"✅ Final {goal} route: {' → '.join(best_route)}")
-        print(f"📏 Total distance: {best_distance:.2f} km")
-        print(f"🔢 Includes {len(best_route) - 2} intermediate ports")
+        print(f" Final {goal} route: {' → '.join(best_route)}")
+        print(f" Total distance: {best_distance:.2f} km")
+        print(f" Includes {len(best_route) - 2} intermediate ports")
         
         return best_route, best_distance
 
@@ -589,10 +589,10 @@ class ShippingRouteOptimizer:
             try:
                 from utils.weather_service import weather_service
                 self.weather_service = weather_service
-                print("✅ Weather service initialized")
+                print(" Weather service initialized")
             except ImportError as e:
-                print(f"⚠️ Weather service import error: {e}")
-                print("⚠️ Using simulated weather data")
+                print(f" Weather service import error: {e}")
+                print(" Using simulated weather data")
                 self.weather_service = None
     
     def _adjust_for_weather(self, distance_km, weather_impact):
@@ -663,8 +663,8 @@ class ShippingRouteOptimizer:
         fuel_tonnes = self._calculate_vessel_fuel(total_distance, self.AVERAGE_SPEED_KMH, weather_impact_avg)
         co2_tonnes = fuel_tonnes * 3.114
         
-        # Base fuel cost $650/t. ECA fuel is more expensive.
-        base_cost = fuel_tonnes * 650
+        # Scenario bunker price used by the paper, not a quotation.
+        base_cost = fuel_tonnes * 600
         eca_premium = (eca_dist / total_distance) * fuel_tonnes * 250 if total_distance > 0 else 0
         
         return {
@@ -850,16 +850,16 @@ class ShippingRouteOptimizer:
             departure_time = datetime.now()
         
         print("\n" + "="*70)
-        print("🚢 ENHANCED ROUTE CALCULATION WITH PHYSICS")
+        print(" ENHANCED ROUTE CALCULATION WITH PHYSICS")
         print("="*70)
-        print(f"📅 Departure: {departure_time}")
-        print(f"🎯 Goal: {goal}")
-        print(f"📦 Cargo: {cargo_tonnes} tonnes")
-        print(f"🦪 Hull days since cleaning: {hull_days}")
+        print(f" Departure: {departure_time}")
+        print(f" Goal: {goal}")
+        print(f" Cargo: {cargo_tonnes} tonnes")
+        print(f" Hull days since cleaning: {hull_days}")
         
         # Get moon phase for departure
         moon = lunar_tides.moon_phase(departure_time)
-        print(f"🌙 Moon: {moon['icon']} {moon['phase']} ({moon['illumination']}% illuminated)")
+        print(f" Moon: {moon['icon']} {moon['phase']} ({moon['illumination']}% illuminated)")
         
         self.current_hub_ports = hub_ports
         self.hull_days = hull_days
@@ -928,7 +928,7 @@ class ShippingRouteOptimizer:
         
         # Weather integration
         if include_weather:
-            print("🌤️ Processing weather data...")
+            print(" Processing weather data...")
             self._initialize_weather_service()
             
             if self.weather_service:
@@ -961,33 +961,40 @@ class ShippingRouteOptimizer:
                     }
                 }
             
-            fastest_time_adjusted = self._adjust_for_weather(
-                fastest_distance, fastest_weather['average_impact']
-            )
-            fuel_time_adjusted = self._adjust_for_weather(
-                fuel_distance, fuel_weather['average_impact']
-            )
-            
-            results['fastest_route']['weather_impact'] = fastest_weather
-            results['fastest_route']['time_hours'] = fastest_time_adjusted
-            results['fuel_efficient_route']['weather_impact'] = fuel_weather
-            results['fuel_efficient_route']['time_hours'] = fuel_time_adjusted
-            results['weather_recommendation'] = self._get_weather_recommendation(
-                fastest_weather, fuel_weather, goal
-            )
+            simulated = fastest_weather.get("recommendation") == "Deterministic simulated weather data"
+            if simulated:
+                results["fastest_route"]["weather_impact"] = {"status": "not_estimated"}
+                results["fuel_efficient_route"]["weather_impact"] = {"status": "not_estimated"}
+                results["weather_recommendation"] = (
+                    "Weather is not estimated. A random field was not applied to time or fuel."
+                )
+            else:
+                fastest_time_adjusted = self._adjust_for_weather(
+                    fastest_distance, fastest_weather["average_impact"]
+                )
+                fuel_time_adjusted = self._adjust_for_weather(
+                    fuel_distance, fuel_weather["average_impact"]
+                )
+                results["fastest_route"]["weather_impact"] = fastest_weather
+                results["fastest_route"]["time_hours"] = fastest_time_adjusted
+                results["fuel_efficient_route"]["weather_impact"] = fuel_weather
+                results["fuel_efficient_route"]["time_hours"] = fuel_time_adjusted
+                results["weather_recommendation"] = self._get_weather_recommendation(
+                    fastest_weather, fuel_weather, goal
+                )
         else:
-            results['weather_recommendation'] = "Weather data disabled. Enable for detailed analysis."
+            results["weather_recommendation"] = "Weather is not estimated."
         
         # Clean up
         if hasattr(self, 'current_hub_ports'):
             del self.current_hub_ports
         
-        print("\n📊 FUEL COMPARISON:")
+        print("\n FUEL COMPARISON:")
         print(f"   Old method: {fastest_distance * self.FUEL_CONSUMPTION_PER_KM:.1f} tonnes")
         print(f"   New physics: {fastest_physics['total']:.1f} tonnes")
         print(f"   Difference: +{((fastest_physics['total']/(fastest_distance * self.FUEL_CONSUMPTION_PER_KM)-1)*100):.1f}%")
         print(f"   Hull fouling: +{fastest_physics['fouling_penalty']}%")
         print(f"   Ocean current: {fastest_physics['ocean_current_benefit']}% benefit")
         
-        print("✅ Route calculation complete!")
+        print(" Route calculation complete!")
         return results

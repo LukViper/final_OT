@@ -49,7 +49,7 @@ class RealTimeAnalytics:
             time_savings = (fuel_time - fastest_time) / 24 if fuel_time and fastest_time else 0
             distance_savings = fastest_dist - fuel_dist
             co2_savings = fuel_savings * 3.114 if fuel_savings else 0
-            cost_savings = fuel_savings * 650 if fuel_savings else 0
+            cost_savings = fuel_savings * 600 if fuel_savings else 0
             
             calculation_record = {
                 'id': len(self.route_calculations) + 1,
@@ -186,6 +186,84 @@ class RealTimeAnalytics:
 realtime_analytics = RealTimeAnalytics()
 route_optimizer = ShippingRouteOptimizer()
 
+_CHECK_MESH = None
+
+
+def _check_mesh():
+    global _CHECK_MESH
+    if _CHECK_MESH is None:
+        from research.navigable_mesh import build_mesh
+        _CHECK_MESH = build_mesh(
+            (32.0, 9.5, 62.0, 32.5),
+            resolution=0.25,
+            strait_half_width_deg=0.30,
+        )
+    return _CHECK_MESH
+
+
+@app.route('/api/check-route')
+def check_route():
+    """Coastline-mesh check for the one route the page can verify."""
+    from research.navigable_mesh import (
+        JEBEL_ALI,
+        great_circle_km,
+        haversine_km,
+        path_crosses_bab_el_mandeb,
+        path_detours_east,
+        path_goes_south_of_gulf,
+        shortest_path,
+    )
+    from research.baselines import SERVICE_SPEED_KN, baseline_1, baseline_2
+    from research.run_decomposition import _polyline_file_path, _sample_great_circle
+
+    canal = (30.5852, 32.2654)
+    mesh = shortest_path(_check_mesh(), JEBEL_ALI, canal, method="astar")
+    dijkstra = shortest_path(_check_mesh(), JEBEL_ALI, canal, method="dijkstra")
+    gc_km = great_circle_km(JEBEL_ALI, canal)
+    coords = mesh["coords"]
+    checks = [
+        {"name": "Enters the Bab el-Mandeb", "pass": path_crosses_bab_el_mandeb(coords)},
+        {"name": "Does not go east of 62°E", "pass": not path_detours_east(coords, 62.0)},
+        {"name": "Does not leave south toward the Cape", "pass": not path_goes_south_of_gulf(coords)},
+        {"name": "Sea path is longer than the great circle", "pass": mesh["distance_km"] > gc_km},
+        {"name": "A* matches Dijkstra", "pass": abs(mesh["distance_km"] - dijkstra["distance_km"]) < 1e-6},
+    ]
+    polyline = _polyline_file_path(JEBEL_ALI, canal)
+    b1 = baseline_1(gc_km, SERVICE_SPEED_KN)
+    b2 = baseline_2(mesh["distance_km"], SERVICE_SPEED_KN)
+    working = all(item["pass"] for item in checks)
+    polyline_km = None
+    if polyline and len(polyline) > 1:
+        polyline_km = sum(
+            haversine_km(a[0], a[1], b[0], b[1]) for a, b in zip(polyline, polyline[1:])
+        )
+    return jsonify({
+        "name": "Jebel Ali to Suez Canal",
+        "start_port": "Jebel_Ali",
+        "destination_port": "Suez_Canal",
+        "working": working,
+        "mesh_km": round(mesh["distance_km"], 3),
+        "great_circle_km": round(gc_km, 3),
+        "polyline_km": None if polyline_km is None else round(polyline_km, 3),
+        "ratio": round(mesh["distance_km"] / gc_km, 4),
+        "mesh_fuel_t": round(b2["fuel_t"], 4),
+        "great_circle_fuel_t": round(b1["fuel_t"], 4),
+        "mesh_co2_t": round(b2["co2_t"], 4),
+        "great_circle_co2_t": round(b1["co2_t"], 4),
+        "mesh_hours": round(b2["hours"], 4),
+        "speed_knots": SERVICE_SPEED_KN,
+        "bunker_usd_per_t": 600,
+        "weather": "not_estimated",
+        "hull": "clean",
+        "polyline_drawn": polyline is not None,
+        "checks": checks,
+        "mesh_coordinates": coords,
+        "great_circle_coordinates": _sample_great_circle(JEBEL_ALI, canal),
+        "polyline_coordinates": polyline or [],
+        "note": "Calm-water Holtrop-Mennen at 18 kn, clean hull. Weather is not estimated. The great circle crosses Arabia and is not a voyage.",
+    })
+
+
 @app.route('/')
 def index():
     ports = list(route_optimizer.PORT_LOCATIONS.keys())
@@ -241,7 +319,7 @@ def calculate_routes():
         if not start_port or not destination_port:
             return jsonify({'error': 'Please select both start and destination ports'}), 400
         
-        print(f"\n🚢 Calculating route: {start_port} → {destination_port}")
+        print(f"\n Calculating route: {start_port} → {destination_port}")
         print(f"   Vessel: {vessel_type}, Cargo: {cargo_tonnes}t, Speed: {speed_knots} knots")
         print(f"   Hull days: {hull_days}, Departure: {departure_time}")
         print(f"   Constraints: {constraints}")
@@ -254,7 +332,8 @@ def calculate_routes():
             route_optimizer.AVERAGE_SPEED_KMH = route_optimizer.current_vessel["avg_speed_kmh"]
             route_optimizer.FUEL_CONSUMPTION_PER_KM = route_optimizer.current_vessel["base_fuel_rate"]
         
-        # Set hull days
+        if not use_fouling:
+            hull_days = 0
         route_optimizer.hull_days = hull_days
         
         # Set departure time
@@ -287,11 +366,10 @@ def calculate_routes():
         # Add constraints
         results['constraints'] = constraints
         
-        # Add ensemble confidence
-        if 'fastest_route' in results and 'weather_impact' in results['fastest_route']:
-            results['ensemble_confidence'] = results['fastest_route']['weather_impact'].get('confidence', 0.85)
-        else:
-            results['ensemble_confidence'] = 0.85
+        results['ensemble_confidence'] = None
+        weather_impact = (results.get('fastest_route') or {}).get('weather_impact') or {}
+        if include_weather and use_weather and weather_impact.get('confidence') is not None:
+            results['ensemble_confidence'] = weather_impact['confidence']
         
         # Log to analytics
         try:
@@ -302,13 +380,13 @@ def calculate_routes():
                 calculation_time
             )
         except Exception as e:
-            print(f"⚠️ Analytics logging error: {e}")
+            print(f" Analytics logging error: {e}")
         
-        print(f"✅ Route calculation complete in {calculation_time:.2f}s")
+        print(f" Route calculation complete in {calculation_time:.2f}s")
         return jsonify(results)
         
     except Exception as e:
-        print(f"❌ Fatal error: {e}")
+        print(f" Fatal error: {e}")
         traceback.print_exc()
         return jsonify({'error': str(e)}), 500
 
@@ -390,6 +468,6 @@ if __name__ == '__main__':
     print("   - Schematic ocean-current cores")
     print("   - A* on the lane graph; order crossover for hub permutations")
     print("="*60)
-    print("⏹️  Press CTRL+C to stop the server")
+    print("⏹  Press CTRL+C to stop the server")
     print("="*60)
     app.run(debug=True, port=5006, host='0.0.0.0')

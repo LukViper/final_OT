@@ -57,19 +57,19 @@ class WeatherService:
         })
         
         if not self.openweather_key:
-            print("⚠️  No OPENWEATHER_API_KEY found. Using fallback data.")
+            print("  No OPENWEATHER_API_KEY found. Using fallback data.")
         else:
             masked = self.openweather_key[:4] + "****" + self.openweather_key[-4:]
-            print(f"✅ OpenWeather API key loaded ({masked})")
+            print(f" OpenWeather API key loaded ({masked})")
         
-        print("✅ Weather Service initialized (fallback mode enabled)")
+        print(" Weather Service initialized (fallback mode enabled)")
 
     def get_marine_weather(self, lat: float, lon: float) -> Dict:
         """Get weather data with multiple fallback options"""
         try:
             # SAFETY: Check for None values
             if lat is None or lon is None:
-                print(f"  ⚠️ Invalid coordinates received: lat={lat}, lon={lon}")
+                print(f"   Invalid coordinates received: lat={lat}, lon={lon}")
                 return self._generate_fallback_weather(0, 0)
             
             # SAFETY: Convert to float and handle potential errors
@@ -77,7 +77,7 @@ class WeatherService:
                 lat_float = float(lat)
                 lon_float = float(lon)
             except (TypeError, ValueError):
-                print(f"  ⚠️ Could not convert coordinates: {lat}, {lon}")
+                print(f"   Could not convert coordinates: {lat}, {lon}")
                 return self._generate_fallback_weather(0, 0)
             
             # SAFETY: Create cache key safely
@@ -96,14 +96,14 @@ class WeatherService:
             
             # If all APIs fail, use deterministic fallback
             if weather is None:
-                print(f"  ℹ️ Using fallback weather for {lat_float:.1f}, {lon_float:.1f}")
+                print(f"  ℹ Using fallback weather for {lat_float:.1f}, {lon_float:.1f}")
                 weather = self._generate_fallback_weather(lat_float, lon_float)
             
             self._set_cache(cache_key, weather)
             return weather
             
         except Exception as e:
-            print(f"  ⚠️ Weather error in get_marine_weather: {e}")
+            print(f"   Weather error in get_marine_weather: {e}")
             return self._generate_fallback_weather(0, 0)
     
     def _fetch_with_fallback(self, lat: float, lon: float) -> Optional[Dict]:
@@ -118,7 +118,7 @@ class WeatherService:
             lat_rounded = round(float(lat), 2) if lat is not None else 0
             lon_rounded = round(float(lon), 2) if lon is not None else 0
         except (TypeError, ValueError) as e:
-            print(f"  ⚠️ Error rounding coordinates: {e}")
+            print(f"   Error rounding coordinates: {e}")
             return None
         
         # Try Open-Meteo Marine first
@@ -141,10 +141,10 @@ class WeatherService:
                 data = response.json()
                 return self._parse_marine(data)
             else:
-                print(f"  ⚠️ Marine API returned {response.status_code}")
+                print(f"   Marine API returned {response.status_code}")
                 
         except Exception as e:
-            print(f"  ⚠️ Marine API failed: {e}")
+            print(f"   Marine API failed: {e}")
         
         # Try standard forecast API as backup
         try:
@@ -167,10 +167,10 @@ class WeatherService:
                 data = response.json()
                 return self._parse_standard_forecast(data)
             else:
-                print(f"  ⚠️ Forecast API returned {response.status_code}")
+                print(f"   Forecast API returned {response.status_code}")
                 
         except Exception as e:
-            print(f"  ⚠️ Forecast API failed: {e}")
+            print(f"   Forecast API failed: {e}")
         
         return None
     
@@ -202,7 +202,7 @@ class WeatherService:
                     'source': 'forecast-api'
                 }
         except Exception as e:
-            print(f"  ⚠️ Error parsing forecast: {e}")
+            print(f"   Error parsing forecast: {e}")
         return None
 
     def _parse_marine(self, data: Dict) -> Optional[Dict]:
@@ -273,7 +273,7 @@ class WeatherService:
                 'source': 'open-meteo-marine'
             }
         except Exception as e:
-            print(f"  ⚠️ Error parsing marine data: {e}")
+            print(f"   Error parsing marine data: {e}")
             return None
 
     def _generate_fallback_weather(self, lat: float, lon: float) -> Dict:
@@ -342,7 +342,7 @@ class WeatherService:
                 'source': 'fallback-climatology'
             }
         except Exception as e:
-            print(f"  ⚠️ Error in fallback weather: {e}")
+            print(f"   Error in fallback weather: {e}")
             # Ultimate fallback
             return {
                 'temperature': 20,
@@ -371,7 +371,7 @@ class WeatherService:
             num_points = min(8, len(route_coordinates))
             step = max(1, len(route_coordinates) // num_points)
             
-            print(f"\n🌤️ Fetching weather for {num_points} points along route...")
+            print(f"\n Fetching weather for {num_points} points along route...")
             
             points_fetched = 0
             for i in range(0, len(route_coordinates), step):
@@ -437,7 +437,7 @@ class WeatherService:
             }
             
         except Exception as e:
-            print(f"⚠️ Route weather error: {e}")
+            print(f" Route weather error: {e}")
             return self._get_default_route_weather()
     
     def _impact_to_condition(self, score: float) -> str:
@@ -449,13 +449,13 @@ class WeatherService:
     
     def _get_recommendation(self, avg_impact: float) -> str:
         if avg_impact < 3:
-            return "✅ Favorable conditions along entire route"
+            return " Favorable conditions along entire route"
         elif avg_impact < 5:
-            return "👍 Normal sailing conditions - proceed as planned"
+            return " Normal sailing conditions - proceed as planned"
         elif avg_impact < 7:
-            return "⚠️ Moderate weather - consider speed adjustments"
+            return " Moderate weather - consider speed adjustments"
         else:
-            return "⛈️ Rough weather expected - consider delaying departure"
+            return " Rough weather expected - consider delaying departure"
     
     def _get_default_route_weather(self) -> Dict:
         return {

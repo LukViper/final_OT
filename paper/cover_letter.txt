@@ -1,0 +1,9 @@
+Cover note, not a submission letter until authors are added.
+
+This manuscript does not propose a new weather-routing algorithm. It identifies what a great-circle baseline measures.
+
+On the Jebel Ali–Suez Canal endpoints, a coastline-masked shortest path is 2.37 times the great circle and passes through the Bab el-Mandeb. The undocumented polyline network previously used for those endpoints produced a ratio of 4.35. That path has 17 vertices and edges longer than 1,000 km, including one of 2,422 km, and it detours east to about 80°E. A 0.25° land mask without forced strait cells does not find a Cape route inside this box; it disconnects Jebel Ali from Suez at Hormuz. On New York–Rotterdam the same construction gives a ratio of 1.09. Calm-water fuel follows distance, so the network term is a fuel understatement of the feasible voyage, not a saving. With a fixed arrival and calm water the speed-policy term is zero.
+
+The closest published pieces are Mohamed, Hendricks and Hu (arXiv:2512.01076), who compare great-circle and sea-only A* routes and exclude weather and AIS, and the SINTEF EcoRouter blog (2026), which separates speed and weather on simulated Atlantic crossings whose shortest path is the great circle. We add the comparison with a polyline product that misses the Gulf of Aden, and we show that a deadline-constrained speed term is identically zero until weather is present. We do not estimate that weather term, and we do not call any model-versus-model comparison validated.
+
+What is still required before this is a full Ocean Engineering or Transportation Research Part D article is a frozen ERA5/Copernicus cache, an AIS source whose licence allows republication of tracks, and the fourth baseline. Those were not invented.
