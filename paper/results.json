@@ -1,0 +1,3853 @@
+{
+  "generated_at": "2026-09-17T00:36:17",
+  "co2_t_per_t_fuel": 3.114,
+  "network": {
+    "n_ports": 20,
+    "n_sea_nodes": 27929,
+    "n_edges": 28903,
+    "n_components": 84,
+    "sea_nodes_in_port_component": 3763,
+    "mean_sea_degree": 2.041498084428372,
+    "port_connection_threshold_km": 500,
+    "n_disconnected_ordered_pairs": 0,
+    "disconnected_pairs": []
+  },
+  "paths": {
+    "n_ordered_pairs": 380,
+    "n_connected": 380,
+    "astar_dijkstra_matches": 380,
+    "astar_dijkstra_compared": 380,
+    "mean_detour": 1.360776842105263,
+    "median_detour": 1.2642,
+    "max_detour": 4.3451,
+    "min_detour": 1.005,
+    "mean_lane_km": 6672.77872631579,
+    "mean_gc_km": 4986.259310526316,
+    "seconds_astar_recomputed": 0.2447654660027183,
+    "seconds_dijkstra": 0.10462703799203155,
+    "rows": [
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Mumbai",
+        "great_circle_km": 1950.618,
+        "lane_km": 2043.385,
+        "dijkstra_km": 2043.385,
+        "detour_ratio": 1.0476
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Colombo",
+        "great_circle_km": 3315.24,
+        "lane_km": 3603.328,
+        "dijkstra_km": 3603.328,
+        "detour_ratio": 1.0869
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Singapore",
+        "great_circle_km": 5850.079,
+        "lane_km": 6520.499,
+        "dijkstra_km": 6520.499,
+        "detour_ratio": 1.1146
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Jakarta",
+        "great_circle_km": 6586.049,
+        "lane_km": 7639.535,
+        "dijkstra_km": 7639.535,
+        "detour_ratio": 1.16
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Port Moresby",
+        "great_circle_km": 10659.803,
+        "lane_km": 11723.085,
+        "dijkstra_km": 11723.085,
+        "detour_ratio": 1.0997
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Kudat",
+        "great_circle_km": 6846.738,
+        "lane_km": 8200.476,
+        "dijkstra_km": 8200.476,
+        "detour_ratio": 1.1977
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Bangkok",
+        "great_circle_km": 4903.493,
+        "lane_km": 8047.603,
+        "dijkstra_km": 8047.603,
+        "detour_ratio": 1.6412
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Manila",
+        "great_circle_km": 6931.078,
+        "lane_km": 9076.277,
+        "dijkstra_km": 9076.277,
+        "detour_ratio": 1.3095
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Hong_Kong",
+        "great_circle_km": 5979.363,
+        "lane_km": 9171.564,
+        "dijkstra_km": 9171.564,
+        "detour_ratio": 1.5339
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Busan",
+        "great_circle_km": 7051.099,
+        "lane_km": 11279.978,
+        "dijkstra_km": 11279.978,
+        "detour_ratio": 1.5997
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Shanghai",
+        "great_circle_km": 6454.081,
+        "lane_km": 10623.172,
+        "dijkstra_km": 10623.172,
+        "detour_ratio": 1.646
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Shenzhen",
+        "great_circle_km": 5961.734,
+        "lane_km": 9195.041,
+        "dijkstra_km": 9195.041,
+        "detour_ratio": 1.5423
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Yokohama",
+        "great_circle_km": 7966.244,
+        "lane_km": 11841.408,
+        "dijkstra_km": 11841.408,
+        "detour_ratio": 1.4864
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Palu",
+        "great_circle_km": 7439.853,
+        "lane_km": 9018.735,
+        "dijkstra_km": 9018.735,
+        "detour_ratio": 1.2122
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Tokyo",
+        "great_circle_km": 7959.286,
+        "lane_km": 11864.867,
+        "dijkstra_km": 11864.867,
+        "detour_ratio": 1.4907
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Melbourne",
+        "great_circle_km": 11669.976,
+        "lane_km": 13349.075,
+        "dijkstra_km": 13349.075,
+        "detour_ratio": 1.1439
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Perth",
+        "great_circle_km": 9039.361,
+        "lane_km": 10591.509,
+        "dijkstra_km": 10591.509,
+        "detour_ratio": 1.1717
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Suez_Canal",
+        "great_circle_km": 2321.627,
+        "lane_km": 10087.695,
+        "dijkstra_km": 10087.695,
+        "detour_ratio": 4.3451
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Salalah",
+        "great_circle_km": 903.226,
+        "lane_km": 1637.474,
+        "dijkstra_km": 1637.474,
+        "detour_ratio": 1.8129
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 1950.618,
+        "lane_km": 2043.385,
+        "dijkstra_km": 2043.385,
+        "detour_ratio": 1.0476
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Colombo",
+        "great_circle_km": 1537.518,
+        "lane_km": 1646.847,
+        "dijkstra_km": 1646.847,
+        "detour_ratio": 1.0711
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Singapore",
+        "great_circle_km": 3901.432,
+        "lane_km": 4564.018,
+        "dijkstra_km": 4564.018,
+        "detour_ratio": 1.1698
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Jakarta",
+        "great_circle_km": 4659.174,
+        "lane_km": 5683.053,
+        "dijkstra_km": 5683.053,
+        "detour_ratio": 1.2198
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Port Moresby",
+        "great_circle_km": 8732.87,
+        "lane_km": 9766.604,
+        "dijkstra_km": 9766.604,
+        "detour_ratio": 1.1184
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Kudat",
+        "great_circle_km": 4939.17,
+        "lane_km": 6243.995,
+        "dijkstra_km": 6243.995,
+        "detour_ratio": 1.2642
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Bangkok",
+        "great_circle_km": 3004.349,
+        "lane_km": 6091.122,
+        "dijkstra_km": 6091.122,
+        "detour_ratio": 2.0274
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Manila",
+        "great_circle_km": 5133.952,
+        "lane_km": 7119.796,
+        "dijkstra_km": 7119.796,
+        "detour_ratio": 1.3868
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Hong_Kong",
+        "great_circle_km": 4304.675,
+        "lane_km": 7215.083,
+        "dijkstra_km": 7215.083,
+        "detour_ratio": 1.6761
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Busan",
+        "great_circle_km": 5773.947,
+        "lane_km": 9323.497,
+        "dijkstra_km": 9323.497,
+        "detour_ratio": 1.6148
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Shanghai",
+        "great_circle_km": 5042.59,
+        "lane_km": 8666.69,
+        "dijkstra_km": 8666.69,
+        "detour_ratio": 1.7187
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Shenzhen",
+        "great_circle_km": 4292.075,
+        "lane_km": 7238.56,
+        "dijkstra_km": 7238.56,
+        "detour_ratio": 1.6865
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Yokohama",
+        "great_circle_km": 6731.773,
+        "lane_km": 9884.927,
+        "dijkstra_km": 9884.927,
+        "detour_ratio": 1.4684
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Palu",
+        "great_circle_km": 5503.324,
+        "lane_km": 7062.254,
+        "dijkstra_km": 7062.254,
+        "detour_ratio": 1.2833
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Tokyo",
+        "great_circle_km": 6731.472,
+        "lane_km": 9908.386,
+        "dijkstra_km": 9908.386,
+        "detour_ratio": 1.4719
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Melbourne",
+        "great_circle_km": 9814.914,
+        "lane_km": 11893.503,
+        "dijkstra_km": 11893.503,
+        "detour_ratio": 1.2118
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Perth",
+        "great_circle_km": 7282.277,
+        "lane_km": 9372.301,
+        "dijkstra_km": 9372.301,
+        "detour_ratio": 1.287
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Suez_Canal",
+        "great_circle_km": 4269.633,
+        "lane_km": 8131.214,
+        "dijkstra_km": 8131.214,
+        "detour_ratio": 1.9044
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Salalah",
+        "great_circle_km": 2002.746,
+        "lane_km": 3187.719,
+        "dijkstra_km": 3187.719,
+        "detour_ratio": 1.5917
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 3315.24,
+        "lane_km": 3603.328,
+        "dijkstra_km": 3603.328,
+        "detour_ratio": 1.0869
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Mumbai",
+        "great_circle_km": 1537.518,
+        "lane_km": 1646.847,
+        "dijkstra_km": 1646.847,
+        "detour_ratio": 1.0711
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Singapore",
+        "great_circle_km": 2727.339,
+        "lane_km": 2917.171,
+        "dijkstra_km": 2917.171,
+        "detour_ratio": 1.0696
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Jakarta",
+        "great_circle_km": 3331.167,
+        "lane_km": 4036.207,
+        "dijkstra_km": 4036.207,
+        "detour_ratio": 1.2116
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Port Moresby",
+        "great_circle_km": 7673.717,
+        "lane_km": 8119.757,
+        "dijkstra_km": 8119.757,
+        "detour_ratio": 1.0581
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Kudat",
+        "great_circle_km": 4081.693,
+        "lane_km": 4597.148,
+        "dijkstra_km": 4597.148,
+        "detour_ratio": 1.1263
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Bangkok",
+        "great_circle_km": 2380.347,
+        "lane_km": 4444.276,
+        "dijkstra_km": 4444.276,
+        "detour_ratio": 1.8671
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Manila",
+        "great_circle_km": 4565.341,
+        "lane_km": 5472.949,
+        "dijkstra_km": 5472.949,
+        "detour_ratio": 1.1988
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Hong_Kong",
+        "great_circle_km": 4053.239,
+        "lane_km": 5568.236,
+        "dijkstra_km": 5568.236,
+        "detour_ratio": 1.3738
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Busan",
+        "great_circle_km": 5911.725,
+        "lane_km": 7676.65,
+        "dijkstra_km": 7676.65,
+        "detour_ratio": 1.2985
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Shanghai",
+        "great_circle_km": 5092.634,
+        "lane_km": 7019.844,
+        "dijkstra_km": 7019.844,
+        "detour_ratio": 1.3784
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Shenzhen",
+        "great_circle_km": 4050.906,
+        "lane_km": 5591.713,
+        "dijkstra_km": 5591.713,
+        "detour_ratio": 1.3804
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Yokohama",
+        "great_circle_km": 6839.387,
+        "lane_km": 8238.08,
+        "dijkstra_km": 8238.08,
+        "detour_ratio": 1.2045
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Palu",
+        "great_circle_km": 4487.079,
+        "lane_km": 5415.407,
+        "dijkstra_km": 5415.407,
+        "detour_ratio": 1.2069
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Tokyo",
+        "great_circle_km": 6846.132,
+        "lane_km": 8261.539,
+        "dijkstra_km": 8261.539,
+        "detour_ratio": 1.2067
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Melbourne",
+        "great_circle_km": 8356.706,
+        "lane_km": 10246.657,
+        "dijkstra_km": 10246.657,
+        "detour_ratio": 1.2262
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Perth",
+        "great_circle_km": 5766.377,
+        "lane_km": 7725.454,
+        "dijkstra_km": 7725.454,
+        "detour_ratio": 1.3397
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Suez_Canal",
+        "great_circle_km": 5602.233,
+        "lane_km": 6534.176,
+        "dijkstra_km": 6534.176,
+        "detour_ratio": 1.1664
+      },
+      {
+        "origin": "Colombo",
+        "destination": "Salalah",
+        "great_circle_km": 3020.217,
+        "lane_km": 4747.662,
+        "dijkstra_km": 4747.662,
+        "detour_ratio": 1.572
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 5850.079,
+        "lane_km": 6520.499,
+        "dijkstra_km": 6520.499,
+        "detour_ratio": 1.1146
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Mumbai",
+        "great_circle_km": 3901.432,
+        "lane_km": 4564.018,
+        "dijkstra_km": 4564.018,
+        "detour_ratio": 1.1698
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Colombo",
+        "great_circle_km": 2727.339,
+        "lane_km": 2917.171,
+        "dijkstra_km": 2917.171,
+        "detour_ratio": 1.0696
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Jakarta",
+        "great_circle_km": 905.354,
+        "lane_km": 1119.036,
+        "dijkstra_km": 1119.036,
+        "detour_ratio": 1.236
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Port Moresby",
+        "great_circle_km": 4946.811,
+        "lane_km": 5202.586,
+        "dijkstra_km": 5202.586,
+        "detour_ratio": 1.0517
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Kudat",
+        "great_circle_km": 1569.691,
+        "lane_km": 1679.977,
+        "dijkstra_km": 1679.977,
+        "detour_ratio": 1.0703
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Bangkok",
+        "great_circle_km": 1426.759,
+        "lane_km": 1527.105,
+        "dijkstra_km": 1527.105,
+        "detour_ratio": 1.0703
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Manila",
+        "great_circle_km": 2392.705,
+        "lane_km": 2555.778,
+        "dijkstra_km": 2555.778,
+        "detour_ratio": 1.0682
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Hong_Kong",
+        "great_circle_km": 2586.134,
+        "lane_km": 2651.065,
+        "dijkstra_km": 2651.065,
+        "detour_ratio": 1.0251
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Busan",
+        "great_circle_km": 4579.341,
+        "lane_km": 4759.479,
+        "dijkstra_km": 4759.479,
+        "detour_ratio": 1.0393
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Shanghai",
+        "great_circle_km": 3805.74,
+        "lane_km": 4102.673,
+        "dijkstra_km": 4102.673,
+        "detour_ratio": 1.078
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Shenzhen",
+        "great_circle_km": 2603.175,
+        "lane_km": 2674.542,
+        "dijkstra_km": 2674.542,
+        "detour_ratio": 1.0274
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Yokohama",
+        "great_circle_km": 5294.535,
+        "lane_km": 5320.909,
+        "dijkstra_km": 5320.909,
+        "detour_ratio": 1.005
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Palu",
+        "great_circle_km": 1785.945,
+        "lane_km": 2498.236,
+        "dijkstra_km": 2498.236,
+        "detour_ratio": 1.3988
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Tokyo",
+        "great_circle_km": 5311.224,
+        "lane_km": 5344.368,
+        "dijkstra_km": 5344.368,
+        "detour_ratio": 1.0062
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Melbourne",
+        "great_circle_km": 6063.299,
+        "lane_km": 7329.486,
+        "dijkstra_km": 7329.486,
+        "detour_ratio": 1.2088
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Perth",
+        "great_circle_km": 3914.468,
+        "lane_km": 4808.283,
+        "dijkstra_km": 4808.283,
+        "detour_ratio": 1.2283
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Suez_Canal",
+        "great_circle_km": 8170.84,
+        "lane_km": 9451.346,
+        "dijkstra_km": 9451.346,
+        "detour_ratio": 1.1567
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Salalah",
+        "great_circle_km": 5714.321,
+        "lane_km": 7664.833,
+        "dijkstra_km": 7664.833,
+        "detour_ratio": 1.3413
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 6586.049,
+        "lane_km": 7639.535,
+        "dijkstra_km": 7639.535,
+        "detour_ratio": 1.16
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Mumbai",
+        "great_circle_km": 4659.174,
+        "lane_km": 5683.053,
+        "dijkstra_km": 5683.053,
+        "detour_ratio": 1.2198
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Colombo",
+        "great_circle_km": 3331.167,
+        "lane_km": 4036.207,
+        "dijkstra_km": 4036.207,
+        "detour_ratio": 1.2116
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Singapore",
+        "great_circle_km": 905.354,
+        "lane_km": 1119.036,
+        "dijkstra_km": 1119.036,
+        "detour_ratio": 1.236
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Port Moresby",
+        "great_circle_km": 4452.086,
+        "lane_km": 4635.914,
+        "dijkstra_km": 4635.914,
+        "detour_ratio": 1.0413
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Kudat",
+        "great_circle_km": 1830.427,
+        "lane_km": 2480.758,
+        "dijkstra_km": 2480.758,
+        "detour_ratio": 1.3553
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Bangkok",
+        "great_circle_km": 2327.835,
+        "lane_km": 2646.14,
+        "dijkstra_km": 2646.14,
+        "detour_ratio": 1.1367
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Manila",
+        "great_circle_km": 2790.044,
+        "lane_km": 3356.559,
+        "dijkstra_km": 3356.559,
+        "detour_ratio": 1.203
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Hong_Kong",
+        "great_circle_km": 3270.866,
+        "lane_km": 3770.101,
+        "dijkstra_km": 3770.101,
+        "detour_ratio": 1.1526
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Busan",
+        "great_circle_km": 5157.419,
+        "lane_km": 5878.515,
+        "dijkstra_km": 5878.515,
+        "detour_ratio": 1.1398
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Shanghai",
+        "great_circle_km": 4443.834,
+        "lane_km": 5211.746,
+        "dijkstra_km": 5211.746,
+        "detour_ratio": 1.1728
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Shenzhen",
+        "great_circle_km": 3292.001,
+        "lane_km": 3793.578,
+        "dijkstra_km": 3793.578,
+        "detour_ratio": 1.1524
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Yokohama",
+        "great_circle_km": 5762.224,
+        "lane_km": 6439.945,
+        "dijkstra_km": 6439.945,
+        "detour_ratio": 1.1176
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Palu",
+        "great_circle_km": 1648.529,
+        "lane_km": 2063.216,
+        "dijkstra_km": 2063.216,
+        "detour_ratio": 1.2515
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Tokyo",
+        "great_circle_km": 5781.839,
+        "lane_km": 6463.404,
+        "dijkstra_km": 6463.404,
+        "detour_ratio": 1.1179
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Melbourne",
+        "great_circle_km": 5206.965,
+        "lane_km": 6210.45,
+        "dijkstra_km": 6210.45,
+        "detour_ratio": 1.1927
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Perth",
+        "great_circle_km": 3011.714,
+        "lane_km": 3689.248,
+        "dijkstra_km": 3689.248,
+        "detour_ratio": 1.225
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Suez_Canal",
+        "great_circle_km": 8902.862,
+        "lane_km": 10570.382,
+        "dijkstra_km": 10570.382,
+        "detour_ratio": 1.1873
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Salalah",
+        "great_circle_km": 6350.853,
+        "lane_km": 7610.151,
+        "dijkstra_km": 7610.151,
+        "detour_ratio": 1.1983
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 10659.803,
+        "lane_km": 11723.085,
+        "dijkstra_km": 11723.085,
+        "detour_ratio": 1.0997
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Mumbai",
+        "great_circle_km": 8732.87,
+        "lane_km": 9766.604,
+        "dijkstra_km": 9766.604,
+        "detour_ratio": 1.1184
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Colombo",
+        "great_circle_km": 7673.717,
+        "lane_km": 8119.757,
+        "dijkstra_km": 8119.757,
+        "detour_ratio": 1.0581
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Singapore",
+        "great_circle_km": 4946.811,
+        "lane_km": 5202.586,
+        "dijkstra_km": 5202.586,
+        "detour_ratio": 1.0517
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Jakarta",
+        "great_circle_km": 4452.086,
+        "lane_km": 4635.914,
+        "dijkstra_km": 4635.914,
+        "detour_ratio": 1.0413
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Kudat",
+        "great_circle_km": 3818.394,
+        "lane_km": 5263.198,
+        "dijkstra_km": 5263.198,
+        "detour_ratio": 1.3784
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Bangkok",
+        "great_circle_km": 5758.936,
+        "lane_km": 6558.202,
+        "dijkstra_km": 6558.202,
+        "detour_ratio": 1.1388
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Manila",
+        "great_circle_km": 3935.765,
+        "lane_km": 6242.813,
+        "dijkstra_km": 6242.813,
+        "detour_ratio": 1.5862
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Hong_Kong",
+        "great_circle_km": 5041.773,
+        "lane_km": 7371.255,
+        "dijkstra_km": 7371.255,
+        "detour_ratio": 1.462
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Busan",
+        "great_circle_km": 5316.771,
+        "lane_km": 8292.975,
+        "dijkstra_km": 8292.975,
+        "detour_ratio": 1.5598
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Shanghai",
+        "great_circle_km": 5289.021,
+        "lane_km": 8098.0,
+        "dijkstra_km": 8098.0,
+        "detour_ratio": 1.5311
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Shenzhen",
+        "great_circle_km": 5066.752,
+        "lane_km": 7398.389,
+        "dijkstra_km": 7398.389,
+        "detour_ratio": 1.4602
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Yokohama",
+        "great_circle_km": 5057.088,
+        "lane_km": 6062.355,
+        "dijkstra_km": 6062.355,
+        "detour_ratio": 1.1988
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Palu",
+        "great_circle_km": 3232.605,
+        "lane_km": 4455.188,
+        "dijkstra_km": 4455.188,
+        "detour_ratio": 1.3782
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Tokyo",
+        "great_circle_km": 5082.316,
+        "lane_km": 6087.204,
+        "dijkstra_km": 6087.204,
+        "detour_ratio": 1.1977
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Melbourne",
+        "great_circle_km": 3158.269,
+        "lane_km": 4528.218,
+        "dijkstra_km": 4528.218,
+        "detour_ratio": 1.4338
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Perth",
+        "great_circle_km": 4074.706,
+        "lane_km": 6543.869,
+        "dijkstra_km": 6543.869,
+        "detour_ratio": 1.606
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Suez_Canal",
+        "great_circle_km": 12917.897,
+        "lane_km": 14653.933,
+        "dijkstra_km": 14653.933,
+        "detour_ratio": 1.1344
+      },
+      {
+        "origin": "Port Moresby",
+        "destination": "Salalah",
+        "great_circle_km": 10643.595,
+        "lane_km": 12246.065,
+        "dijkstra_km": 12246.065,
+        "detour_ratio": 1.1506
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 6846.738,
+        "lane_km": 8200.476,
+        "dijkstra_km": 8200.476,
+        "detour_ratio": 1.1977
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Mumbai",
+        "great_circle_km": 4939.17,
+        "lane_km": 6243.995,
+        "dijkstra_km": 6243.995,
+        "detour_ratio": 1.2642
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Colombo",
+        "great_circle_km": 4081.693,
+        "lane_km": 4597.148,
+        "dijkstra_km": 4597.148,
+        "detour_ratio": 1.1263
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Singapore",
+        "great_circle_km": 1569.691,
+        "lane_km": 1679.977,
+        "dijkstra_km": 1679.977,
+        "detour_ratio": 1.0703
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Jakarta",
+        "great_circle_km": 1830.427,
+        "lane_km": 2480.758,
+        "dijkstra_km": 2480.758,
+        "detour_ratio": 1.3553
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Port Moresby",
+        "great_circle_km": 3818.394,
+        "lane_km": 5263.198,
+        "dijkstra_km": 5263.198,
+        "detour_ratio": 1.3784
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Bangkok",
+        "great_circle_km": 1943.278,
+        "lane_km": 2986.631,
+        "dijkstra_km": 2986.631,
+        "detour_ratio": 1.5369
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Manila",
+        "great_circle_km": 969.63,
+        "lane_km": 979.615,
+        "dijkstra_km": 979.615,
+        "detour_ratio": 1.0103
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Hong_Kong",
+        "great_circle_km": 1740.26,
+        "lane_km": 2108.058,
+        "dijkstra_km": 2108.058,
+        "detour_ratio": 1.2113
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Busan",
+        "great_circle_km": 3385.614,
+        "lane_km": 3678.385,
+        "dijkstra_km": 3678.385,
+        "detour_ratio": 1.0865
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Shanghai",
+        "great_circle_km": 2749.741,
+        "lane_km": 2834.802,
+        "dijkstra_km": 2834.802,
+        "detour_ratio": 1.0309
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Shenzhen",
+        "great_circle_km": 1766.761,
+        "lane_km": 2135.191,
+        "dijkstra_km": 2135.191,
+        "detour_ratio": 1.2085
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Yokohama",
+        "great_circle_km": 3935.937,
+        "lane_km": 5066.521,
+        "dijkstra_km": 5066.521,
+        "detour_ratio": 1.2872
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Palu",
+        "great_circle_km": 745.359,
+        "lane_km": 818.259,
+        "dijkstra_km": 818.259,
+        "detour_ratio": 1.0978
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Tokyo",
+        "great_circle_km": 3956.037,
+        "lane_km": 5089.98,
+        "dijkstra_km": 5089.98,
+        "detour_ratio": 1.2866
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Melbourne",
+        "great_circle_km": 5760.907,
+        "lane_km": 8691.208,
+        "dijkstra_km": 8691.208,
+        "detour_ratio": 1.5087
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Perth",
+        "great_circle_km": 4319.464,
+        "lane_km": 6170.006,
+        "dijkstra_km": 6170.006,
+        "detour_ratio": 1.4284
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Suez_Canal",
+        "great_circle_km": 9101.791,
+        "lane_km": 11131.324,
+        "dijkstra_km": 11131.324,
+        "detour_ratio": 1.223
+      },
+      {
+        "origin": "Kudat",
+        "destination": "Salalah",
+        "great_circle_km": 6901.122,
+        "lane_km": 9344.81,
+        "dijkstra_km": 9344.81,
+        "detour_ratio": 1.3541
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 4903.493,
+        "lane_km": 8047.603,
+        "dijkstra_km": 8047.603,
+        "detour_ratio": 1.6412
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Mumbai",
+        "great_circle_km": 3004.349,
+        "lane_km": 6091.122,
+        "dijkstra_km": 6091.122,
+        "detour_ratio": 2.0274
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Colombo",
+        "great_circle_km": 2380.347,
+        "lane_km": 4444.276,
+        "dijkstra_km": 4444.276,
+        "detour_ratio": 1.8671
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Singapore",
+        "great_circle_km": 1426.759,
+        "lane_km": 1527.105,
+        "dijkstra_km": 1527.105,
+        "detour_ratio": 1.0703
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Jakarta",
+        "great_circle_km": 2327.835,
+        "lane_km": 2646.14,
+        "dijkstra_km": 2646.14,
+        "detour_ratio": 1.1367
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Port Moresby",
+        "great_circle_km": 5758.936,
+        "lane_km": 6558.202,
+        "dijkstra_km": 6558.202,
+        "detour_ratio": 1.1388
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Kudat",
+        "great_circle_km": 1943.278,
+        "lane_km": 2986.631,
+        "dijkstra_km": 2986.631,
+        "detour_ratio": 1.5369
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Manila",
+        "great_circle_km": 2209.417,
+        "lane_km": 2808.134,
+        "dijkstra_km": 2808.134,
+        "detour_ratio": 1.271
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Hong_Kong",
+        "great_circle_km": 1728.805,
+        "lane_km": 3892.576,
+        "dijkstra_km": 3892.576,
+        "detour_ratio": 2.2516
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Busan",
+        "great_circle_km": 3721.273,
+        "lane_km": 5594.285,
+        "dijkstra_km": 5594.285,
+        "detour_ratio": 1.5033
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Shanghai",
+        "great_circle_km": 2890.5,
+        "lane_km": 4750.702,
+        "dijkstra_km": 4750.702,
+        "detour_ratio": 1.6436
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Shenzhen",
+        "great_circle_km": 1732.065,
+        "lane_km": 3919.71,
+        "dijkstra_km": 3919.71,
+        "detour_ratio": 2.263
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Yokohama",
+        "great_circle_km": 4588.334,
+        "lane_km": 6848.014,
+        "dijkstra_km": 6848.014,
+        "detour_ratio": 1.4925
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Palu",
+        "great_circle_km": 2566.932,
+        "lane_km": 3804.889,
+        "dijkstra_km": 3804.889,
+        "detour_ratio": 1.4823
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Tokyo",
+        "great_circle_km": 4598.948,
+        "lane_km": 6871.473,
+        "dijkstra_km": 6871.473,
+        "detour_ratio": 1.4941
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Melbourne",
+        "great_circle_km": 7372.656,
+        "lane_km": 8856.59,
+        "dijkstra_km": 8856.59,
+        "detour_ratio": 1.2013
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Perth",
+        "great_circle_km": 5339.496,
+        "lane_km": 6335.388,
+        "dijkstra_km": 6335.388,
+        "detour_ratio": 1.1865
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Suez_Canal",
+        "great_circle_km": 7168.406,
+        "lane_km": 10978.451,
+        "dijkstra_km": 10978.451,
+        "detour_ratio": 1.5315
+      },
+      {
+        "origin": "Bangkok",
+        "destination": "Salalah",
+        "great_circle_km": 4986.781,
+        "lane_km": 9191.937,
+        "dijkstra_km": 9191.937,
+        "detour_ratio": 1.8433
+      },
+      {
+        "origin": "Manila",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 6931.078,
+        "lane_km": 9076.277,
+        "dijkstra_km": 9076.277,
+        "detour_ratio": 1.3095
+      },
+      {
+        "origin": "Manila",
+        "destination": "Mumbai",
+        "great_circle_km": 5133.952,
+        "lane_km": 7119.796,
+        "dijkstra_km": 7119.796,
+        "detour_ratio": 1.3868
+      },
+      {
+        "origin": "Manila",
+        "destination": "Colombo",
+        "great_circle_km": 4565.341,
+        "lane_km": 5472.949,
+        "dijkstra_km": 5472.949,
+        "detour_ratio": 1.1988
+      },
+      {
+        "origin": "Manila",
+        "destination": "Singapore",
+        "great_circle_km": 2392.705,
+        "lane_km": 2555.778,
+        "dijkstra_km": 2555.778,
+        "detour_ratio": 1.0682
+      },
+      {
+        "origin": "Manila",
+        "destination": "Jakarta",
+        "great_circle_km": 2790.044,
+        "lane_km": 3356.559,
+        "dijkstra_km": 3356.559,
+        "detour_ratio": 1.203
+      },
+      {
+        "origin": "Manila",
+        "destination": "Port Moresby",
+        "great_circle_km": 3935.765,
+        "lane_km": 6242.813,
+        "dijkstra_km": 6242.813,
+        "detour_ratio": 1.5862
+      },
+      {
+        "origin": "Manila",
+        "destination": "Kudat",
+        "great_circle_km": 969.63,
+        "lane_km": 979.615,
+        "dijkstra_km": 979.615,
+        "detour_ratio": 1.0103
+      },
+      {
+        "origin": "Manila",
+        "destination": "Bangkok",
+        "great_circle_km": 2209.417,
+        "lane_km": 2808.134,
+        "dijkstra_km": 2808.134,
+        "detour_ratio": 1.271
+      },
+      {
+        "origin": "Manila",
+        "destination": "Hong_Kong",
+        "great_circle_km": 1119.106,
+        "lane_km": 1128.443,
+        "dijkstra_km": 1128.443,
+        "detour_ratio": 1.0083
+      },
+      {
+        "origin": "Manila",
+        "destination": "Busan",
+        "great_circle_km": 2427.106,
+        "lane_km": 2786.151,
+        "dijkstra_km": 2786.151,
+        "detour_ratio": 1.1479
+      },
+      {
+        "origin": "Manila",
+        "destination": "Shanghai",
+        "great_circle_km": 1849.944,
+        "lane_km": 1942.568,
+        "dijkstra_km": 1942.568,
+        "detour_ratio": 1.0501
+      },
+      {
+        "origin": "Manila",
+        "destination": "Shenzhen",
+        "great_circle_km": 1145.418,
+        "lane_km": 1155.576,
+        "dijkstra_km": 1155.576,
+        "detour_ratio": 1.0089
+      },
+      {
+        "origin": "Manila",
+        "destination": "Yokohama",
+        "great_circle_km": 2972.231,
+        "lane_km": 4086.905,
+        "dijkstra_km": 4086.905,
+        "detour_ratio": 1.375
+      },
+      {
+        "origin": "Manila",
+        "destination": "Palu",
+        "great_circle_km": 1528.125,
+        "lane_km": 1797.874,
+        "dijkstra_km": 1797.874,
+        "detour_ratio": 1.1765
+      },
+      {
+        "origin": "Manila",
+        "destination": "Tokyo",
+        "great_circle_km": 2991.799,
+        "lane_km": 4110.364,
+        "dijkstra_km": 4110.364,
+        "detour_ratio": 1.3739
+      },
+      {
+        "origin": "Manila",
+        "destination": "Melbourne",
+        "great_circle_km": 6343.087,
+        "lane_km": 9567.009,
+        "dijkstra_km": 9567.009,
+        "detour_ratio": 1.5083
+      },
+      {
+        "origin": "Manila",
+        "destination": "Perth",
+        "great_circle_km": 5204.942,
+        "lane_km": 7045.807,
+        "dijkstra_km": 7045.807,
+        "detour_ratio": 1.3537
+      },
+      {
+        "origin": "Manila",
+        "destination": "Suez_Canal",
+        "great_circle_km": 9068.37,
+        "lane_km": 12007.125,
+        "dijkstra_km": 12007.125,
+        "detour_ratio": 1.3241
+      },
+      {
+        "origin": "Manila",
+        "destination": "Salalah",
+        "great_circle_km": 7136.402,
+        "lane_km": 10220.611,
+        "dijkstra_km": 10220.611,
+        "detour_ratio": 1.4322
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 5979.363,
+        "lane_km": 9171.564,
+        "dijkstra_km": 9171.564,
+        "detour_ratio": 1.5339
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Mumbai",
+        "great_circle_km": 4304.675,
+        "lane_km": 7215.083,
+        "dijkstra_km": 7215.083,
+        "detour_ratio": 1.6761
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Colombo",
+        "great_circle_km": 4053.239,
+        "lane_km": 5568.236,
+        "dijkstra_km": 5568.236,
+        "detour_ratio": 1.3738
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Singapore",
+        "great_circle_km": 2586.134,
+        "lane_km": 2651.065,
+        "dijkstra_km": 2651.065,
+        "detour_ratio": 1.0251
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Jakarta",
+        "great_circle_km": 3270.866,
+        "lane_km": 3770.101,
+        "dijkstra_km": 3770.101,
+        "detour_ratio": 1.1526
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Port Moresby",
+        "great_circle_km": 5041.773,
+        "lane_km": 7371.255,
+        "dijkstra_km": 7371.255,
+        "detour_ratio": 1.462
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Kudat",
+        "great_circle_km": 1740.26,
+        "lane_km": 2108.058,
+        "dijkstra_km": 2108.058,
+        "detour_ratio": 1.2113
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Bangkok",
+        "great_circle_km": 1728.805,
+        "lane_km": 3892.576,
+        "dijkstra_km": 3892.576,
+        "detour_ratio": 2.2516
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Manila",
+        "great_circle_km": 1119.106,
+        "lane_km": 1128.443,
+        "dijkstra_km": 1128.443,
+        "detour_ratio": 1.0083
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Busan",
+        "great_circle_km": 2033.943,
+        "lane_km": 2141.826,
+        "dijkstra_km": 2141.826,
+        "detour_ratio": 1.053
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Shanghai",
+        "great_circle_km": 1227.03,
+        "lane_km": 1485.019,
+        "dijkstra_km": 1485.019,
+        "detour_ratio": 1.2103
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Shenzhen",
+        "great_circle_km": 27.397,
+        "lane_km": 36.052,
+        "dijkstra_km": 36.052,
+        "detour_ratio": 1.3159
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Yokohama",
+        "great_circle_km": 2864.118,
+        "lane_km": 2958.463,
+        "dijkstra_km": 2958.463,
+        "detour_ratio": 1.0329
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Palu",
+        "great_circle_km": 2460.473,
+        "lane_km": 2926.317,
+        "dijkstra_km": 2926.317,
+        "detour_ratio": 1.1893
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Tokyo",
+        "great_circle_km": 2875.629,
+        "lane_km": 2981.922,
+        "dijkstra_km": 2981.922,
+        "detour_ratio": 1.037
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Melbourne",
+        "great_circle_km": 7420.793,
+        "lane_km": 9980.551,
+        "dijkstra_km": 9980.551,
+        "detour_ratio": 1.3449
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Perth",
+        "great_circle_km": 6037.313,
+        "lane_km": 7459.349,
+        "dijkstra_km": 7459.349,
+        "detour_ratio": 1.2355
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Suez_Canal",
+        "great_circle_km": 8030.325,
+        "lane_km": 12102.412,
+        "dijkstra_km": 12102.412,
+        "detour_ratio": 1.5071
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Salalah",
+        "great_circle_km": 6289.48,
+        "lane_km": 10315.898,
+        "dijkstra_km": 10315.898,
+        "detour_ratio": 1.6402
+      },
+      {
+        "origin": "Busan",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 7051.099,
+        "lane_km": 11279.978,
+        "dijkstra_km": 11279.978,
+        "detour_ratio": 1.5997
+      },
+      {
+        "origin": "Busan",
+        "destination": "Mumbai",
+        "great_circle_km": 5773.947,
+        "lane_km": 9323.497,
+        "dijkstra_km": 9323.497,
+        "detour_ratio": 1.6148
+      },
+      {
+        "origin": "Busan",
+        "destination": "Colombo",
+        "great_circle_km": 5911.725,
+        "lane_km": 7676.65,
+        "dijkstra_km": 7676.65,
+        "detour_ratio": 1.2985
+      },
+      {
+        "origin": "Busan",
+        "destination": "Singapore",
+        "great_circle_km": 4579.341,
+        "lane_km": 4759.479,
+        "dijkstra_km": 4759.479,
+        "detour_ratio": 1.0393
+      },
+      {
+        "origin": "Busan",
+        "destination": "Jakarta",
+        "great_circle_km": 5157.419,
+        "lane_km": 5878.515,
+        "dijkstra_km": 5878.515,
+        "detour_ratio": 1.1398
+      },
+      {
+        "origin": "Busan",
+        "destination": "Port Moresby",
+        "great_circle_km": 5316.771,
+        "lane_km": 8292.975,
+        "dijkstra_km": 8292.975,
+        "detour_ratio": 1.5598
+      },
+      {
+        "origin": "Busan",
+        "destination": "Kudat",
+        "great_circle_km": 3385.614,
+        "lane_km": 3678.385,
+        "dijkstra_km": 3678.385,
+        "detour_ratio": 1.0865
+      },
+      {
+        "origin": "Busan",
+        "destination": "Bangkok",
+        "great_circle_km": 3721.273,
+        "lane_km": 5594.285,
+        "dijkstra_km": 5594.285,
+        "detour_ratio": 1.5033
+      },
+      {
+        "origin": "Busan",
+        "destination": "Manila",
+        "great_circle_km": 2427.106,
+        "lane_km": 2786.151,
+        "dijkstra_km": 2786.151,
+        "detour_ratio": 1.1479
+      },
+      {
+        "origin": "Busan",
+        "destination": "Hong_Kong",
+        "great_circle_km": 2033.943,
+        "lane_km": 2141.826,
+        "dijkstra_km": 2141.826,
+        "detour_ratio": 1.053
+      },
+      {
+        "origin": "Busan",
+        "destination": "Shanghai",
+        "great_circle_km": 832.102,
+        "lane_km": 843.583,
+        "dijkstra_km": 843.583,
+        "detour_ratio": 1.0138
+      },
+      {
+        "origin": "Busan",
+        "destination": "Shenzhen",
+        "great_circle_km": 2023.286,
+        "lane_km": 2146.432,
+        "dijkstra_km": 2146.432,
+        "detour_ratio": 1.0609
+      },
+      {
+        "origin": "Busan",
+        "destination": "Yokohama",
+        "great_circle_km": 958.397,
+        "lane_km": 2230.62,
+        "dijkstra_km": 2230.62,
+        "detour_ratio": 2.3274
+      },
+      {
+        "origin": "Busan",
+        "destination": "Palu",
+        "great_circle_km": 3928.963,
+        "lane_km": 4496.644,
+        "dijkstra_km": 4496.644,
+        "detour_ratio": 1.1445
+      },
+      {
+        "origin": "Busan",
+        "destination": "Tokyo",
+        "great_circle_km": 959.264,
+        "lane_km": 2216.74,
+        "dijkstra_km": 2216.74,
+        "detour_ratio": 2.3109
+      },
+      {
+        "origin": "Busan",
+        "destination": "Melbourne",
+        "great_circle_km": 8280.179,
+        "lane_km": 11230.634,
+        "dijkstra_km": 11230.634,
+        "detour_ratio": 1.3563
+      },
+      {
+        "origin": "Busan",
+        "destination": "Perth",
+        "great_circle_km": 7591.07,
+        "lane_km": 9567.763,
+        "dijkstra_km": 9567.763,
+        "detour_ratio": 1.2604
+      },
+      {
+        "origin": "Busan",
+        "destination": "Suez_Canal",
+        "great_circle_km": 8661.462,
+        "lane_km": 14210.826,
+        "dijkstra_km": 14210.826,
+        "detour_ratio": 1.6407
+      },
+      {
+        "origin": "Busan",
+        "destination": "Salalah",
+        "great_circle_km": 7596.722,
+        "lane_km": 12424.312,
+        "dijkstra_km": 12424.312,
+        "detour_ratio": 1.6355
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 6454.081,
+        "lane_km": 10623.172,
+        "dijkstra_km": 10623.172,
+        "detour_ratio": 1.646
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Mumbai",
+        "great_circle_km": 5042.59,
+        "lane_km": 8666.69,
+        "dijkstra_km": 8666.69,
+        "detour_ratio": 1.7187
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Colombo",
+        "great_circle_km": 5092.634,
+        "lane_km": 7019.844,
+        "dijkstra_km": 7019.844,
+        "detour_ratio": 1.3784
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Singapore",
+        "great_circle_km": 3805.74,
+        "lane_km": 4102.673,
+        "dijkstra_km": 4102.673,
+        "detour_ratio": 1.078
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Jakarta",
+        "great_circle_km": 4443.834,
+        "lane_km": 5211.746,
+        "dijkstra_km": 5211.746,
+        "detour_ratio": 1.1728
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Port Moresby",
+        "great_circle_km": 5289.021,
+        "lane_km": 8098.0,
+        "dijkstra_km": 8098.0,
+        "detour_ratio": 1.5311
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Kudat",
+        "great_circle_km": 2749.741,
+        "lane_km": 2834.802,
+        "dijkstra_km": 2834.802,
+        "detour_ratio": 1.0309
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Bangkok",
+        "great_circle_km": 2890.5,
+        "lane_km": 4750.702,
+        "dijkstra_km": 4750.702,
+        "detour_ratio": 1.6436
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Manila",
+        "great_circle_km": 1849.944,
+        "lane_km": 1942.568,
+        "dijkstra_km": 1942.568,
+        "detour_ratio": 1.0501
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Hong_Kong",
+        "great_circle_km": 1227.03,
+        "lane_km": 1485.019,
+        "dijkstra_km": 1485.019,
+        "detour_ratio": 1.2103
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Busan",
+        "great_circle_km": 832.102,
+        "lane_km": 843.583,
+        "dijkstra_km": 843.583,
+        "detour_ratio": 1.0138
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Shenzhen",
+        "great_circle_km": 1213.275,
+        "lane_km": 1489.625,
+        "dijkstra_km": 1489.625,
+        "detour_ratio": 1.2278
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Yokohama",
+        "great_circle_km": 1748.343,
+        "lane_km": 3074.203,
+        "dijkstra_km": 3074.203,
+        "detour_ratio": 1.7584
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Palu",
+        "great_circle_km": 3376.734,
+        "lane_km": 3653.061,
+        "dijkstra_km": 3653.061,
+        "detour_ratio": 1.0818
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Tokyo",
+        "great_circle_km": 1754.264,
+        "lane_km": 3060.323,
+        "dijkstra_km": 3060.323,
+        "detour_ratio": 1.7445
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Melbourne",
+        "great_circle_km": 8055.174,
+        "lane_km": 11422.195,
+        "dijkstra_km": 11422.195,
+        "detour_ratio": 1.418
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Perth",
+        "great_circle_km": 7050.297,
+        "lane_km": 8900.993,
+        "dijkstra_km": 8900.993,
+        "detour_ratio": 1.2625
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Suez_Canal",
+        "great_circle_km": 8239.379,
+        "lane_km": 13554.019,
+        "dijkstra_km": 13554.019,
+        "detour_ratio": 1.645
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Salalah",
+        "great_circle_km": 6928.939,
+        "lane_km": 11767.506,
+        "dijkstra_km": 11767.506,
+        "detour_ratio": 1.6983
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 5961.734,
+        "lane_km": 9195.041,
+        "dijkstra_km": 9195.041,
+        "detour_ratio": 1.5423
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Mumbai",
+        "great_circle_km": 4292.075,
+        "lane_km": 7238.56,
+        "dijkstra_km": 7238.56,
+        "detour_ratio": 1.6865
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Colombo",
+        "great_circle_km": 4050.906,
+        "lane_km": 5591.713,
+        "dijkstra_km": 5591.713,
+        "detour_ratio": 1.3804
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Singapore",
+        "great_circle_km": 2603.175,
+        "lane_km": 2674.542,
+        "dijkstra_km": 2674.542,
+        "detour_ratio": 1.0274
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Jakarta",
+        "great_circle_km": 3292.001,
+        "lane_km": 3793.578,
+        "dijkstra_km": 3793.578,
+        "detour_ratio": 1.1524
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Port Moresby",
+        "great_circle_km": 5066.752,
+        "lane_km": 7398.389,
+        "dijkstra_km": 7398.389,
+        "detour_ratio": 1.4602
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Kudat",
+        "great_circle_km": 1766.761,
+        "lane_km": 2135.191,
+        "dijkstra_km": 2135.191,
+        "detour_ratio": 1.2085
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Bangkok",
+        "great_circle_km": 1732.065,
+        "lane_km": 3919.71,
+        "dijkstra_km": 3919.71,
+        "detour_ratio": 2.263
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Manila",
+        "great_circle_km": 1145.418,
+        "lane_km": 1155.576,
+        "dijkstra_km": 1155.576,
+        "detour_ratio": 1.0089
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Hong_Kong",
+        "great_circle_km": 27.397,
+        "lane_km": 36.052,
+        "dijkstra_km": 36.052,
+        "detour_ratio": 1.3159
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Busan",
+        "great_circle_km": 2023.286,
+        "lane_km": 2146.432,
+        "dijkstra_km": 2146.432,
+        "detour_ratio": 1.0609
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Shanghai",
+        "great_circle_km": 1213.275,
+        "lane_km": 1489.625,
+        "dijkstra_km": 1489.625,
+        "detour_ratio": 1.2278
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Yokohama",
+        "great_circle_km": 2858.739,
+        "lane_km": 2963.069,
+        "dijkstra_km": 2963.069,
+        "detour_ratio": 1.0365
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Palu",
+        "great_circle_km": 2487.507,
+        "lane_km": 2953.45,
+        "dijkstra_km": 2953.45,
+        "detour_ratio": 1.1873
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Tokyo",
+        "great_circle_km": 2870.026,
+        "lane_km": 2986.528,
+        "dijkstra_km": 2986.528,
+        "detour_ratio": 1.0406
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Melbourne",
+        "great_circle_km": 7448.182,
+        "lane_km": 10004.028,
+        "dijkstra_km": 10004.028,
+        "detour_ratio": 1.3432
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Perth",
+        "great_circle_km": 6062.551,
+        "lane_km": 7482.826,
+        "dijkstra_km": 7482.826,
+        "detour_ratio": 1.2343
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Suez_Canal",
+        "great_circle_km": 8008.983,
+        "lane_km": 12125.889,
+        "dijkstra_km": 12125.889,
+        "detour_ratio": 1.514
+      },
+      {
+        "origin": "Shenzhen",
+        "destination": "Salalah",
+        "great_circle_km": 6275.472,
+        "lane_km": 10339.375,
+        "dijkstra_km": 10339.375,
+        "detour_ratio": 1.6476
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 7966.244,
+        "lane_km": 11841.408,
+        "dijkstra_km": 11841.408,
+        "detour_ratio": 1.4864
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Mumbai",
+        "great_circle_km": 6731.773,
+        "lane_km": 9884.927,
+        "dijkstra_km": 9884.927,
+        "detour_ratio": 1.4684
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Colombo",
+        "great_circle_km": 6839.387,
+        "lane_km": 8238.08,
+        "dijkstra_km": 8238.08,
+        "detour_ratio": 1.2045
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Singapore",
+        "great_circle_km": 5294.535,
+        "lane_km": 5320.909,
+        "dijkstra_km": 5320.909,
+        "detour_ratio": 1.005
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Jakarta",
+        "great_circle_km": 5762.224,
+        "lane_km": 6439.945,
+        "dijkstra_km": 6439.945,
+        "detour_ratio": 1.1176
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Port Moresby",
+        "great_circle_km": 5057.088,
+        "lane_km": 6062.355,
+        "dijkstra_km": 6062.355,
+        "detour_ratio": 1.1988
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Kudat",
+        "great_circle_km": 3935.937,
+        "lane_km": 5066.521,
+        "dijkstra_km": 5066.521,
+        "detour_ratio": 1.2872
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Bangkok",
+        "great_circle_km": 4588.334,
+        "lane_km": 6848.014,
+        "dijkstra_km": 6848.014,
+        "detour_ratio": 1.4925
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Manila",
+        "great_circle_km": 2972.231,
+        "lane_km": 4086.905,
+        "dijkstra_km": 4086.905,
+        "detour_ratio": 1.375
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Hong_Kong",
+        "great_circle_km": 2864.118,
+        "lane_km": 2958.463,
+        "dijkstra_km": 2958.463,
+        "detour_ratio": 1.0329
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Busan",
+        "great_circle_km": 958.397,
+        "lane_km": 2230.62,
+        "dijkstra_km": 2230.62,
+        "detour_ratio": 2.3274
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Shanghai",
+        "great_circle_km": 1748.343,
+        "lane_km": 3074.203,
+        "dijkstra_km": 3074.203,
+        "detour_ratio": 1.7584
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Shenzhen",
+        "great_circle_km": 2858.739,
+        "lane_km": 2963.069,
+        "dijkstra_km": 2963.069,
+        "detour_ratio": 1.0365
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Palu",
+        "great_circle_km": 4350.9,
+        "lane_km": 5884.78,
+        "dijkstra_km": 5884.78,
+        "detour_ratio": 1.3525
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Tokyo",
+        "great_circle_km": 25.877,
+        "lane_km": 36.352,
+        "dijkstra_km": 36.352,
+        "detour_ratio": 1.4048
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Melbourne",
+        "great_circle_km": 8164.312,
+        "lane_km": 9000.015,
+        "dijkstra_km": 9000.015,
+        "detour_ratio": 1.1024
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Perth",
+        "great_circle_km": 7893.919,
+        "lane_km": 10129.193,
+        "dijkstra_km": 10129.193,
+        "detour_ratio": 1.2832
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Suez_Canal",
+        "great_circle_km": 9461.16,
+        "lane_km": 14772.256,
+        "dijkstra_km": 14772.256,
+        "detour_ratio": 1.5614
+      },
+      {
+        "origin": "Yokohama",
+        "destination": "Salalah",
+        "great_circle_km": 8539.126,
+        "lane_km": 12985.742,
+        "dijkstra_km": 12985.742,
+        "detour_ratio": 1.5207
+      },
+      {
+        "origin": "Palu",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 7439.853,
+        "lane_km": 9018.735,
+        "dijkstra_km": 9018.735,
+        "detour_ratio": 1.2122
+      },
+      {
+        "origin": "Palu",
+        "destination": "Mumbai",
+        "great_circle_km": 5503.324,
+        "lane_km": 7062.254,
+        "dijkstra_km": 7062.254,
+        "detour_ratio": 1.2833
+      },
+      {
+        "origin": "Palu",
+        "destination": "Colombo",
+        "great_circle_km": 4487.079,
+        "lane_km": 5415.407,
+        "dijkstra_km": 5415.407,
+        "detour_ratio": 1.2069
+      },
+      {
+        "origin": "Palu",
+        "destination": "Singapore",
+        "great_circle_km": 1785.945,
+        "lane_km": 2498.236,
+        "dijkstra_km": 2498.236,
+        "detour_ratio": 1.3988
+      },
+      {
+        "origin": "Palu",
+        "destination": "Jakarta",
+        "great_circle_km": 1648.529,
+        "lane_km": 2063.216,
+        "dijkstra_km": 2063.216,
+        "detour_ratio": 1.2515
+      },
+      {
+        "origin": "Palu",
+        "destination": "Port Moresby",
+        "great_circle_km": 3232.605,
+        "lane_km": 4455.188,
+        "dijkstra_km": 4455.188,
+        "detour_ratio": 1.3782
+      },
+      {
+        "origin": "Palu",
+        "destination": "Kudat",
+        "great_circle_km": 745.359,
+        "lane_km": 818.259,
+        "dijkstra_km": 818.259,
+        "detour_ratio": 1.0978
+      },
+      {
+        "origin": "Palu",
+        "destination": "Bangkok",
+        "great_circle_km": 2566.932,
+        "lane_km": 3804.889,
+        "dijkstra_km": 3804.889,
+        "detour_ratio": 1.4823
+      },
+      {
+        "origin": "Palu",
+        "destination": "Manila",
+        "great_circle_km": 1528.125,
+        "lane_km": 1797.874,
+        "dijkstra_km": 1797.874,
+        "detour_ratio": 1.1765
+      },
+      {
+        "origin": "Palu",
+        "destination": "Hong_Kong",
+        "great_circle_km": 2460.473,
+        "lane_km": 2926.317,
+        "dijkstra_km": 2926.317,
+        "detour_ratio": 1.1893
+      },
+      {
+        "origin": "Palu",
+        "destination": "Busan",
+        "great_circle_km": 3928.963,
+        "lane_km": 4496.644,
+        "dijkstra_km": 4496.644,
+        "detour_ratio": 1.1445
+      },
+      {
+        "origin": "Palu",
+        "destination": "Shanghai",
+        "great_circle_km": 3376.734,
+        "lane_km": 3653.061,
+        "dijkstra_km": 3653.061,
+        "detour_ratio": 1.0818
+      },
+      {
+        "origin": "Palu",
+        "destination": "Shenzhen",
+        "great_circle_km": 2487.507,
+        "lane_km": 2953.45,
+        "dijkstra_km": 2953.45,
+        "detour_ratio": 1.1873
+      },
+      {
+        "origin": "Palu",
+        "destination": "Yokohama",
+        "great_circle_km": 4350.9,
+        "lane_km": 5884.78,
+        "dijkstra_km": 5884.78,
+        "detour_ratio": 1.3525
+      },
+      {
+        "origin": "Palu",
+        "destination": "Tokyo",
+        "great_circle_km": 4373.342,
+        "lane_km": 5908.238,
+        "dijkstra_km": 5908.238,
+        "detour_ratio": 1.351
+      },
+      {
+        "origin": "Palu",
+        "destination": "Melbourne",
+        "great_circle_km": 5015.773,
+        "lane_km": 8165.215,
+        "dijkstra_km": 8165.215,
+        "detour_ratio": 1.6279
+      },
+      {
+        "origin": "Palu",
+        "destination": "Perth",
+        "great_circle_km": 3677.34,
+        "lane_km": 5752.463,
+        "dijkstra_km": 5752.463,
+        "detour_ratio": 1.5643
+      },
+      {
+        "origin": "Palu",
+        "destination": "Suez_Canal",
+        "great_circle_km": 9728.08,
+        "lane_km": 11949.583,
+        "dijkstra_km": 11949.583,
+        "detour_ratio": 1.2284
+      },
+      {
+        "origin": "Palu",
+        "destination": "Salalah",
+        "great_circle_km": 7416.159,
+        "lane_km": 9673.367,
+        "dijkstra_km": 9673.367,
+        "detour_ratio": 1.3044
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 7959.286,
+        "lane_km": 11864.867,
+        "dijkstra_km": 11864.867,
+        "detour_ratio": 1.4907
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Mumbai",
+        "great_circle_km": 6731.472,
+        "lane_km": 9908.386,
+        "dijkstra_km": 9908.386,
+        "detour_ratio": 1.4719
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Colombo",
+        "great_circle_km": 6846.132,
+        "lane_km": 8261.539,
+        "dijkstra_km": 8261.539,
+        "detour_ratio": 1.2067
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Singapore",
+        "great_circle_km": 5311.224,
+        "lane_km": 5344.368,
+        "dijkstra_km": 5344.368,
+        "detour_ratio": 1.0062
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Jakarta",
+        "great_circle_km": 5781.839,
+        "lane_km": 6463.404,
+        "dijkstra_km": 6463.404,
+        "detour_ratio": 1.1179
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Port Moresby",
+        "great_circle_km": 5082.316,
+        "lane_km": 6087.204,
+        "dijkstra_km": 6087.204,
+        "detour_ratio": 1.1977
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Kudat",
+        "great_circle_km": 3956.037,
+        "lane_km": 5089.98,
+        "dijkstra_km": 5089.98,
+        "detour_ratio": 1.2866
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Bangkok",
+        "great_circle_km": 4598.948,
+        "lane_km": 6871.473,
+        "dijkstra_km": 6871.473,
+        "detour_ratio": 1.4941
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Manila",
+        "great_circle_km": 2991.799,
+        "lane_km": 4110.364,
+        "dijkstra_km": 4110.364,
+        "detour_ratio": 1.3739
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Hong_Kong",
+        "great_circle_km": 2875.629,
+        "lane_km": 2981.922,
+        "dijkstra_km": 2981.922,
+        "detour_ratio": 1.037
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Busan",
+        "great_circle_km": 959.264,
+        "lane_km": 2216.74,
+        "dijkstra_km": 2216.74,
+        "detour_ratio": 2.3109
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Shanghai",
+        "great_circle_km": 1754.264,
+        "lane_km": 3060.323,
+        "dijkstra_km": 3060.323,
+        "detour_ratio": 1.7445
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Shenzhen",
+        "great_circle_km": 2870.026,
+        "lane_km": 2986.528,
+        "dijkstra_km": 2986.528,
+        "detour_ratio": 1.0406
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Yokohama",
+        "great_circle_km": 25.877,
+        "lane_km": 36.352,
+        "dijkstra_km": 36.352,
+        "detour_ratio": 1.4048
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Palu",
+        "great_circle_km": 4373.342,
+        "lane_km": 5908.238,
+        "dijkstra_km": 5908.238,
+        "detour_ratio": 1.351
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Melbourne",
+        "great_circle_km": 8190.005,
+        "lane_km": 9024.864,
+        "dijkstra_km": 9024.864,
+        "detour_ratio": 1.1019
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Perth",
+        "great_circle_km": 7918.425,
+        "lane_km": 10152.651,
+        "dijkstra_km": 10152.651,
+        "detour_ratio": 1.2822
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Suez_Canal",
+        "great_circle_km": 9447.455,
+        "lane_km": 14795.714,
+        "dijkstra_km": 14795.714,
+        "detour_ratio": 1.5661
+      },
+      {
+        "origin": "Tokyo",
+        "destination": "Salalah",
+        "great_circle_km": 8535.043,
+        "lane_km": 13009.201,
+        "dijkstra_km": 13009.201,
+        "detour_ratio": 1.5242
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 11669.976,
+        "lane_km": 13349.075,
+        "dijkstra_km": 13349.075,
+        "detour_ratio": 1.1439
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Mumbai",
+        "great_circle_km": 9814.914,
+        "lane_km": 11893.503,
+        "dijkstra_km": 11893.503,
+        "detour_ratio": 1.2118
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Colombo",
+        "great_circle_km": 8356.706,
+        "lane_km": 10246.657,
+        "dijkstra_km": 10246.657,
+        "detour_ratio": 1.2262
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Singapore",
+        "great_circle_km": 6063.299,
+        "lane_km": 7329.486,
+        "dijkstra_km": 7329.486,
+        "detour_ratio": 1.2088
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Jakarta",
+        "great_circle_km": 5206.965,
+        "lane_km": 6210.45,
+        "dijkstra_km": 6210.45,
+        "detour_ratio": 1.1927
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Port Moresby",
+        "great_circle_km": 3158.269,
+        "lane_km": 4528.218,
+        "dijkstra_km": 4528.218,
+        "detour_ratio": 1.4338
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Kudat",
+        "great_circle_km": 5760.907,
+        "lane_km": 8691.208,
+        "dijkstra_km": 8691.208,
+        "detour_ratio": 1.5087
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Bangkok",
+        "great_circle_km": 7372.656,
+        "lane_km": 8856.59,
+        "dijkstra_km": 8856.59,
+        "detour_ratio": 1.2013
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Manila",
+        "great_circle_km": 6343.087,
+        "lane_km": 9567.009,
+        "dijkstra_km": 9567.009,
+        "detour_ratio": 1.5083
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Hong_Kong",
+        "great_circle_km": 7420.793,
+        "lane_km": 9980.551,
+        "dijkstra_km": 9980.551,
+        "detour_ratio": 1.3449
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Busan",
+        "great_circle_km": 8280.179,
+        "lane_km": 11230.634,
+        "dijkstra_km": 11230.634,
+        "detour_ratio": 1.3563
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Shanghai",
+        "great_circle_km": 8055.174,
+        "lane_km": 11422.195,
+        "dijkstra_km": 11422.195,
+        "detour_ratio": 1.418
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Shenzhen",
+        "great_circle_km": 7448.182,
+        "lane_km": 10004.028,
+        "dijkstra_km": 10004.028,
+        "detour_ratio": 1.3432
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Yokohama",
+        "great_circle_km": 8164.312,
+        "lane_km": 9000.015,
+        "dijkstra_km": 9000.015,
+        "detour_ratio": 1.1024
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Palu",
+        "great_circle_km": 5015.773,
+        "lane_km": 8165.215,
+        "dijkstra_km": 8165.215,
+        "detour_ratio": 1.6279
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Tokyo",
+        "great_circle_km": 8190.005,
+        "lane_km": 9024.864,
+        "dijkstra_km": 9024.864,
+        "detour_ratio": 1.1019
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Perth",
+        "great_circle_km": 2721.385,
+        "lane_km": 2943.697,
+        "dijkstra_km": 2943.697,
+        "detour_ratio": 1.0817
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Suez_Canal",
+        "great_circle_km": 13905.641,
+        "lane_km": 16780.832,
+        "dijkstra_km": 16780.832,
+        "detour_ratio": 1.2068
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Salalah",
+        "great_circle_km": 11233.72,
+        "lane_km": 11711.601,
+        "dijkstra_km": 11711.601,
+        "detour_ratio": 1.0425
+      },
+      {
+        "origin": "Perth",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 9039.361,
+        "lane_km": 10591.509,
+        "dijkstra_km": 10591.509,
+        "detour_ratio": 1.1717
+      },
+      {
+        "origin": "Perth",
+        "destination": "Mumbai",
+        "great_circle_km": 7282.277,
+        "lane_km": 9372.301,
+        "dijkstra_km": 9372.301,
+        "detour_ratio": 1.287
+      },
+      {
+        "origin": "Perth",
+        "destination": "Colombo",
+        "great_circle_km": 5766.377,
+        "lane_km": 7725.454,
+        "dijkstra_km": 7725.454,
+        "detour_ratio": 1.3397
+      },
+      {
+        "origin": "Perth",
+        "destination": "Singapore",
+        "great_circle_km": 3914.468,
+        "lane_km": 4808.283,
+        "dijkstra_km": 4808.283,
+        "detour_ratio": 1.2283
+      },
+      {
+        "origin": "Perth",
+        "destination": "Jakarta",
+        "great_circle_km": 3011.714,
+        "lane_km": 3689.248,
+        "dijkstra_km": 3689.248,
+        "detour_ratio": 1.225
+      },
+      {
+        "origin": "Perth",
+        "destination": "Port Moresby",
+        "great_circle_km": 4074.706,
+        "lane_km": 6543.869,
+        "dijkstra_km": 6543.869,
+        "detour_ratio": 1.606
+      },
+      {
+        "origin": "Perth",
+        "destination": "Kudat",
+        "great_circle_km": 4319.464,
+        "lane_km": 6170.006,
+        "dijkstra_km": 6170.006,
+        "detour_ratio": 1.4284
+      },
+      {
+        "origin": "Perth",
+        "destination": "Bangkok",
+        "great_circle_km": 5339.496,
+        "lane_km": 6335.388,
+        "dijkstra_km": 6335.388,
+        "detour_ratio": 1.1865
+      },
+      {
+        "origin": "Perth",
+        "destination": "Manila",
+        "great_circle_km": 5204.942,
+        "lane_km": 7045.807,
+        "dijkstra_km": 7045.807,
+        "detour_ratio": 1.3537
+      },
+      {
+        "origin": "Perth",
+        "destination": "Hong_Kong",
+        "great_circle_km": 6037.313,
+        "lane_km": 7459.349,
+        "dijkstra_km": 7459.349,
+        "detour_ratio": 1.2355
+      },
+      {
+        "origin": "Perth",
+        "destination": "Busan",
+        "great_circle_km": 7591.07,
+        "lane_km": 9567.763,
+        "dijkstra_km": 9567.763,
+        "detour_ratio": 1.2604
+      },
+      {
+        "origin": "Perth",
+        "destination": "Shanghai",
+        "great_circle_km": 7050.297,
+        "lane_km": 8900.993,
+        "dijkstra_km": 8900.993,
+        "detour_ratio": 1.2625
+      },
+      {
+        "origin": "Perth",
+        "destination": "Shenzhen",
+        "great_circle_km": 6062.551,
+        "lane_km": 7482.826,
+        "dijkstra_km": 7482.826,
+        "detour_ratio": 1.2343
+      },
+      {
+        "origin": "Perth",
+        "destination": "Yokohama",
+        "great_circle_km": 7893.919,
+        "lane_km": 10129.193,
+        "dijkstra_km": 10129.193,
+        "detour_ratio": 1.2832
+      },
+      {
+        "origin": "Perth",
+        "destination": "Palu",
+        "great_circle_km": 3677.34,
+        "lane_km": 5752.463,
+        "dijkstra_km": 5752.463,
+        "detour_ratio": 1.5643
+      },
+      {
+        "origin": "Perth",
+        "destination": "Tokyo",
+        "great_circle_km": 7918.425,
+        "lane_km": 10152.651,
+        "dijkstra_km": 10152.651,
+        "detour_ratio": 1.2822
+      },
+      {
+        "origin": "Perth",
+        "destination": "Melbourne",
+        "great_circle_km": 2721.385,
+        "lane_km": 2943.697,
+        "dijkstra_km": 2943.697,
+        "detour_ratio": 1.0817
+      },
+      {
+        "origin": "Perth",
+        "destination": "Suez_Canal",
+        "great_circle_km": 11211.149,
+        "lane_km": 14259.63,
+        "dijkstra_km": 14259.63,
+        "detour_ratio": 1.2719
+      },
+      {
+        "origin": "Perth",
+        "destination": "Salalah",
+        "great_circle_km": 8537.821,
+        "lane_km": 8954.036,
+        "dijkstra_km": 8954.036,
+        "detour_ratio": 1.0487
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 2321.627,
+        "lane_km": 10087.695,
+        "dijkstra_km": 10087.695,
+        "detour_ratio": 4.3451
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Mumbai",
+        "great_circle_km": 4269.633,
+        "lane_km": 8131.214,
+        "dijkstra_km": 8131.214,
+        "detour_ratio": 1.9044
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Colombo",
+        "great_circle_km": 5602.233,
+        "lane_km": 6534.176,
+        "dijkstra_km": 6534.176,
+        "detour_ratio": 1.1664
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Singapore",
+        "great_circle_km": 8170.84,
+        "lane_km": 9451.346,
+        "dijkstra_km": 9451.346,
+        "detour_ratio": 1.1567
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Jakarta",
+        "great_circle_km": 8902.862,
+        "lane_km": 10570.382,
+        "dijkstra_km": 10570.382,
+        "detour_ratio": 1.1873
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Port Moresby",
+        "great_circle_km": 12917.897,
+        "lane_km": 14653.933,
+        "dijkstra_km": 14653.933,
+        "detour_ratio": 1.1344
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Kudat",
+        "great_circle_km": 9101.791,
+        "lane_km": 11131.324,
+        "dijkstra_km": 11131.324,
+        "detour_ratio": 1.223
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Bangkok",
+        "great_circle_km": 7168.406,
+        "lane_km": 10978.451,
+        "dijkstra_km": 10978.451,
+        "detour_ratio": 1.5315
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Manila",
+        "great_circle_km": 9068.37,
+        "lane_km": 12007.125,
+        "dijkstra_km": 12007.125,
+        "detour_ratio": 1.3241
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Hong_Kong",
+        "great_circle_km": 8030.325,
+        "lane_km": 12102.412,
+        "dijkstra_km": 12102.412,
+        "detour_ratio": 1.5071
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Busan",
+        "great_circle_km": 8661.462,
+        "lane_km": 14210.826,
+        "dijkstra_km": 14210.826,
+        "detour_ratio": 1.6407
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Shanghai",
+        "great_circle_km": 8239.379,
+        "lane_km": 13554.019,
+        "dijkstra_km": 13554.019,
+        "detour_ratio": 1.645
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Shenzhen",
+        "great_circle_km": 8008.983,
+        "lane_km": 12125.889,
+        "dijkstra_km": 12125.889,
+        "detour_ratio": 1.514
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Yokohama",
+        "great_circle_km": 9461.16,
+        "lane_km": 14772.256,
+        "dijkstra_km": 14772.256,
+        "detour_ratio": 1.5614
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Palu",
+        "great_circle_km": 9728.08,
+        "lane_km": 11949.583,
+        "dijkstra_km": 11949.583,
+        "detour_ratio": 1.2284
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Tokyo",
+        "great_circle_km": 9447.455,
+        "lane_km": 14795.714,
+        "dijkstra_km": 14795.714,
+        "detour_ratio": 1.5661
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Melbourne",
+        "great_circle_km": 13905.641,
+        "lane_km": 16780.832,
+        "dijkstra_km": 16780.832,
+        "detour_ratio": 1.2068
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Perth",
+        "great_circle_km": 11211.149,
+        "lane_km": 14259.63,
+        "dijkstra_km": 14259.63,
+        "detour_ratio": 1.2719
+      },
+      {
+        "origin": "Suez_Canal",
+        "destination": "Salalah",
+        "great_circle_km": 2673.976,
+        "lane_km": 11232.029,
+        "dijkstra_km": 11232.029,
+        "detour_ratio": 4.2005
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Jebel_Ali",
+        "great_circle_km": 903.226,
+        "lane_km": 1637.474,
+        "dijkstra_km": 1637.474,
+        "detour_ratio": 1.8129
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Mumbai",
+        "great_circle_km": 2002.746,
+        "lane_km": 3187.719,
+        "dijkstra_km": 3187.719,
+        "detour_ratio": 1.5917
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Colombo",
+        "great_circle_km": 3020.217,
+        "lane_km": 4747.662,
+        "dijkstra_km": 4747.662,
+        "detour_ratio": 1.572
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Singapore",
+        "great_circle_km": 5714.321,
+        "lane_km": 7664.833,
+        "dijkstra_km": 7664.833,
+        "detour_ratio": 1.3413
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Jakarta",
+        "great_circle_km": 6350.853,
+        "lane_km": 7610.151,
+        "dijkstra_km": 7610.151,
+        "detour_ratio": 1.1983
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Port Moresby",
+        "great_circle_km": 10643.595,
+        "lane_km": 12246.065,
+        "dijkstra_km": 12246.065,
+        "detour_ratio": 1.1506
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Kudat",
+        "great_circle_km": 6901.122,
+        "lane_km": 9344.81,
+        "dijkstra_km": 9344.81,
+        "detour_ratio": 1.3541
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Bangkok",
+        "great_circle_km": 4986.781,
+        "lane_km": 9191.937,
+        "dijkstra_km": 9191.937,
+        "detour_ratio": 1.8433
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Manila",
+        "great_circle_km": 7136.402,
+        "lane_km": 10220.611,
+        "dijkstra_km": 10220.611,
+        "detour_ratio": 1.4322
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Hong_Kong",
+        "great_circle_km": 6289.48,
+        "lane_km": 10315.898,
+        "dijkstra_km": 10315.898,
+        "detour_ratio": 1.6402
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Busan",
+        "great_circle_km": 7596.722,
+        "lane_km": 12424.312,
+        "dijkstra_km": 12424.312,
+        "detour_ratio": 1.6355
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Shanghai",
+        "great_circle_km": 6928.939,
+        "lane_km": 11767.506,
+        "dijkstra_km": 11767.506,
+        "detour_ratio": 1.6983
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Shenzhen",
+        "great_circle_km": 6275.472,
+        "lane_km": 10339.375,
+        "dijkstra_km": 10339.375,
+        "detour_ratio": 1.6476
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Yokohama",
+        "great_circle_km": 8539.126,
+        "lane_km": 12985.742,
+        "dijkstra_km": 12985.742,
+        "detour_ratio": 1.5207
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Palu",
+        "great_circle_km": 7416.159,
+        "lane_km": 9673.367,
+        "dijkstra_km": 9673.367,
+        "detour_ratio": 1.3044
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Tokyo",
+        "great_circle_km": 8535.043,
+        "lane_km": 13009.201,
+        "dijkstra_km": 13009.201,
+        "detour_ratio": 1.5242
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Melbourne",
+        "great_circle_km": 11233.72,
+        "lane_km": 11711.601,
+        "dijkstra_km": 11711.601,
+        "detour_ratio": 1.0425
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Perth",
+        "great_circle_km": 8537.821,
+        "lane_km": 8954.036,
+        "dijkstra_km": 8954.036,
+        "detour_ratio": 1.0487
+      },
+      {
+        "origin": "Salalah",
+        "destination": "Suez_Canal",
+        "great_circle_km": 2673.976,
+        "lane_km": 11232.029,
+        "dijkstra_km": 11232.029,
+        "detour_ratio": 4.2005
+      }
+    ]
+  },
+  "sequencing": {
+    "service_speed_kn": 18.0,
+    "ga_population": 24,
+    "ga_generations": 40,
+    "ga_seeds": 20,
+    "month": 1,
+    "instances": [
+      {
+        "origin": "Singapore",
+        "destination": "Tokyo",
+        "n_hubs": 4,
+        "n_permutations": 24,
+        "listed_order_km": 7246.6,
+        "exact_distance_km": 7246.6,
+        "exact_order": [
+          "Singapore",
+          "Hong_Kong",
+          "Shanghai",
+          "Busan",
+          "Yokohama",
+          "Tokyo"
+        ],
+        "insertion_km": 7246.6,
+        "insertion_gap_pct": 0.0,
+        "listed_gap_pct": 0.0,
+        "reversed_gap_pct": 77.49,
+        "ga_mean_gap_pct": 0.0,
+        "ga_max_gap_pct": 0.0,
+        "ga_success_rate": 1.0,
+        "ga_evaluations": 984,
+        "exact_distance_order": [
+          "Hong_Kong",
+          "Shanghai",
+          "Busan",
+          "Yokohama"
+        ],
+        "exact_fuel_order": [
+          "Hong_Kong",
+          "Shanghai",
+          "Busan",
+          "Yokohama"
+        ],
+        "orders_differ_under_current": false,
+        "exact_fuel_t": 508.89,
+        "fuel_of_distance_optimum_t": 508.89
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Shanghai",
+        "n_hubs": 4,
+        "n_permutations": 24,
+        "listed_order_km": 8740.8,
+        "exact_distance_km": 8740.8,
+        "exact_order": [
+          "Mumbai",
+          "Colombo",
+          "Singapore",
+          "Hong_Kong",
+          "Shenzhen",
+          "Shanghai"
+        ],
+        "insertion_km": 8740.8,
+        "insertion_gap_pct": 0.0,
+        "listed_gap_pct": 0.0,
+        "reversed_gap_pct": 127.242,
+        "ga_mean_gap_pct": 0.0,
+        "ga_max_gap_pct": 0.0,
+        "ga_success_rate": 1.0,
+        "ga_evaluations": 984,
+        "exact_distance_order": [
+          "Colombo",
+          "Singapore",
+          "Hong_Kong",
+          "Shenzhen"
+        ],
+        "exact_fuel_order": [
+          "Colombo",
+          "Singapore",
+          "Hong_Kong",
+          "Shenzhen"
+        ],
+        "orders_differ_under_current": false,
+        "exact_fuel_t": 606.14,
+        "fuel_of_distance_optimum_t": 606.14
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Singapore",
+        "n_hubs": 3,
+        "n_permutations": 6,
+        "listed_order_km": 9389.2,
+        "exact_distance_km": 9389.2,
+        "exact_order": [
+          "Jebel_Ali",
+          "Salalah",
+          "Mumbai",
+          "Colombo",
+          "Singapore"
+        ],
+        "insertion_km": 9389.2,
+        "insertion_gap_pct": 0.0,
+        "listed_gap_pct": 0.0,
+        "reversed_gap_pct": 71.502,
+        "ga_mean_gap_pct": 0.0,
+        "ga_max_gap_pct": 0.0,
+        "ga_success_rate": 1.0,
+        "ga_evaluations": 984,
+        "exact_distance_order": [
+          "Salalah",
+          "Mumbai",
+          "Colombo"
+        ],
+        "exact_fuel_order": [
+          "Salalah",
+          "Mumbai",
+          "Colombo"
+        ],
+        "orders_differ_under_current": false,
+        "exact_fuel_t": 658.43,
+        "fuel_of_distance_optimum_t": 658.43
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Yokohama",
+        "n_hubs": 4,
+        "n_permutations": 24,
+        "listed_order_km": 9175.7,
+        "exact_distance_km": 9175.7,
+        "exact_order": [
+          "Jakarta",
+          "Singapore",
+          "Manila",
+          "Hong_Kong",
+          "Busan",
+          "Yokohama"
+        ],
+        "insertion_km": 9175.7,
+        "insertion_gap_pct": 0.0,
+        "listed_gap_pct": 0.0,
+        "reversed_gap_pct": 85.55,
+        "ga_mean_gap_pct": 0.0,
+        "ga_max_gap_pct": 0.0,
+        "ga_success_rate": 1.0,
+        "ga_evaluations": 984,
+        "exact_distance_order": [
+          "Singapore",
+          "Manila",
+          "Hong_Kong",
+          "Busan"
+        ],
+        "exact_fuel_order": [
+          "Singapore",
+          "Manila",
+          "Hong_Kong",
+          "Busan"
+        ],
+        "orders_differ_under_current": false,
+        "exact_fuel_t": 642.92,
+        "fuel_of_distance_optimum_t": 642.92
+      },
+      {
+        "origin": "Melbourne",
+        "destination": "Busan",
+        "n_hubs": 4,
+        "n_permutations": 24,
+        "listed_order_km": 12671.4,
+        "exact_distance_km": 12671.4,
+        "exact_order": [
+          "Melbourne",
+          "Jakarta",
+          "Singapore",
+          "Manila",
+          "Shanghai",
+          "Busan"
+        ],
+        "insertion_km": 12671.4,
+        "insertion_gap_pct": 0.0,
+        "listed_gap_pct": 0.0,
+        "reversed_gap_pct": 80.865,
+        "ga_mean_gap_pct": 0.0,
+        "ga_max_gap_pct": 0.0,
+        "ga_success_rate": 1.0,
+        "ga_evaluations": 984,
+        "exact_distance_order": [
+          "Jakarta",
+          "Singapore",
+          "Manila",
+          "Shanghai"
+        ],
+        "exact_fuel_order": [
+          "Jakarta",
+          "Singapore",
+          "Manila",
+          "Shanghai"
+        ],
+        "orders_differ_under_current": false,
+        "exact_fuel_t": 886.89,
+        "fuel_of_distance_optimum_t": 886.89
+      },
+      {
+        "origin": "Perth",
+        "destination": "Tokyo",
+        "n_hubs": 4,
+        "n_permutations": 24,
+        "listed_order_km": 10454.2,
+        "exact_distance_km": 10454.2,
+        "exact_order": [
+          "Perth",
+          "Jakarta",
+          "Singapore",
+          "Hong_Kong",
+          "Yokohama",
+          "Tokyo"
+        ],
+        "insertion_km": 10454.2,
+        "insertion_gap_pct": 0.0,
+        "listed_gap_pct": 0.0,
+        "reversed_gap_pct": 123.08,
+        "ga_mean_gap_pct": 0.0,
+        "ga_max_gap_pct": 0.0,
+        "ga_success_rate": 1.0,
+        "ga_evaluations": 984,
+        "exact_distance_order": [
+          "Jakarta",
+          "Singapore",
+          "Hong_Kong",
+          "Yokohama"
+        ],
+        "exact_fuel_order": [
+          "Jakarta",
+          "Singapore",
+          "Hong_Kong",
+          "Yokohama"
+        ],
+        "orders_differ_under_current": false,
+        "exact_fuel_t": 727.18,
+        "fuel_of_distance_optimum_t": 727.18
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Tokyo",
+        "n_hubs": 6,
+        "n_permutations": 720,
+        "listed_order_km": 12793.6,
+        "exact_distance_km": 12793.6,
+        "exact_order": [
+          "Mumbai",
+          "Colombo",
+          "Singapore",
+          "Manila",
+          "Hong_Kong",
+          "Shanghai",
+          "Busan",
+          "Tokyo"
+        ],
+        "insertion_km": 12793.6,
+        "insertion_gap_pct": 0.0,
+        "listed_gap_pct": 0.0,
+        "reversed_gap_pct": 107.253,
+        "ga_mean_gap_pct": 0.0,
+        "ga_max_gap_pct": 0.0,
+        "ga_success_rate": 1.0,
+        "ga_evaluations": 984,
+        "exact_distance_order": [
+          "Colombo",
+          "Singapore",
+          "Manila",
+          "Hong_Kong",
+          "Shanghai",
+          "Busan"
+        ],
+        "exact_fuel_order": [
+          "Colombo",
+          "Singapore",
+          "Manila",
+          "Hong_Kong",
+          "Shanghai",
+          "Busan"
+        ],
+        "orders_differ_under_current": false,
+        "exact_fuel_t": 891.69,
+        "fuel_of_distance_optimum_t": 891.69
+      },
+      {
+        "origin": "Jebel_Ali",
+        "destination": "Yokohama",
+        "n_hubs": 7,
+        "n_permutations": 5040,
+        "listed_order_km": 16599.5,
+        "exact_distance_km": 16599.5,
+        "exact_order": [
+          "Jebel_Ali",
+          "Salalah",
+          "Mumbai",
+          "Colombo",
+          "Singapore",
+          "Hong_Kong",
+          "Shanghai",
+          "Busan",
+          "Yokohama"
+        ],
+        "insertion_km": 16599.5,
+        "insertion_gap_pct": 0.0,
+        "listed_gap_pct": 0.0,
+        "reversed_gap_pct": 122.881,
+        "ga_mean_gap_pct": 0.0,
+        "ga_max_gap_pct": 0.0,
+        "ga_success_rate": 1.0,
+        "ga_evaluations": 984,
+        "exact_distance_order": [
+          "Salalah",
+          "Mumbai",
+          "Colombo",
+          "Singapore",
+          "Hong_Kong",
+          "Shanghai",
+          "Busan"
+        ],
+        "exact_fuel_order": [
+          "Salalah",
+          "Mumbai",
+          "Colombo",
+          "Singapore",
+          "Hong_Kong",
+          "Shanghai",
+          "Busan"
+        ],
+        "orders_differ_under_current": false,
+        "exact_fuel_t": 1164.79,
+        "fuel_of_distance_optimum_t": 1164.79
+      }
+    ]
+  },
+  "resistance": {
+    "particulars": {
+      "name": "Panamax container ship",
+      "L_m": 280.0,
+      "B_m": 32.2,
+      "T_m": 12.5,
+      "displacement_m3": 73255.0,
+      "Cb": 0.65,
+      "Cp": 0.6633,
+      "Cm": 0.98,
+      "Cwp": 0.78,
+      "S_m2": 11768.8,
+      "sfoc_g_per_kwh": 170.0,
+      "propulsive_efficiency": 0.7,
+      "one_plus_k1": 1.102
+    },
+    "curve": [
+      {
+        "speed_knots": 12,
+        "froude": 0.1178,
+        "resistance_kN": 450.72,
+        "viscous_kN": 370.22,
+        "wave_kN": 1.54,
+        "other_kN": 78.96,
+        "bhp_MW": 4.098,
+        "fuel_tpd": 16.72,
+        "in_range": true
+      },
+      {
+        "speed_knots": 13,
+        "froude": 0.1276,
+        "resistance_kN": 524.27,
+        "viscous_kN": 430.31,
+        "wave_kN": 3.62,
+        "other_kN": 90.34,
+        "bhp_MW": 5.164,
+        "fuel_tpd": 21.07,
+        "in_range": true
+      },
+      {
+        "speed_knots": 14,
+        "froude": 0.1374,
+        "resistance_kN": 604.26,
+        "viscous_kN": 494.63,
+        "wave_kN": 7.55,
+        "other_kN": 102.08,
+        "bhp_MW": 6.409,
+        "fuel_tpd": 26.15,
+        "in_range": true
+      },
+      {
+        "speed_knots": 15,
+        "froude": 0.1472,
+        "resistance_kN": 691.6,
+        "viscous_kN": 563.13,
+        "wave_kN": 14.36,
+        "other_kN": 114.1,
+        "bhp_MW": 7.86,
+        "fuel_tpd": 32.07,
+        "in_range": true
+      },
+      {
+        "speed_knots": 16,
+        "froude": 0.1571,
+        "resistance_kN": 787.92,
+        "viscous_kN": 635.8,
+        "wave_kN": 25.81,
+        "other_kN": 126.32,
+        "bhp_MW": 9.552,
+        "fuel_tpd": 38.97,
+        "in_range": true
+      },
+      {
+        "speed_knots": 17,
+        "froude": 0.1669,
+        "resistance_kN": 896.15,
+        "viscous_kN": 712.6,
+        "wave_kN": 41.33,
+        "other_kN": 142.22,
+        "bhp_MW": 11.542,
+        "fuel_tpd": 47.09,
+        "in_range": true
+      },
+      {
+        "speed_knots": 18,
+        "froude": 0.1767,
+        "resistance_kN": 1021.01,
+        "viscous_kN": 793.51,
+        "wave_kN": 68.12,
+        "other_kN": 159.39,
+        "bhp_MW": 13.924,
+        "fuel_tpd": 56.81,
+        "in_range": true
+      },
+      {
+        "speed_knots": 19,
+        "froude": 0.1865,
+        "resistance_kN": 1153.98,
+        "viscous_kN": 878.49,
+        "wave_kN": 97.96,
+        "other_kN": 177.53,
+        "bhp_MW": 16.612,
+        "fuel_tpd": 67.78,
+        "in_range": true
+      },
+      {
+        "speed_knots": 20,
+        "froude": 0.1963,
+        "resistance_kN": 1301.81,
+        "viscous_kN": 967.53,
+        "wave_kN": 137.63,
+        "other_kN": 196.65,
+        "bhp_MW": 19.726,
+        "fuel_tpd": 80.48,
+        "in_range": true
+      },
+      {
+        "speed_knots": 21,
+        "froude": 0.2061,
+        "resistance_kN": 1488.54,
+        "viscous_kN": 1060.61,
+        "wave_kN": 211.19,
+        "other_kN": 216.74,
+        "bhp_MW": 23.684,
+        "fuel_tpd": 96.63,
+        "in_range": true
+      },
+      {
+        "speed_knots": 22,
+        "froude": 0.2159,
+        "resistance_kN": 1685.35,
+        "viscous_kN": 1157.7,
+        "wave_kN": 289.84,
+        "other_kN": 237.81,
+        "bhp_MW": 28.092,
+        "fuel_tpd": 114.62,
+        "in_range": true
+      },
+      {
+        "speed_knots": 23,
+        "froude": 0.2258,
+        "resistance_kN": 1862.35,
+        "viscous_kN": 1258.78,
+        "wave_kN": 343.72,
+        "other_kN": 259.85,
+        "bhp_MW": 32.453,
+        "fuel_tpd": 132.41,
+        "in_range": true
+      },
+      {
+        "speed_knots": 24,
+        "froude": 0.2356,
+        "resistance_kN": 2057.81,
+        "viscous_kN": 1363.84,
+        "wave_kN": 411.1,
+        "other_kN": 282.87,
+        "bhp_MW": 37.418,
+        "fuel_tpd": 152.67,
+        "in_range": true
+      }
+    ]
+  },
+  "fouling": {
+    "sst_c": 28.0,
+    "salinity_psu": 35.0,
+    "rows": [
+      {
+        "days": 0,
+        "multiplier": 1.0,
+        "penalty_percent": 0.0,
+        "level": "CLEAN"
+      },
+      {
+        "days": 30,
+        "multiplier": 1.215,
+        "penalty_percent": 21.5,
+        "level": "HEAVY FOULING"
+      },
+      {
+        "days": 90,
+        "multiplier": 1.386,
+        "penalty_percent": 38.6,
+        "level": "SEVERE FOULING"
+      },
+      {
+        "days": 180,
+        "multiplier": 1.4,
+        "penalty_percent": 40.0,
+        "level": "SEVERE FOULING"
+      },
+      {
+        "days": 270,
+        "multiplier": 1.4,
+        "penalty_percent": 40.0,
+        "level": "SEVERE FOULING"
+      },
+      {
+        "days": 365,
+        "multiplier": 1.4,
+        "penalty_percent": 40.0,
+        "level": "SEVERE FOULING"
+      }
+    ]
+  },
+  "corridors": {
+    "speed_knots": 18.0,
+    "rows": [
+      {
+        "origin": "Singapore",
+        "destination": "Tokyo",
+        "month": "January",
+        "lane_km": 5344.4,
+        "great_circle_km": 5311.2,
+        "calm_fuel_t": 379.49,
+        "current_fuel_t": 365.55,
+        "current_delta_pct": 3.67,
+        "co2_t": 1138.3
+      },
+      {
+        "origin": "Singapore",
+        "destination": "Tokyo",
+        "month": "July",
+        "lane_km": 5344.4,
+        "great_circle_km": 5311.2,
+        "calm_fuel_t": 379.49,
+        "current_fuel_t": 366.74,
+        "current_delta_pct": 3.36,
+        "co2_t": 1142.0
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Yokohama",
+        "month": "January",
+        "lane_km": 2958.5,
+        "great_circle_km": 2864.1,
+        "calm_fuel_t": 210.07,
+        "current_fuel_t": 196.81,
+        "current_delta_pct": 6.31,
+        "co2_t": 612.9
+      },
+      {
+        "origin": "Hong_Kong",
+        "destination": "Yokohama",
+        "month": "July",
+        "lane_km": 2958.5,
+        "great_circle_km": 2864.1,
+        "calm_fuel_t": 210.07,
+        "current_fuel_t": 197.91,
+        "current_delta_pct": 5.79,
+        "co2_t": 616.3
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Singapore",
+        "month": "January",
+        "lane_km": 4564.0,
+        "great_circle_km": 3901.4,
+        "calm_fuel_t": 324.08,
+        "current_fuel_t": 315.81,
+        "current_delta_pct": 2.55,
+        "co2_t": 983.4
+      },
+      {
+        "origin": "Mumbai",
+        "destination": "Singapore",
+        "month": "July",
+        "lane_km": 4564.0,
+        "great_circle_km": 3901.4,
+        "calm_fuel_t": 324.08,
+        "current_fuel_t": 313.3,
+        "current_delta_pct": 3.33,
+        "co2_t": 975.6
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Singapore",
+        "month": "January",
+        "lane_km": 4102.7,
+        "great_circle_km": 3805.7,
+        "calm_fuel_t": 291.32,
+        "current_fuel_t": 298.87,
+        "current_delta_pct": -2.59,
+        "co2_t": 930.7
+      },
+      {
+        "origin": "Shanghai",
+        "destination": "Singapore",
+        "month": "July",
+        "lane_km": 4102.7,
+        "great_circle_km": 3805.7,
+        "calm_fuel_t": 291.32,
+        "current_fuel_t": 298.13,
+        "current_delta_pct": -2.34,
+        "co2_t": 928.4
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Melbourne",
+        "month": "January",
+        "lane_km": 6210.4,
+        "great_circle_km": 5207.0,
+        "calm_fuel_t": 440.99,
+        "current_fuel_t": 440.99,
+        "current_delta_pct": -0.0,
+        "co2_t": 1373.2
+      },
+      {
+        "origin": "Jakarta",
+        "destination": "Melbourne",
+        "month": "July",
+        "lane_km": 6210.4,
+        "great_circle_km": 5207.0,
+        "calm_fuel_t": 440.99,
+        "current_fuel_t": 440.99,
+        "current_delta_pct": -0.0,
+        "co2_t": 1373.2
+      }
+    ]
+  },
+  "tradeoff": {
+    "origin": "Singapore",
+    "destination": "Tokyo",
+    "lane_km": 5344.4,
+    "bunker_usd_per_t": 600.0,
+    "charter_usd_per_day": 25000.0,
+    "economic_speed_knots": 13,
+    "economic_cost_usd": 330861.0,
+    "economic_fuel_t": 185.19,
+    "economic_hours": 210.96,
+    "rows": [
+      {
+        "speed_knots": 12,
+        "hours": 227.64,
+        "days": 9.485,
+        "fuel_t": 158.58,
+        "fuel_fouled_90d_t": 219.79,
+        "co2_t": 493.8,
+        "scenario_cost_usd": 332267.0
+      },
+      {
+        "speed_knots": 13,
+        "hours": 210.96,
+        "days": 8.79,
+        "fuel_t": 185.19,
+        "fuel_fouled_90d_t": 256.67,
+        "co2_t": 576.7,
+        "scenario_cost_usd": 330861.0
+      },
+      {
+        "speed_knots": 14,
+        "hours": 196.56,
+        "days": 8.19,
+        "fuel_t": 214.18,
+        "fuel_fouled_90d_t": 296.85,
+        "co2_t": 666.9,
+        "scenario_cost_usd": 333258.0
+      },
+      {
+        "speed_knots": 15,
+        "hours": 184.01,
+        "days": 7.667,
+        "fuel_t": 245.87,
+        "fuel_fouled_90d_t": 340.77,
+        "co2_t": 765.6,
+        "scenario_cost_usd": 339194.0
+      },
+      {
+        "speed_knots": 16,
+        "hours": 172.96,
+        "days": 7.207,
+        "fuel_t": 280.85,
+        "fuel_fouled_90d_t": 389.26,
+        "co2_t": 874.6,
+        "scenario_cost_usd": 348681.0
+      },
+      {
+        "speed_knots": 17,
+        "hours": 163.17,
+        "days": 6.799,
+        "fuel_t": 320.18,
+        "fuel_fouled_90d_t": 443.76,
+        "co2_t": 997.0,
+        "scenario_cost_usd": 362075.0
+      },
+      {
+        "speed_knots": 18,
+        "hours": 154.43,
+        "days": 6.435,
+        "fuel_t": 365.55,
+        "fuel_fouled_90d_t": 506.65,
+        "co2_t": 1138.3,
+        "scenario_cost_usd": 380193.0
+      },
+      {
+        "speed_knots": 19,
+        "hours": 146.58,
+        "days": 6.107,
+        "fuel_t": 413.93,
+        "fuel_fouled_90d_t": 573.71,
+        "co2_t": 1289.0,
+        "scenario_cost_usd": 401045.0
+      },
+      {
+        "speed_knots": 20,
+        "hours": 139.48,
+        "days": 5.812,
+        "fuel_t": 467.76,
+        "fuel_fouled_90d_t": 648.31,
+        "co2_t": 1456.6,
+        "scenario_cost_usd": 425951.0
+      },
+      {
+        "speed_knots": 21,
+        "hours": 133.05,
+        "days": 5.544,
+        "fuel_t": 535.68,
+        "fuel_fouled_90d_t": 742.45,
+        "co2_t": 1668.1,
+        "scenario_cost_usd": 460000.0
+      },
+      {
+        "speed_knots": 22,
+        "hours": 127.18,
+        "days": 5.299,
+        "fuel_t": 607.36,
+        "fuel_fouled_90d_t": 841.81,
+        "co2_t": 1891.3,
+        "scenario_cost_usd": 496897.0
+      },
+      {
+        "speed_knots": 23,
+        "hours": 121.81,
+        "days": 5.075,
+        "fuel_t": 672.02,
+        "fuel_fouled_90d_t": 931.42,
+        "co2_t": 2092.7,
+        "scenario_cost_usd": 530094.0
+      },
+      {
+        "speed_knots": 24,
+        "hours": 116.87,
+        "days": 4.87,
+        "fuel_t": 743.43,
+        "fuel_fouled_90d_t": 1030.4,
+        "co2_t": 2315.0,
+        "scenario_cost_usd": 567800.0
+      }
+    ]
+  }
+}

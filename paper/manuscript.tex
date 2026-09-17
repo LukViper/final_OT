@@ -1,0 +1,391 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\hypersetup{colorlinks=true,citecolor=blue,linkcolor=blue,urlcolor=blue}
+
+\title{Mandatory-waypoint routing on a shipping-lane graph\\
+with a Holtrop--Mennen fuel model}
+
+\author{%
+Author names and affiliations to be completed before submission\thanks{%
+This preprint is generated from the accompanying repository.
+Running \texttt{python experiments/run\_study.py} regenerates every
+number cited through \texttt{numbers.tex} and \texttt{tables.tex}.
+The author line is intentionally blank: the repository does not record authorship.}
+}
+
+\date{}
+
+\input{numbers}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Claims of fuel saving from maritime route ``optimization'' are difficult to compare when the baseline, the network, and the fuel model are not stated \citep{zis2020}.
+This paper specifies all three for a 20-port Indo-Pacific set and a polyline network of shipping lanes distributed with the code.
+Port-to-port distances are shortest paths in that network.
+Mandatory intermediate ports turn the voyage into an open-path traveling-salesman problem on the resulting metric closure.
+Fuel is estimated with the Holtrop--Mennen regression \citep{holtrop1982,holtrop1984}, not with a distance rate scaled by an assumed weather factor.
+On all \NConnected{} connected ordered pairs, A* with the great-circle heuristic returns the same distance as Dijkstra.
+Lane distance exceeds great-circle distance by a median factor of \MedianDetour{} (mean \MeanDetour{}).
+The maximum factor, \MaxDetour{}, is Jebel~Ali--Suez Canal and is a missing-corridor artefact, not an operational detour.
+Enumeration of waypoint orders with up to seven hubs is exact.
+A permutation genetic algorithm recovers that order in every replicate, as does nearest insertion; reversing the geographic order lengthens the voyage by \ReversedGapMin--\ReversedGapMax\%.
+A stylized current field changes fuel by between \CurrentPenalty\% and \(+\CurrentBenefitMax\%\) and does not change the optimal order on any of the \NInstances{} instances.
+Under an illustrative bunker price of \BunkerPrice~USD/t and a time-charter of \CharterRate~USD/day, the cost-minimizing speed on the Singapore--Tokyo lane is \EconomicSpeed~knots.
+No weather-routing saving is reported.
+An earlier comparison against a fixed 15\% allowance was not a saving and has been removed.
+\end{abstract}
+
+\noindent\textbf{Keywords:}
+ship routing; shipping lanes; Holtrop--Mennen; slow steaming; genetic algorithm; reproducibility
+
+\section{Introduction}
+\label{sec:intro}
+
+Minimum-time weather routing goes back at least to the isochrone construction of \citet{james1957}.
+Later work replaced hand-drawn isochrones with dynamic programming, graph search, and field-based models \citep{mannarini2016,zis2020}.
+Speed selection is a separate decision.
+Cubic resistance makes fuel highly sensitive to speed, while the commercial objective usually mixes bunker cost with a time cost \citep{corbett2009,notteboom2009,psaraftis2013}.
+\citet{zis2020} note that published savings are hard to compare because baselines are not standardized.
+
+The software this paper accompanies originally mixed those decisions.
+A genetic algorithm sequenced ports.
+A separate fuel column was described as the effect of four-dimensional weather.
+That column was compared with the same voyage multiplied by 1.15, and the ratio was reported as a saving, including a constant 15\% when the forecast was unavailable.
+The resistance routine multiplied Holtrop's wave-resistance coefficient by \(10^{-9}\) to offset the use of the block coefficient in place of Holtrop's \(c_7\).
+A current ``following'' and ``adverse'' test used the same angular condition in both branches, so the adverse branch was unreachable.
+Fouling was applied twice.
+None of those quantities is retained as a result.
+
+The contribution is therefore not a new routing principle.
+It is a formulation that can be checked, a resistance model that matches the published regression well enough to produce a service-speed fuel rate of the expected order, and a numerical study that separates lane geometry, waypoint order, current, fouling, and speed.
+The study is small on purpose.
+Every instance is enumerated where enumeration is cheap, and every negative result is reported.
+
+Section~\ref{sec:problem} states the problem.
+Section~\ref{sec:methods} describes the network, the search, and the fuel model.
+Section~\ref{sec:design} states what is compared with what.
+Section~\ref{sec:results} gives the numbers produced by \texttt{experiments/run\_study.py}.
+Section~\ref{sec:discussion} records what the study does not establish.
+
+\section{Problem}
+\label{sec:problem}
+
+Let \(G=(V,E)\) be an undirected graph whose vertices are sample points on reported shipping lanes together with a finite port set \(P\subset V\).
+An edge between consecutive lane samples has length equal to the great-circle distance of its endpoints.
+A port is joined to every lane vertex within 500~km.
+Given an origin \(o\in P\), a destination \(d\in P\), and a mandatory intermediate set \(H\subset P\setminus\{o,d\}\), a feasible voyage is a sequence
+\begin{equation}
+\sigma = (o, h_{\pi(1)}, \ldots, h_{\pi(|H|)}, d),
+\end{equation}
+where \(\pi\) is a permutation of \(H\).
+The geometric length of \(\sigma\) is the sum of shortest-path distances in \(G\),
+\begin{equation}
+D(\sigma) = \sum_{i=0}^{|\sigma|-2} \mathrm{dist}_G(\sigma_i, \sigma_{i+1}).
+\end{equation}
+If every edge cost used later is a positive multiple of length, and that multiple does not depend on direction, then every optimal permutation is a shortest-path order in the complete graph on \(\{o\}\cup H\cup\{d\}\) with the metric \(\mathrm{dist}_G\).
+Speed through water \(V\) and an along-track current break that equivalence, because fuel then depends on the direction of each segment.
+
+Two voyage costs are used.
+The geometric cost is \(D(\sigma)\).
+The fuel cost holds speed through water fixed and accumulates fuel along the realized track, with speed over ground
+\begin{equation}
+V_g = \max(V + c_{\parallel},\, 1~\mathrm{knot}),
+\label{eq:sog}
+\end{equation}
+where \(c_{\parallel}\) is the component of the current along the segment heading, positive when following.
+Fuel rate is a function of \(V\) only, so time, and therefore fuel, scales as \(V/V_g\) relative to calm water.
+A third, commercial cost is defined only for a fixed path, as a function of speed:
+\begin{equation}
+C(V) = p_b\, m_f(V) + p_t\, T(V),
+\label{eq:cost}
+\end{equation}
+with bunker price \(p_b\), fuel mass \(m_f\), charter rate \(p_t\), and voyage duration \(T\).
+Equation~\eqref{eq:cost} is the standard bunker-plus-time form reviewed by \citet{psaraftis2013}.
+The prices used below are scenario values, not a fixture or a bunker quotation.
+
+Emission mass is fuel mass times 3.114~t~CO\(_2\) per tonne of residual fuel, the inventory factor used for residual fuel in the IMO greenhouse-gas studies \citep{imo2020}.
+It is not an engine measurement.
+
+\section{Methods}
+\label{sec:methods}
+
+\subsection{Lane network}
+The network is the file \texttt{Shipping\_Lanes\_v1.geojson} in the repository: a GeoJSON \texttt{FeatureCollection} of \texttt{MultiLineString} features.
+The file has no source, date, or license metadata.
+It is treated as a routing graph supplied with the code, not as an AIS product and not as a representation of navigable water.
+Vertices are coordinate samples, quantized at \(10^{-6}\) degrees so that shared endpoints merge.
+The resulting graph has \NSeaNodes{} sea vertices, \NEdges{} edges including port connectors, and \NComponents{} connected components.
+Mean degree of the sea vertices is \MeanDegree.
+A graph with mean degree near 2 is a collection of polylines with a modest number of branches, not a mesh of alternative sea routes.
+Of the sea vertices, \SeaInPortComponent{} lie in the component that contains the port set.
+The other components are lane fragments that this port set never reaches.
+All \NPairs{} ordered pairs among the \NPorts{} ports are connected through that component (\NDisconnected{} disconnected pairs).
+
+Great-circle distance uses a spherical Earth of radius 6371~km.
+The same formula is the A* heuristic and the edge weight, so the heuristic is admissible and consistent on this graph \citep{hart1968}.
+A* distances must therefore match Dijkstra distances \citep{dijkstra1959} up to numerical tolerance.
+That identity is checked rather than assumed.
+
+\subsection{Waypoint order}
+For \(|H|\le 7\), every permutation is evaluated.
+That is the reference optimum.
+Two heuristics are compared with it.
+Nearest insertion builds an open path by inserting, at each step, the hub and slot with the smallest total length.
+The genetic algorithm uses a population of \texttt{24} permutations, \texttt{40} generations, order crossover \citep{davis1985}, swap mutation with probability 0.3, and elitism of two individuals.
+It is run from \texttt{20} seeds.
+An earlier crossover concatenated both parents and then appended any missing hub, so the child was not a permutation.
+That operator is not used.
+
+The geographic order stored in the study file is also evaluated, and so is that order reversed.
+The reversed order is a naive baseline.
+It is not a competitive heuristic.
+
+\subsection{Resistance and fuel}
+Calm-water resistance follows Holtrop and Mennen \citep{holtrop1982,holtrop1984}.
+The frictional coefficient is the ITTC-1957 line \citep{ittc1957}.
+The form factor is the 1984 expression in the length of run, \(c_{12}\), and \(c_{13}\).
+Wave resistance uses \(c_7\), not the block coefficient, in
+\begin{equation}
+c_1 = 2223105\, c_7^{3.78613}\,(T/B)^{1.07961}\,(90-i_E)^{-1.37565},
+\end{equation}
+with the piecewise definition of \(c_7\) from \citet{holtrop1984}: \(0.229577(B/L)^{1/3}\) if \(B/L<0.11\), \(B/L\) if \(0.11\le B/L\le 0.25\), and \(0.5-0.0625\,L/B\) otherwise.
+For Froude number \(F_n\le 0.4\),
+\begin{equation}
+R_W = c_1 c_2 c_5 \nabla \rho g \exp\!\left(m_1 F_n^{-0.9} + m_2 \cos(\lambda F_n^{-2})\right).
+\end{equation}
+Bulb, transom, and correlation terms follow the same sources.
+Air drag, \(0.5\rho_a V^2 A_a C_D\) with \(A_a=280~\mathrm{m}^2\) and \(C_D=0.8\), is added outside the hydrostatic regression because it is not part of Holtrop's calm-water residuary.
+Brake power uses a quasi-propulsive efficiency of 0.70 and a shaft efficiency of 0.97.
+Specific fuel consumption is constant at 170~g/kWh.
+There is no engine map, so the model does not represent the rise in specific consumption at low load.
+
+The reported hull is a Panamax container ship with particulars that are internally consistent: \(L=280~\mathrm{m}\), \(B=32.2~\mathrm{m}\), \(T=12.5~\mathrm{m}\), \(C_B=0.65\), \(C_M=0.98\), so \(\nabla=C_B L B T=\Displacement~\mathrm{m}^3\) and \(C_P=C_B/C_M\).
+A beam of 40~m, previously labelled Panamax, is not used.
+The wetted surface is the Holtrop--Mennen regression, \WettedSurface~m\(^2\) at the reported coefficients, not a round number inserted by hand.
+The regression envelope used as a validity flag is \(0.10\le F_n\le 0.45\) and \(0.55\le C_P\le 0.85\).
+All speeds reported below fall inside it.
+The prediction is still a regression, not a sea trial.
+
+\subsection{Current}
+The current field is a sum of Gaussian cores placed on five named systems (Gulf Stream, Kuroshio, Agulhas, an equatorial set, and the Canary Current) plus two eddies.
+Core speeds are of order 0.4--2.5~m/s and decay with a 500~km scale inside a 1000~km cutoff.
+December--February uses the winter factor stored with each system; June--August uses the summer factor; other months use 1.
+This is a schematic climatology.
+It is not OSCAR, not Copernicus Marine, and not a forecast.
+
+Only the along-track component enters \eqref{eq:sog}.
+A previous implementation compared the current's compass bearing with 90\(^\circ\) and with 270\(^\circ\) using the same predicate in both branches, and it reported a speed in knots that was still in metres per second.
+Neither quantity is used.
+
+\subsection{Fouling}
+The fouling module applies a scenario multiplier for slime, barnacles, tubeworms, and algae, with a temperature and salinity factor and a 40\% cap.
+It is not the ITTC roughness allowance, and it is not a fit to \citet{schultz2007} or \citet{townsin2003}.
+Those papers are cited only to locate the published observation that fouling can change required power by amounts of this order.
+The numerical study reports the multiplier at a tropical scenario of 28\(^\circ\)C and 35~psu.
+Fouling is applied once, at voyage level, and never inside the resistance routine.
+Reported corridor fuel is for a clean hull unless a column says otherwise.
+
+\subsection{What is not in the objective}
+Lunar phase and a simplified tidal height are computed by the application and are not terms in \(D\), \(m_f\), or \(C\).
+Emission-control areas defined in the application lie in the North Sea and on the North American coasts.
+None of the study ports falls in those boxes, so the ECA price is inactive here.
+The operational forecast client can call external weather APIs.
+The numerical study does not.
+A piecewise sea-state multiplier remains in the application code.
+It is not a result of this paper, because it was previously differenced against an assumed factor of 1.15.
+
+\section{Experimental design}
+\label{sec:design}
+
+The study answers six questions.
+\begin{enumerate}
+\item Are all port pairs connected, and by how much do lane distances exceed great-circle distances?
+\item Do A* and Dijkstra agree, and what does the timing protocol actually measure?
+\item For the stated hub sets, what is the gap of a reversed order, of nearest insertion, and of the genetic algorithm, relative to enumeration?
+\item Does January along-track current change the fuel-minimizing order?
+\item What fuel rate does the corrected regression give between 12 and 24~knots?
+\item For the Singapore--Tokyo lane, which speed in \(\{12,\ldots,24\}\) minimizes \eqref{eq:cost} at \(p_b=\BunkerPrice\)~USD/t and \(p_t=\CharterRate\)~USD/day?
+\end{enumerate}
+There is no hold-out ocean, no AIS track used as a ground truth, and no comparison with a commercial weather-routing product.
+A comparison of that kind would require a current and wave field the repository does not contain.
+
+Distances are in kilometres, fuel in tonnes, and carbon dioxide in tonnes using the factor in Section~\ref{sec:problem}.
+The genetic-algorithm budget is \(24\times 40=960\) evaluations of the length cost per seed, plus the initial population.
+Enumeration of seven hubs is \(7!=5040\) evaluations.
+Both are cheap because a voyage length is a sum of cached port-to-port distances.
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Lane distances}
+Figure~\ref{fig:detour} shows the distribution of the ratio of lane distance to great-circle distance over the \NConnected{} ordered pairs.
+The median ratio is \MedianDetour, the mean of the ratios is \MeanDetour, and the minimum is \MinDetour.
+The ratio of mean lengths is smaller than the mean of ratios, which is expected for a right-skewed set.
+\PairsAboveOnePointFive{} pairs exceed 1.5.
+Mean lane length is \MeanLaneKm~km against a mean great-circle length of \MeanGcKm~km.
+
+The maximum ratio, \MaxDetour, is Jebel~Ali--Suez Canal in both directions: 2{,}322~km by great circle and 10{,}088~km on the lane network (2{,}321.6~km and 10{,}087.7~km before rounding).
+The shortest path in the file does enter the Red Sea.
+Before that, it runs east from the Gulf of Oman to about 80\(^\circ\)E and only then west through the Gulf of Aden.
+The missing piece is a direct Arabian Sea corridor, not the Red Sea itself.
+The ratio is evidence of a hole in the graph, not evidence that a ship should sail four times the great-circle distance.
+Busan--Yokohama and Busan--Tokyo are the next class of outliers, at ratios 2.33 and 2.31, which is consistent with a lane that follows the Japanese coast rather than the direct crossing.
+Singapore--Yokohama is almost the great circle (ratio \MinDetour).
+Any paper that reports a single ``optimization percentage'' against the great circle, on this file, is averaging a data defect with a mild coastal detour.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.86\linewidth]{figures/detour.pdf}
+\caption{Ratio of shortest lane distance to great-circle distance, all ordered pairs among the 20 ports. The dashed line is the median.}
+\label{fig:detour}
+\end{figure}
+
+Recomputing A* for every ordered pair took \SecondsAstar~s.
+Building one Dijkstra tree from each of the 20 origins took \SecondsDijkstra~s.
+The two algorithms agreed to \(10^{-6}\)~km on all \AstarMatches{} pairs.
+A* is not faster in this protocol, and the paper does not claim a search speed-up.
+The useful statement is the identity: the heuristic does not sacrifice optimality on this weight function.
+For a 20-port closure, one Dijkstra tree per origin is the straightforward construction.
+
+\subsection{Waypoint order}
+Table~\ref{tab:sequencing} lists the eight instances.
+The geographic order in the study file is already a shortest order: its gap against enumeration is zero in every row.
+Nearest insertion also has zero gap.
+The genetic algorithm matches the enumerated optimum in all 20 seeds on every instance (maximum gap \GaMaxGap\%, success rate \GaMinSuccess\%).
+The reversed order is longer by between \ReversedGapMin\% and \ReversedGapMax\%.
+
+That pattern should not be read as a success of the genetic algorithm.
+On this metric, with hubs placed along a natural corridor and \(|H|\le 7\), enumeration is exact and nearest insertion also recovers the optimum.
+The genetic algorithm is retained because the application accepts an arbitrary hub list, and because the previous crossover was not a permutation operator.
+It is not the reason a reversed schedule is improved.
+The result that matters is the size of that reversed-order gap: for these corridors, order is worth tens of percent of distance, and a geographic sort already captures it.
+
+On all \NInstances{} instances the fuel-minimizing order in January, at 18~knots, is the same as the shortest order (\NCurrentOrderChanges{} disagreements).
+Direction-dependent current is weak relative to the differences between permutations in this schematic field.
+A conclusion that current never matters would be stronger than the experiment.
+The conclusion the experiment supports is narrower: this current model does not reorder these hub sets.
+
+\input{tables}
+
+\subsection{Resistance, fouling, and current}
+Figure~\ref{fig:resistance} separates viscous and wave-making resistance.
+At 20~knots the model gives \ResistanceTwenty~kN total resistance, \PowerTwenty~MW brake power, and \FuelTwenty~t/day of fuel.
+At 18~knots the fuel rate is \FuelEighteen~t/day.
+The form factor is \FormFactor, at the low end of the range usually quoted for merchant hulls.
+Wave-making is small at 12~knots and is about a third of the viscous term by 24~knots, which is the qualitative behaviour the regression is meant to produce.
+These figures are uncalibrated against a trial.
+They replace a model whose wave term had been scaled by \(10^{-9}\) and which printed component forces on every call.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.86\linewidth]{figures/resistance.pdf}
+\caption{Holtrop--Mennen resistance components for the Panamax particulars in Section~\ref{sec:methods}, 15\(^\circ\)C seawater. ``Total'' includes appendage, bulb, transom, correlation, and the separate air-drag term.}
+\label{fig:resistance}
+\end{figure}
+
+Under the tropical fouling scenario the multiplier is 1.215 after 30 days and \FoulingMultiplier{} (\FoulingNinety\%) after 90 days (Figure~\ref{fig:fouling}).
+The coded cap of 40\% is reached at 180 days and does not increase further.
+A 90-day tropical penalty of this size is inside the broad range associated with heavy fouling, but the time scale is an assumption of the growth rates, not a measurement.
+Beyond the cap, days since cleaning are not an additional decision variable in this implementation.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.8\linewidth]{figures/fouling.pdf}
+\caption{Scenario fuel multiplier at 28\(^\circ\)C and 35~psu. The curve is the implemented envelope, including its 40\% cap, not a fitted growth law.}
+\label{fig:fouling}
+\end{figure}
+
+Table~\ref{tab:corridors} applies the current projection to five corridors at 18~knots in January and July.
+The largest reduction against calm water is \CurrentBenefitMax\% (Hong Kong--Yokohama, January).
+The largest increase is the absolute value of \CurrentPenalty\% (Shanghai--Singapore, January).
+Jakarta--Melbourne is unchanged at the reported precision, because the schematic cores do not cover that track.
+Seasonal factors move the deltas by a few tenths of a percent.
+They do not create a second routing regime.
+
+\subsection{Speed}
+Figure~\ref{fig:pareto} is the Singapore--Tokyo lane (\LaneSingaporeTokyo~km) in January, clean hull, with current.
+Fuel falls as speed is reduced, as expected from a resistance that increases faster than linearly with speed.
+There is no interior fuel minimum on a fixed path: without a time cost, the tested minimum would lie at the lowest speed.
+Equation~\eqref{eq:cost}, at \BunkerPrice~USD/t and \CharterRate~USD/day, has an interior minimum at \EconomicSpeed~knots.
+That point uses \EconomicFuel~t of fuel and \EconomicHours~h, at a scenario cost of \EconomicCost~USD.
+The same lane at 18~knots uses \ServiceFuel~t and \ServiceHours~h, at a scenario cost of \ServiceCost~USD.
+Corresponding CO\(_2\) masses are \EconomicCOTwo~t and \ServiceCOTwo~t.
+The difference is a consequence of the prices in \eqref{eq:cost}.
+A higher charter rate, a schedule window, or an engine map that penalizes low load would move the minimum.
+The figure does not identify a universally optimal speed.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.86\linewidth]{figures/pareto.pdf}
+\caption{Singapore--Tokyo, January, clean hull. The marked point minimizes \eqref{eq:cost} at the prices in Section~\ref{sec:design}. It is not a pure fuel minimum.}
+\label{fig:pareto}
+\end{figure}
+
+\section{Discussion}
+\label{sec:discussion}
+
+The network explains the negative results.
+Mean sea-vertex degree \MeanDegree{} means that, between two ports, the shortest lane path is usually close to a unique polyline.
+Search can snap a voyage onto that polyline.
+It cannot discover an alternative sea route that was never digitized.
+The Jebel~Ali--Suez Canal path, which reaches 80\(^\circ\)E before turning into the Gulf of Aden, is the extreme case.
+Reporting it as a routing benefit would be a misuse of the file.
+
+The same geometry makes the combinatorial part small.
+Once port-to-port distances are cached, seven hubs are an enumeration, not a reason to invoke a genetic algorithm.
+The algorithm is documented because it is what the application runs, and because its crossover had to be replaced before that statement was true.
+On larger optional-waypoint sets, or on a mesh with direction-dependent costs large enough to reorder ports, a heuristic would matter.
+Neither condition holds here.
+The current model, in particular, is too coarse, and too weak on these tracks, to change order.
+A reanalysis product could.
+This paper does not estimate how often it would.
+
+Three modelling choices bound the fuel numbers.
+First, specific consumption does not vary with load, so slow steaming looks slightly better than an engine map would allow.
+Second, the fouling curve saturates by design.
+Third, added resistance in waves is omitted from the reported fuel.
+Including the application's sea-state bins would require a forecast and a baseline defined without a fixed percentage.
+That comparison is not in the study.
+The earlier 15\% figure was the fixed percentage itself.
+
+A further bound is provenance.
+The lane file cannot be dated or attributed from the repository.
+Results that depend on it, including every distance in Table~\ref{tab:sequencing}, should be recomputed if the file is replaced.
+The script that does so writes \texttt{paper/results.json}, \texttt{paper/numbers.tex}, and \texttt{paper/tables.tex}.
+The manuscript inputs the latter two files, so a changed network cannot be silently described with the old sentences if the study is rerun and the manuscript recompiled.
+Sentences that name a corridor, such as the Jebel~Ali--Suez Canal lengths, are checked against \texttt{results.json} rather than typed from memory; they are still ordinary text and should be re-read after a rerun.
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+Shortest paths on the supplied lane graph are a well-posed distance problem.
+A* and Dijkstra agree on all 380 port pairs.
+Those distances exceed the great circle by a median factor of \MedianDetour, and by a factor of \MaxDetour{} on Jebel~Ali--Suez Canal, where the shortest stored lane detours to 80\(^\circ\)E before using the Red Sea.
+Waypoint order is an open metric traveling-salesman problem.
+On the instances tested it is solved exactly by enumeration and by nearest insertion.
+A reversed order is longer by between \ReversedGapMin\% and \ReversedGapMax\%.
+A schematic current changes fuel by a few percent and does not change order.
+A Holtrop--Mennen fuel model without an ad-hoc scale factor gives about \FuelEighteen~t/day at 18~knots and \FuelTwenty~t/day at 20~knots for the stated Panamax particulars.
+With the stated bunker and charter scenario, the Singapore--Tokyo cost minimum is at \EconomicSpeed~knots, not at the service speed used as a reference.
+No percentage fuel saving from weather routing is claimed.
+
+\paragraph{Data and code.}
+The lane file, the study script, and this manuscript are in the same repository.
+\texttt{python experiments/run\_study.py} regenerates the figures and the macros.
+No weather-service key is required for that command.
+Author names are not part of the generated files and must be added before submission.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

@@ -1,6 +1,9 @@
 """
-Advanced Hull Fouling Model
-Based on ITTC and Biofouling journal (2024)
+Scenario hull-fouling penalty.
+
+Growth rates are not fitted to a trial and are not an ITTC roughness procedure.
+They are a multiplicative envelope, capped at 40 percent, used as a sensitivity
+input. Published penalty ranges are discussed in Schultz (2007) and Townsin (2003).
 """
 
 import math
@@ -114,9 +117,9 @@ class HullFoulingModel:
             level = "SEVERE FOULING"
             cleaning_rec = "IMMEDIATE CLEANING REQUIRED"
         
-        # Economic impact
-        annual_fuel_cost = 5000 * 300 * 650  # 5000t/month * 12 * $650
-        annual_waste = annual_fuel_cost * total_penalty
+        # Economic impact is not estimated here. An earlier version invented an
+        # annual bunker bill (5000 t/month at $650/t) and a return on cleaning.
+        # Callers that need a cost must pass an explicit annual fuel quantity.
         
         return {
             'fuel_multiplier': round(fuel_multiplier, 3),
@@ -129,11 +132,7 @@ class HullFoulingModel:
                 'avg_salinity': round(avg_salinity, 1),
                 'synergy_factor': round(synergy, 2)
             },
-            'economic_impact': {
-                'annual_waste_usd': int(annual_waste),
-                'cleaning_cost_usd': int(self.cleaning_cost_per_m2['in_water_cleaning'] * 5000),
-                'roi_percent': round((annual_waste / (5000*45)) * 100, 1)
-            }
+            'economic_impact': None
         }
 
 # Singleton

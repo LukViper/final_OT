@@ -88,8 +88,14 @@ class OceanCurrentModel:
         u_total = 0.0  # East component (m/s)
         v_total = 0.0  # North component (m/s)
         
-        # Season factor
-        season = 'winter' if month in [12, 1, 2] else 'summer'
+        # DJF / JJA only. Shoulder months use factor 1.0 rather than being
+        # labelled summer.
+        if month in (12, 1, 2):
+            season = "winter"
+        elif month in (6, 7, 8):
+            season = "summer"
+        else:
+            season = "shoulder"
         
         # Add major currents
         for name, current in self.currents.items():
@@ -102,7 +108,7 @@ class OceanCurrentModel:
                     factor = math.exp(-dist**2 / (500**2))
                     
                     # Apply seasonal factor
-                    factor *= current['seasonal_factor'][season]
+                    factor *= current["seasonal_factor"].get(season, 1.0)
                     
                     # Convert direction to components
                     dir_rad = math.radians(direction)
@@ -130,38 +136,62 @@ class OceanCurrentModel:
                 u_total += u_eddy
                 v_total += v_eddy
         
-        # Calculate total speed and direction
-        speed = math.sqrt(u_total**2 + v_total**2)
-        
-        if speed > 0:
+        return self._pack(u_total, v_total, lat, lon)
+
+    def along_track(self, lat: float, lon: float, month: int, bearing_deg: float) -> Dict:
+        """
+        Project the current onto a ship's heading.
+
+        Bearing is degrees clockwise from north. ``along_knots`` is positive
+        when the current has a following component. A fuel factor cannot be
+        inferred from current direction alone; the previous implementation used
+        the same angular test for following and adverse current.
+        """
+        raw = self.get_current(lat, lon, month)
+        bearing = math.radians(bearing_deg)
+        east = math.sin(bearing)
+        north = math.cos(bearing)
+        along_ms = raw["u_ms"] * east + raw["v_ms"] * north
+        across_ms = -raw["u_ms"] * north + raw["v_ms"] * east
+        along_knots = along_ms / 0.514444
+        if along_ms > 0.05:
+            benefit = "Following component"
+        elif along_ms < -0.05:
+            benefit = "Adverse component"
+        else:
+            benefit = "Negligible along-track component"
+        return {
+            **raw,
+            "bearing_deg": round(bearing_deg % 360.0, 1),
+            "along_ms": along_ms,
+            "across_ms": across_ms,
+            "along_knots": along_knots,
+            "benefit_text": benefit,
+        }
+
+    def _pack(self, u_total: float, v_total: float, lat: float, lon: float) -> Dict:
+        speed_ms = math.sqrt(u_total ** 2 + v_total ** 2)
+        if speed_ms > 0:
             direction = math.degrees(math.atan2(u_total, v_total)) % 360
         else:
-            direction = 0
-        
-        # Fuel benefit calculation
-        if speed > 0.5:
-            if abs(direction - 90) < 45 or abs(direction - 270) < 45:
-                benefit = "Following current - fuel savings"
-                fuel_factor = 1.0 - (speed * 0.1)  # Up to 10% savings
-            elif abs(direction - 270) < 45 or abs(direction - 90) < 45:
-                benefit = "Against current - fuel penalty"
-                fuel_factor = 1.0 + (speed * 0.15)  # Up to 15% penalty
-            else:
-                benefit = "Cross current - minor effect"
-                fuel_factor = 1.0 + (speed * 0.02)  # 2% penalty
-        else:
-            benefit = "No significant current"
-            fuel_factor = 1.0
-        
+            direction = 0.0
         return {
-            'speed_knots': round(speed, 2),
-            'direction_deg': round(direction),
-            'u_component': round(u_total, 2),
-            'v_component': round(v_total, 2),
-            'fuel_factor': round(fuel_factor, 3),
-            'benefit_text': benefit,
-            'eddies_nearby': len([e for e in self.eddies if 
-                                 self._haversine_km(lat, lon, e['center'][0], e['center'][1]) < e['radius']])
+            "speed_ms": speed_ms,
+            "speed_knots": speed_ms / 0.514444,
+            "direction_deg": round(direction),
+            "u_ms": u_total,
+            "v_ms": v_total,
+            "u_component": round(u_total, 3),
+            "v_component": round(v_total, 3),
+            "fuel_factor": 1.0,
+            "benefit_text": "Heading required; scalar fuel factor is not used",
+            "eddies_nearby": len(
+                [
+                    e
+                    for e in self.eddies
+                    if self._haversine_km(lat, lon, e["center"][0], e["center"][1]) < e["radius"]
+                ]
+            ),
         }
     
     def _haversine_km(self, lat1, lon1, lat2, lon2):

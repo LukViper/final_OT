@@ -48,7 +48,7 @@ class RealTimeAnalytics:
             fuel_savings = fastest_fuel - fuel_fuel
             time_savings = (fuel_time - fastest_time) / 24 if fuel_time and fastest_time else 0
             distance_savings = fastest_dist - fuel_dist
-            co2_savings = fuel_savings * 3.15 if fuel_savings else 0
+            co2_savings = fuel_savings * 3.114 if fuel_savings else 0
             cost_savings = fuel_savings * 650 if fuel_savings else 0
             
             calculation_record = {
@@ -118,8 +118,8 @@ class RealTimeAnalytics:
                 a_star_perf = (self.algorithm_performance['A*']['count'] / total_algo_calls) * 100
                 genetic_perf = (self.algorithm_performance['Genetic']['count'] / total_algo_calls) * 100
             else:
-                a_star_perf = 65.0
-                genetic_perf = 35.0
+                a_star_perf = 0.0
+                genetic_perf = 0.0
             
             # Calculate total optimization based on actual savings
             if self.performance_metrics['total_calculations'] > 0:
@@ -133,13 +133,13 @@ class RealTimeAnalytics:
                 
                 total_optimization = min(fuel_optimization + distance_optimization + time_optimization, 100)
             else:
-                total_optimization = 15.0
+                total_optimization = 0.0
             
             # Calculate average calculation time
             if self.route_calculations:
                 avg_calc_time = sum(calc['calculation_time'] for calc in self.route_calculations) / len(self.route_calculations)
             else:
-                avg_calc_time = 1.85
+                avg_calc_time = 0.0
             
             # Determine fastest algorithm
             if a_star_perf > genetic_perf:
@@ -321,59 +321,47 @@ def get_realtime_analytics():
     except Exception as e:
         print(f"Analytics error: {e}")
         traceback.print_exc()
-        # Return demo data
         return jsonify({
+            'error': 'analytics unavailable',
             'performance_metrics': {
-                'total_calculations': 1247,
-                'total_distance_saved': 12850.0,
-                'total_fuel_saved': 45.2,
-                'total_time_saved': 12.5,
-                'total_co2_reduced': 142.4,
-                'total_cost_saved': 29380
+                'total_calculations': 0,
+                'total_distance_saved': 0.0,
+                'total_fuel_saved': 0.0,
+                'total_time_saved': 0.0,
+                'total_co2_reduced': 0.0,
+                'total_cost_saved': 0
             },
-            'recent_calculations': [
-                {
-                    'start_port': 'Singapore',
-                    'destination_port': 'Busan',
-                    'timestamp': datetime.now().isoformat(),
-                    'calculation_time': 1.85
-                }
-            ],
-            'port_usage': {
-                'Singapore': 85.0,
-                'Shanghai': 72.0,
-                'Jebel_Ali': 68.0,
-                'Busan': 65.0,
-                'Colombo': 58.0
-            },
+            'recent_calculations': [],
+            'port_usage': {},
             'algorithm_stats': {
-                'total_calculations': 1247,
-                'average_calculation_time': 1.85,
-                'fastest_algorithm': "A* Algorithm",
-                'routes_calculated': 892,
+                'total_calculations': 0,
+                'average_calculation_time': 0.0,
+                'fastest_algorithm': None,
+                'routes_calculated': 0,
                 'performance_metrics': {
-                    'a_star_performance': 78.0,
-                    'genetic_algorithm_performance': 92.0,
-                    'total_optimization': 15.0
+                    'a_star_performance': 0.0,
+                    'genetic_algorithm_performance': 0.0,
+                    'total_optimization': 0.0
                 }
             },
             'timestamp': datetime.now().isoformat()
-        })
+        }), 500
 
 @app.route('/analytics')
 def analytics_page():
     """Analytics page with real-time data"""
     try:
         analytics_data = realtime_analytics.get_realtime_data()
-    except:
+    except Exception:
         analytics_data = {
+            'error': 'analytics unavailable',
             'performance_metrics': {
-                'total_calculations': 1247,
-                'total_distance_saved': 12850.0,
-                'total_fuel_saved': 45.2,
-                'total_time_saved': 12.5,
-                'total_co2_reduced': 142.4,
-                'total_cost_saved': 29380
+                'total_calculations': 0,
+                'total_distance_saved': 0.0,
+                'total_fuel_saved': 0.0,
+                'total_time_saved': 0.0,
+                'total_co2_reduced': 0.0,
+                'total_cost_saved': 0
             }
         }
     
@@ -392,18 +380,15 @@ def internal_error(error):
 
 if __name__ == '__main__':
     print("="*60)
-    print("🚢 MARITIME ROUTE OPTIMIZER - JOURNAL GRADE")
+    print("Lane-constrained route calculator")
     print("="*60)
-    print("📡 Access the application at: http://localhost:5006")
-    print("🌐 Also available at: http://0.0.0.0:5006")
-    print("🔬 Physics Models Loaded:")
-    print("   - Holtrop-Mennen (1982) Resistance")
-    print("   - 4D Weather Ensemble Forecasting")
-    print("   - Biofouling (ITTC 2024)")
-    print("   - Ocean Current Systems")
-    print("   - Lunar Tides")
-    print("   - Genetic Algorithm Optimization")
-    print("   - A* Pathfinding")
+    print("Access the application at: http://localhost:5006")
+    print("Reported study numbers come from experiments/run_study.py, not this UI.")
+    print("Models in use:")
+    print("   - Holtrop-Mennen resistance (utils/holtrop_mennen.py)")
+    print("   - Scenario fouling multiplier (not an ITTC procedure)")
+    print("   - Schematic ocean-current cores")
+    print("   - A* on the lane graph; order crossover for hub permutations")
     print("="*60)
     print("⏹️  Press CTRL+C to stop the server")
     print("="*60)

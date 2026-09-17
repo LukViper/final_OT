@@ -165,14 +165,13 @@ class ShippingRouteOptimizer:
             seg_dist = segment['distance_km']
             forecast = segment['forecast']
             
-            # Base fuel from vessel physics
-            base_fuel = vessel_physics.fuel_consumption(
-                seg_dist, speed_knots, 15.0, self.hull_days
-            )
+            # Clean-hull Holtrop fuel. Fouling is applied once, to both columns.
+            base_fuel = vessel_physics.fuel_consumption(seg_dist, speed_knots, 15.0)
             
-            # Weather multiplier based on conditions at arrival time
-            wind = forecast.get('wind_speed', 0)
-            wave = forecast.get('wave_height', 0)
+            # Piecewise sea-state multiplier. Units follow the forecast module:
+            # wind_speed is km/h in the climatological fallback.
+            wind = forecast.get('wind_speed', 0) or 0
+            wave = forecast.get('wave_height', 0) or 0
             
             if wind > 60 or wave > 5:
                 weather_mult = 1.4  # Severe
@@ -186,28 +185,25 @@ class ShippingRouteOptimizer:
             segment_fuel_4d = base_fuel * weather_mult
             total_fuel_4d += segment_fuel_4d
             
-            # Static weather for comparison (average conditions)
-            segment_fuel_static = base_fuel * 1.15  # Assume moderate
-            total_fuel_static += segment_fuel_static
+            # Calm-water baseline. A previous version compared against a
+            # hardcoded 1.15 factor and reported the ratio as a saving,
+            # including a fixed 15% when the forecast module was missing.
+            total_fuel_static += base_fuel
         
-        # Calculate fouling penalty
-        water_temps = [25.0] * len(coords)
-        try:
-            fouling = hull_fouling.calculate_fouling_penalty(
-                self.hull_days, water_temps, [35.0] * len(coords)
-            )
-            total_fuel_4d *= fouling['fuel_multiplier']
-            fouling_penalty = fouling['total_penalty_percent']
-        except:
-            fouling_penalty = 0
-        
-        # Calculate savings
-        savings = (total_fuel_static - total_fuel_4d) / total_fuel_static * 100 if total_fuel_static > 0 else 0
+        # Weather delta before fouling, so the two effects are not confounded.
+        weather_delta = (total_fuel_static - total_fuel_4d) / total_fuel_static * 100 if total_fuel_static > 0 else 0
+        water_temps = [28.0] * max(len(coords), 1)
+        fouling = hull_fouling.calculate_fouling_penalty(
+            self.hull_days, water_temps, [35.0] * max(len(coords), 1)
+        )
+        total_fuel_4d *= fouling["fuel_multiplier"]
+        total_fuel_static *= fouling["fuel_multiplier"]
+        fouling_penalty = fouling["total_penalty_percent"]
         
         print(f"\n📊 4D Results:")
-        print(f"   Static weather fuel: {total_fuel_static:.1f} tonnes")
-        print(f"   4D weather fuel:     {total_fuel_4d:.1f} tonnes")
-        print(f"   Savings:             {savings:.1f}%")
+        print(f"   Calm-water fuel:     {total_fuel_static:.1f} tonnes")
+        print(f"   Weather-adjusted:    {total_fuel_4d:.1f} tonnes")
+        print(f"   Calm-water delta:    {weather_delta:.1f}%")
         print(f"   Optimal departure:   {timeline.get('optimal_departure', departure_time.isoformat())}")
         print(f"   Confidence:          {timeline.get('ensemble_confidence', 0.5)*100:.0f}%")
         
@@ -217,7 +213,7 @@ class ShippingRouteOptimizer:
             'timeline': timeline,
             'fuel_4d': round(total_fuel_4d, 1),
             'fuel_static': round(total_fuel_static, 1),
-            'savings_percent': round(savings, 1),
+            'savings_percent': round(weather_delta, 1),
             'fouling_impact': fouling_penalty,
             'optimal_departure': timeline.get('optimal_departure', departure_time.isoformat()),
             'confidence': timeline.get('ensemble_confidence', 0.5)
@@ -227,19 +223,17 @@ class ShippingRouteOptimizer:
         """Fallback method if 4D forecast isn't available"""
         print("📊 Using simplified 4D calculation")
         
-        # Simple fuel calculation
-        total_fuel = distance * self.FUEL_CONSUMPTION_PER_KM * 1.25  # Weather factor
-        
+        calm = distance * self.FUEL_CONSUMPTION_PER_KM
         return {
             'route': route,
             'distance_km': distance,
-            'fuel_4d': round(total_fuel, 1),
-            'fuel_static': round(total_fuel * 0.85, 1),
-            'savings_percent': 15.0,
+            'fuel_4d': round(calm, 1),
+            'fuel_static': round(calm, 1),
+            'savings_percent': 0.0,
             'fouling_impact': 0,
             'optimal_departure': departure_time.isoformat(),
-            'confidence': 0.5,
-            'note': 'Simplified calculation - install numpy and requests for full 4D'
+            'confidence': 0.0,
+            'note': 'Forecast unavailable; calm-water rate only. No weather saving is implied.'
         }
 
     # ========== GRAPH BUILDING ==========
@@ -396,19 +390,41 @@ class ShippingRouteOptimizer:
         return result
 
     def _crossover(self, parent1, parent2, hub_ports, seed):
-        """Deterministic crossover that preserves all hub ports."""
+        """Order crossover on the hub permutation (Davis, 1985).
+
+        The previous operator concatenated both parents and therefore did not
+        search the permutation space. Start and end ports are fixed. Every
+        required hub appears once.
+        """
         rng = random.Random(seed)
-        
-        hubs1 = parent1[1:-1]
-        hubs2 = parent2[1:-1]
-        all_hubs = list(dict.fromkeys(hubs1 + hubs2))
-        
+        hubs1 = list(parent1[1:-1])
+        hubs2 = list(parent2[1:-1])
+        # Drop accidental duplicates from older call sites before crossing.
+        hubs1 = list(dict.fromkeys(hubs1))
+        hubs2 = list(dict.fromkeys(hubs2))
         for hub in hub_ports:
-            if hub not in all_hubs:
-                all_hubs.append(hub)
-        
-        child = [parent1[0]] + all_hubs + [parent1[-1]]
-        return child
+            if hub not in hubs1:
+                hubs1.append(hub)
+            if hub not in hubs2:
+                hubs2.append(hub)
+        n = len(hubs1)
+        if n < 2:
+            child_hubs = hubs1
+        else:
+            i, j = sorted(rng.sample(range(n), 2))
+            child_hubs = [None] * n
+            child_hubs[i : j + 1] = hubs1[i : j + 1]
+            taken = set(child_hubs[i : j + 1])
+            fill = [h for h in hubs2 if h not in taken]
+            # Remaining required hubs, in parent-2 order, if a parent was short.
+            for hub in hub_ports:
+                if hub not in taken and hub not in fill:
+                    fill.append(hub)
+            cursor = 0
+            for idx in list(range(j + 1, n)) + list(range(0, i)):
+                child_hubs[idx] = fill[cursor]
+                cursor += 1
+        return [parent1[0]] + child_hubs + [parent1[-1]]
 
     def _mutate(self, route, hub_ports, seed):
         """Deterministic mutation that maintains all hub ports."""
@@ -645,7 +661,7 @@ class ShippingRouteOptimizer:
                 eca_dist += dist
         
         fuel_tonnes = self._calculate_vessel_fuel(total_distance, self.AVERAGE_SPEED_KMH, weather_impact_avg)
-        co2_tonnes = fuel_tonnes * 3.15
+        co2_tonnes = fuel_tonnes * 3.114
         
         # Base fuel cost $650/t. ECA fuel is more expensive.
         base_cost = fuel_tonnes * 650
@@ -755,61 +771,41 @@ class ShippingRouteOptimizer:
         """
         Calculate fuel using all physics models
         """
-        # Water temperatures (simplified - could come from weather)
-        water_temps = [25.0] * len(coordinates)  # Default 25°C
+        # Tropical SST / salinity are scenario values, not a measured field.
+        water_temps = [28.0] * max(len(coordinates), 1)
+        salinities = [35.0] * max(len(coordinates), 1)
+        fouling = hull_fouling.calculate_fouling_penalty(hull_days, water_temps, salinities)
         
-        # Calculate fouling penalty
-        fouling = hull_fouling.calculate_fouling_penalty(
-            hull_days, water_temps, [35.0] * len(coordinates)
-        )
-        
-        total_fuel = 0
+        total_fuel = 0.0
+        calm_fuel = 0.0
         current_time = departure_time
         speed_knots = self.AVERAGE_SPEED_KMH / 1.852
         
-        # Calculate each segment
         for i in range(len(coordinates) - 1):
             lat1, lon1 = coordinates[i]
-            lat2, lon2 = coordinates[i+1]
-            
-            # Distance for this segment
+            lat2, lon2 = coordinates[i + 1]
             seg_dist = self._haversine(lat1, lon1, lat2, lon2)
-            
-            # Get ocean current at midpoint
+            if seg_dist <= 0:
+                continue
+            bearing = self._bearing_deg(lat1, lon1, lat2, lon2)
             mid_lat = (lat1 + lat2) / 2
             mid_lon = (lon1 + lon2) / 2
-            current = ocean_currents.get_current(mid_lat, mid_lon, current_time.month)
-            
-            # Adjust speed for current
-            seg_speed = speed_knots
-            if current['fuel_factor'] < 1.0:
-                seg_speed *= 1.05  # 5% speed boost from following current
-            elif current['fuel_factor'] > 1.0:
-                # Against current - maintain speed but more fuel
-                pass
-            
-            # Calculate fuel for this segment using vessel physics
-            segment_fuel = vessel_physics.fuel_consumption(
-                seg_dist, seg_speed, water_temps[i], hull_days
-            )
-            
-            # Apply current factor
-            segment_fuel *= current['fuel_factor']
-            
+            current = ocean_currents.along_track(mid_lat, mid_lon, current_time.month, bearing)
+            # Constant speed through water. Time, and therefore fuel, scales with SOG.
+            sog = speed_knots + current["along_knots"]
+            sog = max(sog, 1.0)
+            calm_segment = vessel_physics.fuel_consumption(seg_dist, speed_knots, 15.0)
+            segment_fuel = calm_segment * (speed_knots / sog)
+            calm_fuel += calm_segment
             total_fuel += segment_fuel
-            
-            # Update time
-            hours = seg_dist / (seg_speed * 1.852)
-            current_time += timedelta(hours=hours)
+            current_time += timedelta(hours=seg_dist / (sog * 1.852))
         
-        # Apply fouling multiplier
-        total_fuel *= fouling['fuel_multiplier']
-        
-        # Calculate ocean current benefit
-        base_fuel = vessel_physics.fuel_consumption(
-            distance, speed_knots, 25.0, hull_days
-        )
-        current_benefit = ((base_fuel * fouling['fuel_multiplier']) / total_fuel - 1) * 100
+        total_fuel *= fouling["fuel_multiplier"]
+        calm_fuel *= fouling["fuel_multiplier"]
+        if total_fuel > 0 and calm_fuel > 0:
+            current_benefit = (calm_fuel - total_fuel) / calm_fuel * 100
+        else:
+            current_benefit = 0.0
         
         return {
             'total': round(total_fuel, 1),
@@ -820,6 +816,15 @@ class ShippingRouteOptimizer:
             'arrival_time': current_time.isoformat() if current_time else None,
             'fouling_breakdown': fouling['organism_breakdown']
         }
+
+    def _bearing_deg(self, lat1, lon1, lat2, lon2):
+        """Initial great-circle bearing, degrees clockwise from north."""
+        phi1 = math.radians(lat1)
+        phi2 = math.radians(lat2)
+        dlon = math.radians(lon2 - lon1)
+        y = math.sin(dlon) * math.cos(phi2)
+        x = math.cos(phi1) * math.sin(phi2) - math.sin(phi1) * math.cos(phi2) * math.cos(dlon)
+        return (math.degrees(math.atan2(y, x)) + 360.0) % 360.0
 
     def _haversine(self, lat1, lon1, lat2, lon2):
         """Haversine distance in km"""
@@ -895,7 +900,7 @@ class ShippingRouteOptimizer:
                 'distance_km': fastest_distance,
                 'time_hours': fastest_time_base,
                 'fuel_tonnes': fastest_physics['total'],
-                'co2_tonnes': fastest_physics['total'] * 3.15,
+                'co2_tonnes': fastest_physics['total'] * 3.114,
                 'coordinates': fast_coords,
                 'physics': fastest_physics
             },
@@ -904,7 +909,7 @@ class ShippingRouteOptimizer:
                 'distance_km': fuel_distance,
                 'time_hours': fuel_time_base,
                 'fuel_tonnes': fuel_physics['total'],
-                'co2_tonnes': fuel_physics['total'] * 3.15,
+                'co2_tonnes': fuel_physics['total'] * 3.114,
                 'coordinates': fuel_coords,
                 'physics': fuel_physics
             },

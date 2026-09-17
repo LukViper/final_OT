@@ -393,22 +393,15 @@ class Forecast4D:
         elif month in [6, 7, 8]:  # Summer
             wind_speed *= 0.8 if abs_lat > 30 else 1.0
         
-        # 3. Wave height from fetch-limited growth (JONSWAP)
-        # Assume fetch = 100km for open ocean
+        # Fetch-limited significant wave height (CERC/SPM form), not a JONSWAP
+        # spectrum. An earlier version used 0.041, the JONSWAP peak-enhancement
+        # factor, in place of the fetch-limited height coefficient.
         fetch_km = 100
-        u10 = wind_speed / 3.6  # m/s
+        u10 = max(wind_speed / 3.6, 0.5)  # forecast wind is km/h
         g = self.G
-        
-        # Dimensionless fetch
-        F_tilde = g * fetch_km * 1000 / u10**2
-        
-        if F_tilde > 0:
-            # JONSWAP fetch-limited growth
-            epsilon = 0.041  # JONSWAP coefficient
-            hs = (u10**2 / g) * epsilon * F_tilde**0.5
-            wave_height = min(hs, 15.0)  # Cap at 15m
-        else:
-            wave_height = 1.5
+        f_tilde = g * fetch_km * 1000 / u10**2
+        hs = (u10 ** 2 / g) * 0.0016 * f_tilde ** 0.5
+        wave_height = min(max(hs, 0.0), 8.0)
         
         # 4. Pressure (simplified)
         pressure = 1013 + 10 * math.sin(2 * math.pi * (month - 1) / 12)

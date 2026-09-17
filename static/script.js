@@ -3,7 +3,7 @@ const CONFIG = {
   AVERAGE_SPEED_KMH: 37.0,
   FUEL_CONSUMPTION_PER_KM: 0.04,
   WEATHER_FACTOR: 1.25,
-  EMISSION_FACTOR: 3.15,
+  EMISSION_FACTOR: 3.114,
 };
 
 // Navigation Configuration
@@ -676,7 +676,7 @@ function displayResults(data, optimizationGoal = 'both') {
   const fuelDiff = (fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0);
   const timeDiff = ((fastestRoute.time_hours || 0) - (fuelRoute.time_hours || 0)) / 24;
   const costDiff = fuelDiff * 650;
-  const co2Diff = fuelDiff * 3.15;
+  const co2Diff = fuelDiff * 3.114;
   
   // Determine winner for each metric
   const winner = {
@@ -776,7 +776,7 @@ function displayResults(data, optimizationGoal = 'both') {
           <div class="winner-metrics">
             <span class="winner-metric ${winner.time === 'fastest' ? 'win' : ''}">⏱️ ${((fastestRoute.time_hours || 0)/24).toFixed(1)}d</span>
             <span class="winner-metric ${winner.cost === 'fastest' ? 'win' : ''}">💰 $${((fastestRoute.fuel_tonnes || 0) * 650).toLocaleString()}</span>
-            <span class="winner-metric ${winner.co2 === 'fastest' ? 'win' : ''}">🌍 ${((fastestRoute.fuel_tonnes || 0) * 3.15).toFixed(1)}t CO₂</span>
+            <span class="winner-metric ${winner.co2 === 'fastest' ? 'win' : ''}">🌍 ${((fastestRoute.fuel_tonnes || 0) * 3.114).toFixed(1)}t CO₂</span>
           </div>
         </div>
         <div class="winner-score">${fastestWins} wins</div>
@@ -789,7 +789,7 @@ function displayResults(data, optimizationGoal = 'both') {
           <div class="winner-metrics">
             <span class="winner-metric ${winner.fuel === 'efficient' ? 'win' : ''}">⛽ ${(fuelRoute.fuel_tonnes || 0).toFixed(1)}t</span>
             <span class="winner-metric ${winner.cost === 'efficient' ? 'win' : ''}">💰 $${((fuelRoute.fuel_tonnes || 0) * 650).toLocaleString()}</span>
-            <span class="winner-metric ${winner.co2 === 'efficient' ? 'win' : ''}">🌍 ${((fuelRoute.fuel_tonnes || 0) * 3.15).toFixed(1)}t CO₂</span>
+            <span class="winner-metric ${winner.co2 === 'efficient' ? 'win' : ''}">🌍 ${((fuelRoute.fuel_tonnes || 0) * 3.114).toFixed(1)}t CO₂</span>
           </div>
         </div>
         <div class="winner-score">${efficientWins} wins</div>
@@ -828,7 +828,7 @@ function displayResults(data, optimizationGoal = 'both') {
             <div class="stat-label">💰 Cost</div>
           </div>
           <div class="stat-card ${winner.co2 === 'fastest' ? 'winner-stat' : ''}">
-            <div class="stat-value">${((fastestRoute.fuel_tonnes || 0) * 3.15).toFixed(1)} t</div>
+            <div class="stat-value">${((fastestRoute.fuel_tonnes || 0) * 3.114).toFixed(1)} t</div>
             <div class="stat-label">🌍 CO₂</div>
           </div>
           <div class="stat-card">
@@ -933,7 +933,7 @@ function displayResults(data, optimizationGoal = 'both') {
           <div class="stat-label">💰 Cost</div>
         </div>
         <div class="stat-card ${winner.co2 === 'efficient' ? 'winner-stat' : ''}">
-          <div class="stat-value">${((fuelRoute.fuel_tonnes || 0) * 3.15).toFixed(1)} t</div>
+          <div class="stat-value">${((fuelRoute.fuel_tonnes || 0) * 3.114).toFixed(1)} t</div>
           <div class="stat-label">🌍 CO₂</div>
         </div>
         <div class="stat-card">
@@ -1041,13 +1041,13 @@ function displayResults(data, optimizationGoal = 'both') {
           </tr>
           <tr>
             <td>CO₂ (tonnes)</td>
-            <td class="fastest">${((fastestRoute.fuel_tonnes || 0) * 3.15).toFixed(1)}</td>
-            <td class="efficient">${((fuelRoute.fuel_tonnes || 0) * 3.15).toFixed(1)}</td>
+            <td class="fastest">${((fastestRoute.fuel_tonnes || 0) * 3.114).toFixed(1)}</td>
+            <td class="efficient">${((fuelRoute.fuel_tonnes || 0) * 3.114).toFixed(1)}</td>
             <td class="${((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) > 0 ? 'positive' : 'negative'}">
-              ${(Math.abs((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) * 3.15).toFixed(1)}
+              ${(Math.abs((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) * 3.114).toFixed(1)}
             </td>
             <td class="${((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) > 0 ? 'positive' : 'negative'}">
-              ${((((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) * 3.15) / ((fuelRoute.fuel_tonnes || 1) * 3.15) * 100).toFixed(1)}%
+              ${((((fastestRoute.fuel_tonnes || 0) - (fuelRoute.fuel_tonnes || 0)) * 3.114) / ((fuelRoute.fuel_tonnes || 1) * 3.114) * 100).toFixed(1)}%
             </td>
             <td class="winner-cell">${((fastestRoute.fuel_tonnes || 0) < (fuelRoute.fuel_tonnes || 0)) ? '🚀 Fastest' : (((fastestRoute.fuel_tonnes || 0) > (fuelRoute.fuel_tonnes || 0)) ? '🌿 Efficient' : '⚖️ Tie')}</td>
           </tr>
@@ -1366,8 +1366,8 @@ function updateRouteComparison(fastestRoute, fuelRoute) {
   const fuelDelta = fastestFuel - fuelFuel;
   if (fuelDeltaEl) fuelDeltaEl.textContent = Math.abs(fuelDelta).toFixed(1);
 
-  const fastestCO2 = fastestFuel * 3.15;
-  const fuelCO2 = fuelFuel * 3.15;
+  const fastestCO2 = fastestFuel * 3.114;
+  const fuelCO2 = fuelFuel * 3.114;
   const fastestCO2El = document.getElementById("fastestCO2");
   const efficientCO2El = document.getElementById("efficientCO2");
   const co2DeltaEl = document.getElementById("co2Delta");
